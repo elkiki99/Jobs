@@ -8,7 +8,7 @@
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <p class="text-2xl">{{ __('Last job openings') }}</p>
         
-        <div class="grid grid-cols-4 gap-8 py-12">
+        <div class="gap-8 py-12">
             {{-- @forelse($jobs as $job) --}}
                 <x-job-card 
                     {{-- :job="$job"  --}}
