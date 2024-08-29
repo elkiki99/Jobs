@@ -13,8 +13,8 @@
         </p>
         
         <div class="py-12">
-            <p class="text-2xl">{{ __('Featured jobs') }}</p>
-            <div class="grid grid-cols-4 gap-8 py-12">
+            <p class="text-2xl text-gray-600">{{ __('Featured jobs') }}</p>
+            <div class="gap-8 py-12">
                 {{-- @forelse($jobs as $job) --}}
                     <x-job-card 
                         {{-- :job="$job"  --}}

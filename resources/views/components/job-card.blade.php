@@ -1,4 +1,4 @@
-<div class="max-w-4xl py-4 overflow-hidden bg-white border-t border-gray-300">
+<div class="max-w-4xl py-4 overflow-hidden bg-white border-b border-gray-300">
     <div class="flex flex-col sm:flex-row">
         <div class="relative w-full mb-4 sm:w-36 sm:mb-0 sm:mr-4 aspect-square">
             <a href="#">
@@ -12,4 +12,4 @@
             <a href="#" class="text-gray-400 ">Recruiter/Company Name</a>
         </div>
     </div>
-</div>
+    </div>
