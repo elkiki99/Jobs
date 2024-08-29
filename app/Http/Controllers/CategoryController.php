@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Opening;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class OpeningController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $openings = Opening::latest()->paginate(24);
-
-        return view('openings.index', [
-            'openings' => $openings,
-        ]);
+        //
     }
 
     /**
@@ -38,19 +34,15 @@ class OpeningController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
+    public function show(Category $category)
     {
-        $opening = Opening::where('slug', $slug)->firstOrFail();
-
-        return view('openings.show', [
-            'opening' => $opening,
-        ]);
-    }   
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Opening $opening)
+    public function edit(Category $category)
     {
         //
     }
@@ -58,7 +50,7 @@ class OpeningController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Opening $opening)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -66,7 +58,7 @@ class OpeningController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Opening $opening)
+    public function destroy(Category $category)
     {
         //
     }

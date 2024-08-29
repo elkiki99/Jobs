@@ -6,7 +6,7 @@
     </div>
     
     <div class="px-4 space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-nav-link :href="route('jobs')">Home</x-nav-link>
+        <x-nav-link :href="route('home')">Home</x-nav-link>
         <x-nav-link :href="route('about')">About</x-nav-link>
         <x-nav-link :href="route('terms')">Terms</x-nav-link>
         <x-nav-link :href="route('support')">Support</x-nav-link>

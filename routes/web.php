@@ -1,7 +1,8 @@
 
 <?php
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OpeningController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('home');
@@ -13,9 +14,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 }); 
 
-Route::get('/jobs', function() {
-    return view('jobs');
-})->name('jobs');
+Route::get('/openings', [OpeningController::class, 'index'])->name('openings.index');
+Route::get('/opening/{slug}', [OpeningController::class, 'show'])->name('openings.show');
 
 Route::get('/network', function() {
     return view('network');

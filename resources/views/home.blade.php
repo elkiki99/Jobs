@@ -7,30 +7,19 @@
     </x-slot>
 
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <p class="text-xl ">
-            {{ __('Get recruited by the best headhunters in town blazing fast,') }}<br>
-            {{ __('made for developers in a hurry.') }}
+        <p class="text-xl text-gray-800">
+            {{ __('Get recruited quickly by top headhunters, tailored for fast-moving developers.') }}<br>
+            {{ __('Just apply and skip the lengthy forms!') }}
         </p>
         
         <div class="py-12">
-            <p class="text-2xl text-gray-600">{{ __('Featured jobs') }}</p>
+            <p class="text-2xl text-gray-600">{{ __('Featured openings') }}</p>
             <div class="gap-8 py-12">
-                {{-- @forelse($jobs as $job) --}}
-                    <x-job-card 
-                        {{-- :job="$job"  --}}
-                    />
-                    <x-job-card 
-                        {{-- :job="$job"  --}}
-                    />
-                    <x-job-card 
-                        {{-- :job="$job"  --}}
-                    />
-                    <x-job-card 
-                        {{-- :job="$job"  --}}
-                    />
-                {{-- @empty
-                    <p>No jobs found.</p>
-                @endforelse --}}
+                @forelse(App\Models\Opening::take(4)->get() as $opening)
+                    <x-opening-card :opening="$opening"  />
+                @empty
+                    <p>No openings found.</p>
+                @endforelse
             </div>
         </div>
     </div>

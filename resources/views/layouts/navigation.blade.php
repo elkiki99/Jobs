@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- Settings Dropdown -->  
             <div class="hidden space-x-8 sm:flex sm:items-center sm:ms-6">
         
                 <!-- Navigation Links -->
@@ -19,8 +19,8 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('jobs')" :active="request()->routeIs('jobs')">
-                        {{ __('Jobs') }}
+                    <x-nav-link :href="route('openings.index')" :active="request()->routeIs('openings.index')">
+                        {{ __('Openings') }}
                     </x-nav-link>
                     <x-nav-link :href="route('network')" :active="request()->routeIs('network')">
                         {{ __('Network') }}
@@ -74,7 +74,7 @@
             <div class="flex items-center -me-2 sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
                     <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linein="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
