@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "baf74fa489dd22906aebac7a5f507195",
+    "content-hash": "d936826720d5ab85451272d322bf1c6b",
     "packages": [
         {
             "name": "brick/math",
@@ -7707,6 +7707,50 @@
                 }
             ],
             "time": "2024-04-05T04:39:01+00:00"
+        },
+        {
+            "name": "pranpegu/laravel-countries",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ffegu/laravel-countries.git",
+                "reference": "33d5d5b1b541d5e987637445b197e6fa1c3c8454"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ffegu/laravel-countries/zipball/33d5d5b1b541d5e987637445b197e6fa1c3c8454",
+                "reference": "33d5d5b1b541d5e987637445b197e6fa1c3c8454",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pranpegu\\LaravelCountries\\CountriesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pranpegu\\LaravelCountries\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ffegu",
+                    "email": "ffegu0617@gmail.com"
+                }
+            ],
+            "description": "Simple laravel country list",
+            "support": {
+                "issues": "https://github.com/ffegu/laravel-countries/issues",
+                "source": "https://github.com/ffegu/laravel-countries/tree/v1.0.0"
+            },
+            "time": "2020-05-26T19:58:20+00:00"
         },
         {
             "name": "sebastian/cli-parser",
