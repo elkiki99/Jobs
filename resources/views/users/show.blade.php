@@ -9,7 +9,8 @@
         <div class="w-1/3 space-y-2 ">
             <!-- Avatar -->
             @if ($user->avatar)
-                <img class="rounded-full size-36 aspect-square" src="{{ $user->avatar }}" alt="{{ $user->username }}">
+                <img class="rounded-full size-36 aspect-square" src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}" 
+                alt="{{ $user->username }}">
             @else
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-gray-500 rounded-full size-36 aspect-square">
                     <path fill-rule="evenodd"

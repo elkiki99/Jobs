@@ -25,7 +25,8 @@
                 {{ Illuminate\Support\Number::currency($opening->salary, 'USD') }}</p>
             <div class="flex items-center gap-2">
                 <p class="font-semibold">Company: </p>
-                <a href="{{ route('companies.show', $opening->user->company->slug) }}" class="text-sm hover:underline" href="#">{{ $opening->user->company->name }}</a>
+                <a href="{{ route('companies.show', $opening->user->company->slug) }}" class="text-sm hover:underline"
+                    href="#">{{ $opening->user->company->name }}</a>
             </div>
             <div class="flex items-center gap-2">
                 <p class="font-semibold">Category: </p>
@@ -34,23 +35,24 @@
             </div>
             <div class="flex items-center gap-2">
                 <p class="font-semibold">Posted by: </p>
-                <a 
-                    href="{{ route('users.show', $opening->user->username) }}"
+                <a href="{{ route('users.show', $opening->user->username) }}"
                     class="text-sm hover:underline">{{ $opening->user->name }}
                 </a>
             </div>
             <p><span class="font-semibold">Status:</span> {{ $opening->status }}</p>
 
             @auth
-                @if(!auth()->user()->appliedOpenings()->where('opening_id', $opening->id)->exists())
+                @if (auth()->user()->role === 'developer')
                     <div class="pt-4">
-                        <form method="POST" action="{{ route('openings.show', $opening->slug) }}">
-                            @csrf
-                            <x-primary-button type="submit" aria-label="Apply to this opening">Apply</x-primary-button>
-                        </form>
+                        @if (!auth()->user()->appliedOpenings()->where('opening_id', $opening->id)->exists())
+                            <form method="POST" action="{{ route('openings.show', $opening->slug) }}">
+                                @csrf
+                                <x-primary-button type="submit" aria-label="Apply to this opening">Apply</x-primary-button>
+                            </form>
+                        @else
+                            <p class="text-green-500 underline">Congrats! You have applied to this opening</p>
+                        @endif
                     </div>
-                @else
-                    <p class="text-green-500 underline">Congrats! You have applied to this opening</p>
                 @endif
             @else
                 <div class="pt-4">
@@ -58,8 +60,8 @@
                 </div>
             @endauth
         </div>
-    <div class="w-full md:w-1/2">
-        <img src="{{ $opening->image }}" alt="{{ $opening->name }}">
+        <div class="w-full md:w-1/2">
+            <img src="{{ $opening->image }}" alt="{{ $opening->name }}">
+        </div>
     </div>
-</div>
 </x-app-layout>
