@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,7 +26,7 @@ class OpeningFactory extends Factory
             'status' => $this->faker->word(),
             'slug' => $this->faker->unique()->slug(),
             'category_id' => $this->faker->numberBetween(1, 10),
-            'user_id' => $this->faker->numberBetween(1, 10),
+            'user_id' => User::where('role', 'recruiter')->pluck('id')->random(),
         ];
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Opening;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class OpeningController extends Controller
 {
@@ -13,7 +12,7 @@ class OpeningController extends Controller
      */
     public function index()
     {
-        $openings = Opening::latest()->paginate(24);
+        $openings = Opening::with('user.company')->latest()->paginate(24);
 
         return view('openings.index', [
             'openings' => $openings,

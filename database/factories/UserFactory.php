@@ -36,7 +36,7 @@ class UserFactory extends Factory
             'country' => fake()->country(),
             'postcode' => fake()->postcode(),
             'gender' => fake()->randomElement(['male', 'female']),
-            'company_id' => fake()->numberBetween(1, 10),
+            'company_id' => fake()->numberBetween(1, 100),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
