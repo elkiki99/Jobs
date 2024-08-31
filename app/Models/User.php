@@ -23,10 +23,14 @@ class User extends Authenticatable
         'username',
         'role',
         'avatar',
+        'bio',
         'phone',
         'address',
         'city',
         'country',
+        'postcode',
+        'gender',
+        'company_id',
         'password',
     ];
 
@@ -56,5 +60,10 @@ class User extends Authenticatable
     public function opening()
     {
         return $this->hasMany(Opening::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }

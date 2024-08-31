@@ -18,7 +18,7 @@ class OpeningFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'description' => $this->faker->sentences(3, true),
+            'description' => $this->faker->paragraphs(8, true),
             'location' => $this->faker->city(),
             'image' => $this->faker->imageUrl(),
             'salary' => $this->faker->numberBetween(10000, 100000),

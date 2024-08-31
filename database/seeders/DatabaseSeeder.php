@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Category;
+use App\Models\Company;
 use App\Models\Opening;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -16,7 +17,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Category::factory(10)->create();
+        Company::factory(10)->create();
         User::factory(10)->create();
         Opening::factory(10)->create();
+
     }
 }

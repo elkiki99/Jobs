@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Opening;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
-class OpeningController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $openings = Opening::latest()->paginate(24);
-
-        return view('openings.index', [
-            'openings' => $openings,
-        ]);
+        //
     }
 
     /**
@@ -40,17 +36,17 @@ class OpeningController extends Controller
      */
     public function show($slug)
     {
-        $opening = Opening::with(['user', 'user.company', 'category'])->where('slug', $slug)->firstOrFail();
+        $company = Company::with('openings')->where('slug', $slug)->firstOrFail();
 
-        return view('openings.show', [
-            'opening' => $opening,
+        return view('companies.show', [
+            'company' => $company
         ]);
-    }   
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Opening $opening)
+    public function edit(Company $company)
     {
         //
     }
@@ -58,7 +54,7 @@ class OpeningController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Opening $opening)
+    public function update(Request $request, Company $company)
     {
         //
     }
@@ -66,7 +62,7 @@ class OpeningController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Opening $opening)
+    public function destroy(Company $company)
     {
         //
     }
