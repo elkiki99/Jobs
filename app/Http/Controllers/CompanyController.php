@@ -36,10 +36,12 @@ class CompanyController extends Controller
      */
     public function show($slug)
     {
-        $company = Company::with('openings')->where('slug', $slug)->firstOrFail();
+        $company = Company::where('slug', $slug)->firstOrFail();
+        $openings = $company->openings()->with('category')->paginate(24);
 
         return view('companies.show', [
-            'company' => $company
+            'company' => $company,
+            'openings' => $openings
         ]);
     }
 

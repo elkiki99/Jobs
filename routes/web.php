@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\OpeningController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('home');
@@ -35,6 +36,11 @@ Route::get('/user/{username}', [UserController::class, 'show'])->name('users.sho
  * Company
  */
 Route::get('/company/{slug}', [CompanyController::class, 'show'])->name('companies.show');
+
+/**
+ * Category
+ */
+Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::get('/search', function() {
     return view('search');

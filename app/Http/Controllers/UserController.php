@@ -19,9 +19,11 @@ class UserController extends Controller
     public function show($username)
     {
         $user = User::with('opening')->where('username', $username)->firstOrFail();
+        $openings = $user->opening()->paginate(24);
         
         return view('users.show', [
-            'user' => $user
+            'user' => $user,
+            'openings' => $openings
         ]);
     }
 }

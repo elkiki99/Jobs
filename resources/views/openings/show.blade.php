@@ -5,8 +5,8 @@
         </h2>
     </x-slot>   
 
-    <div class="flex gap-8 px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-        <div class="w-1/2 py-12 space-y-2">
+    <div class="flex flex-col-reverse gap-8 px-4 py-12 mx-auto md:flex-row sm:px-6 lg:px-8 max-w-7xl">
+        <div class="w-full space-y-2 md:w-1/2">
             <p class="text-xl font-semibold">{{ $opening->title }}</p>
             <p>{{ $opening->description }}</p>
             <p><span class="font-semibold">Location:</span> {{ $opening->location }}</p>
@@ -17,7 +17,7 @@
             </div>
             <div class="flex items-center gap-2">
                 <p class="font-semibold">Category: </p>
-                <a href="#" class="text-sm hover:underline">{{ $opening->category->name }}</a>
+                <a href="{{ route('categories.show', $opening->category->slug) }}" class="text-sm hover:underline">{{ $opening->category->name }}</a>
             </div>
             <div class="flex items-center gap-2">
                 <p class="font-semibold">Posted by: </p>
@@ -29,7 +29,7 @@
                 <x-primary-button>Apply</x-primary-button>
             </div>
         </div>
-        <div class="w-1/2 py-12">
+        <div class="w-full md:w-1/2">
             <img src="{{ $opening->image }}" alt="{{ $opening->name }}">
         </div>
     </div>

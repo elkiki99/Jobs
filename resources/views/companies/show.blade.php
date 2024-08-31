@@ -16,9 +16,14 @@
         </div>    
 
         <div class="w-2/3 space-y-2">
-            @foreach ($company->openings as $opening)
+            @forelse ($openings as $opening)
                 <x-opening-card :opening="$opening" />
-            @endforeach
+            @empty
+                <p>No openings found.</p>
+            @endforelse
+            
+            {{ $openings->links() }}
         </div>
+
     </div>
 </x-app-layout>
