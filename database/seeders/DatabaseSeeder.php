@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(10)->create();
-        Company::factory(10)->create();
-        User::factory(10)->create();
-        Opening::factory(10)->create();
+        Category::factory(100)->create();
+        Company::factory(100)->create();
+        User::factory(100)->create();
+        Opening::factory(100)->create();
 
     }
 }

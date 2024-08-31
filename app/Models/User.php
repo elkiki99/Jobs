@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function appliedOpenings()
+    {
+        return $this->belongsToMany(Opening::class, 'opening_user', 'user_id', 'opening_id');
+    }
 }
