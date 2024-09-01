@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('id', '!=', auth()->id())->latest()->paginate(24);
+        $users = User::where('id', '!=', Auth::id())->latest()->paginate(24);
 
         return view('users.index', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
+
 
     public function show($username)
     {

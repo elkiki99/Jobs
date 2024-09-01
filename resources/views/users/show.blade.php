@@ -9,16 +9,18 @@
         <div class="w-1/3 space-y-2 ">
             <!-- Avatar -->
             @if ($user->avatar)
-                <img class="rounded-full size-36 aspect-square" src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}" 
-                alt="{{ $user->username }}">
+                <img class="rounded-full size-36 aspect-square"
+                    src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}"
+                    alt="{{ $user->username }}">
             @else
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-gray-500 rounded-full size-36 aspect-square">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="text-gray-500 rounded-full size-36 aspect-square">
                     <path fill-rule="evenodd"
                         d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
                         clip-rule="evenodd" />
                 </svg>
             @endif
-            
+
             <!-- Username -->
             @if ($user->role === 'recruiter')
                 <div class="flex items-center gap-2">
@@ -33,15 +35,15 @@
             @else
                 <p class="text-2xl">{{ $user->username }}</p>
             @endif
-            
+
             <!-- Email -->
             <p class="text-gray-600">{{ $user->email }}</p>
-            
+
             <!-- Bio -->
             <p>{{ $user->bio }}</p>
-            
+
             <!-- Phone -->
-            @if($user->phone)
+            @if ($user->phone)
                 <div class="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5">
@@ -53,11 +55,12 @@
             @endif
 
             <!-- Address -->
-            @if($user->address)
+            @if ($user->address)
                 <div class="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                     </svg>
@@ -69,7 +72,7 @@
             @endif
 
             <!-- Location -->
-            @if($user->country || $user->city)
+            @if ($user->country || $user->city)
                 <div class="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5">
@@ -79,9 +82,9 @@
                     <p>{{ $user->city }}, {{ $user->country }}</p>
                 </div>
             @endif
-            
+
             <!-- Company -->
-            @if($user->role === 'recruiter' && $user->company)
+            @if ($user->role === 'recruiter' && $user->company)
                 <div class="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5">
@@ -93,6 +96,21 @@
                     </p>
                 </div>
             @endif
+            
+            <!-- Follow button -->
+            @auth
+                @if (auth()->user()->id !== $user->id)
+                    @if (auth()->user()->followers->contains($user))
+                        <div class="pt-4">
+                            <x-primary-button>Unfollow</x-primary-button>
+                        </div>
+                    @else
+                        <div class="pt-4">
+                            <x-primary-button>Follow</x-primary-button>
+                        </div>
+                    @endif
+                @endif
+            @endauth
         </div>
 
         <!-- Openings -->
