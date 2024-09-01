@@ -99,16 +99,10 @@
             
             <!-- Follow button -->
             @auth
-                @if (auth()->user()->id !== $user->id)
-                    @if (auth()->user()->followers->contains($user))
-                        <div class="pt-4">
-                            <x-primary-button>Unfollow</x-primary-button>
-                        </div>
-                    @else
-                        <div class="pt-4">
-                            <x-primary-button>Follow</x-primary-button>
-                        </div>
-                    @endif
+                @if (auth()->user()->id !== $user->id && !auth()->user()->followers->contains($user))
+                    <div class="pt-4">
+                        <livewire:users.toggle-follow :user="$user" />
+                    </div>
                 @endif
             @endauth
         </div>

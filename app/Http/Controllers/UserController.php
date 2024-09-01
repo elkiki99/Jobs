@@ -17,6 +17,24 @@ class UserController extends Controller
         ]);
     }
 
+    public function followers()
+    {
+        $users = Auth::user()->followers()->paginate(24);
+
+        return view('users.followers', [
+            'users' => $users,
+        ]);
+    }
+
+    public function following()
+    {
+        $users = Auth::user()->following()->paginate(24);
+
+        return view('users.following', [
+            'users' => $users,
+        ]);
+    }
+
 
     public function show($username)
     {

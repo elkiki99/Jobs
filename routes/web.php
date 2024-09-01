@@ -6,6 +6,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\OpeningController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FollowerController;
 
 Route::get('/', function () {
     return view('home');
@@ -32,6 +33,8 @@ Route::post('/opening/{slug}', [OpeningController::class, 'apply'])->name('openi
  */
 Route::get('/network', [UserController::class, 'index'])->name('users.index');
 Route::get('/user/{username}', [UserController::class, 'show'])->name('users.show');
+Route::get('/followers', [UserController::class, 'followers'])->name('users.followers');
+Route::get('/following', [UserController::class, 'following'])->name('users.following');
 
 /**
  * Company
@@ -42,6 +45,10 @@ Route::get('/company/{slug}', [CompanyController::class, 'show'])->name('compani
  * Category
  */
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('categories.show');
+
+Route::get('/contact', function() {
+    return view('contact');
+})->name('contact');
 
 Route::get('/search', function() {
     return view('search');
