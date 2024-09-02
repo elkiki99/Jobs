@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-4xl font-medium leading-tight text-gray-800">
+        <h2 class="text-6xl font-medium leading-tight text-gray-800">
             {{ $category->name }}
         </h2>
     </x-slot>   

@@ -23,7 +23,7 @@
                         {{ __('Openings') }}
                     </x-nav-link>
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
-                        {{ __('Network') }}
+                        {{ __('Connect') }}
                     </x-nav-link>
                 </div>
 
@@ -44,6 +44,10 @@
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
+                            </x-dropdown-link>
+                            
+                            <x-dropdown-link :href="route('network')">
+                                {{ __('My network') }}
                             </x-dropdown-link>
                             
                             <!-- Authentication -->

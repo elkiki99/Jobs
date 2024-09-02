@@ -6,7 +6,6 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\OpeningController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\FollowerController;
 
 Route::get('/', function () {
     return view('home');
@@ -31,8 +30,9 @@ Route::post('/opening/{slug}', [OpeningController::class, 'apply'])->name('openi
 /**
  * Users
  */
-Route::get('/network', [UserController::class, 'index'])->name('users.index');
+Route::get('/connect', [UserController::class, 'index'])->name('users.index');
 Route::get('/user/{username}', [UserController::class, 'show'])->name('users.show');
+Route::get('/network', [UserController::class, 'network'])->name('network');
 Route::get('/followers', [UserController::class, 'followers'])->name('users.followers');
 Route::get('/following', [UserController::class, 'following'])->name('users.following');
 

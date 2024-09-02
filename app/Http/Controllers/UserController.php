@@ -26,6 +26,11 @@ class UserController extends Controller
         ]);
     }
 
+    public function network()
+    {
+        return view('users.network');
+    }
+
     public function following()
     {
         $users = Auth::user()->following()->paginate(24);
@@ -34,7 +39,6 @@ class UserController extends Controller
             'users' => $users,
         ]);
     }
-
 
     public function show($username)
     {

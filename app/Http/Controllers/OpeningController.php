@@ -37,7 +37,7 @@ class OpeningController extends Controller
 
     /**
      * Display the specified resource.
-     */
+     */ 
     public function show($slug)
     {
         $opening = Opening::with(['user', 'user.company', 'category'])->where('slug', $slug)->firstOrFail();

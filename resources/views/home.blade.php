@@ -13,8 +13,8 @@
         </p>
         
         <div class="py-12">
-            <p class="text-2xl text-gray-600">{{ __('Featured openings') }}</p>
-            <div class="gap-8 py-12">
+            <p class="pb-6 text-2xl text-gray-600">{{ __('Featured openings') }}</p>
+            <div class="gap-8">
                 @forelse(App\Models\Opening::take(4)->get() as $opening)
                     <x-opening-card :opening="$opening"  />
                 @empty
@@ -25,7 +25,7 @@
         
         <div class="py-12">
             <p class="text-2xl text-gray-600">{{ __('Featured recruiters') }}</p>
-            <div class="gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:grid">
+            <div class="gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:grid">
                 @forelse(App\Models\User::where('role', 'recruiter')->take(8)->get() as $user)
                     <x-user-card :user="$user"  />
                 @empty
@@ -36,7 +36,7 @@
 
         <div class="py-12">
             <p class="text-2xl text-gray-600">{{ __('Featured companies') }}</p>
-            <div class="gap-8 py-12 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 sm:grid">
+            <div class="gap-8 mt-10 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 sm:grid">
                 @forelse(App\Models\Company::take(8)->get() as $company)
                     <div class="flex flex-col items-center justify-center text-center">
                         <img class="w-24 h-24 border rounded-full " src="{{ $company->logo }}" alt="{{ $company->name }}">
