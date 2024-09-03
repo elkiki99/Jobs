@@ -17,7 +17,6 @@ class ToggleFollow extends Component
         $this->isFollowing = auth()->user()->following()->where('followed_id', $user->id)->exists();
     }
 
-
     public function toggleFollow()
     {
         $authUser = Auth::user();
@@ -25,6 +24,7 @@ class ToggleFollow extends Component
         if ($this->isFollowing) {
             $authUser->following()->detach($this->user->id);
             $this->isFollowing = false;
+            $this->dispatch('userUnfollowed', $this->user->id);
         } else {
             $authUser->following()->attach($this->user->id);
             $this->isFollowing = true;

@@ -7,16 +7,18 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 
-class ShowUsers extends Component
+class ShowFollowing extends Component
 {
     use WithPagination;
 
     public $followedUsers;
-    protected $listeners = ['userFollowed' => 'updateUserList'];
+    protected $listeners = ['userUnfollowed' => 'removeUserFromList'];
 
-    public function updateUserList($userId)
+    public function removeUserFromList($userId)
     {
-        $this->followedUsers->push($userId);
+        $this->followedUsers = $this->followedUsers->filter(function ($id) use ($userId) {
+            return $id !== $userId;
+        });
     }
 
     public function mount()
@@ -27,11 +29,11 @@ class ShowUsers extends Component
     public function render()
     {
         $users = User::where('id', '!=', Auth::id())
-            ->whereNotIn('id', $this->followedUsers)
+            ->whereIn('id', $this->followedUsers)
             ->latest()
             ->paginate(24);
-    
-        return view('livewire.users.show-users', [
+            
+        return view('livewire.users.show-following', [
             'users' => $users
         ]);
     }

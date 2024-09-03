@@ -31,13 +31,7 @@
         <div class="flex items-center justify-between pt-4">
             <a href="{{ route('users.show', $user->username) }}" class="text-sm hover:underline">View Profile</a>
 
-            @auth
-                @if (auth()->user()->id !== $user->id && !auth()->user()->followers->contains($user))
-                    <div>
-                        <livewire:users.toggle-follow :user="$user" :key="$user->id" />
-                    </div>
-                @endif
-            @endauth
+            <livewire:users.toggle-follow :user="$user" :key="$user->id" />
         </div>
     </div>
 </div>
