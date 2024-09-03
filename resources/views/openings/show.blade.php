@@ -42,7 +42,7 @@
             </div>
             <p><span class="font-semibold">Status:</span> {{ $opening->status }}</p>
 
-            <livewire:apply-to-opening :slug="$opening->slug" />
+            <livewire:openings.apply-to-opening :slug="$opening->slug" />
         </div>
         <div class="w-full md:w-1/2">
             <img src="{{ $opening->image }}" alt="{{ $opening->name }}">

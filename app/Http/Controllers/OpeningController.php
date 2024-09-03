@@ -64,6 +64,16 @@ class OpeningController extends Controller
         }
     }
 
+    public function applications()
+    {
+        $user = auth()->user();
+        $openings = $user->appliedOpenings()->paginate(24);
+
+        return view('openings.applications', [
+            'openings' => $openings,
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

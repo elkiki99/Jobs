@@ -50,6 +50,10 @@
                                 {{ __('My network') }}
                             </x-dropdown-link>
                             
+                            <x-dropdown-link :href="route('openings.applications')">
+                                {{ __('My applications') }}
+                            </x-dropdown-link>
+                            
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

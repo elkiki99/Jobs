@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/openings', [OpeningController::class, 'index'])->name('openings.index');
 Route::get('/opening/{slug}', [OpeningController::class, 'show'])->name('openings.show');
 Route::post('/opening/{slug}', [OpeningController::class, 'apply'])->name('openings.show');
+Route::get('/applications', [OpeningController::class, 'applications'])->name('openings.applications');
 
 /**
  * Users
