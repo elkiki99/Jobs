@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-4xl space-y-6 sm:px-6 lg:px-8">
+        <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
             <div class="p-4 bg-white border sm:p-8">
                 <div class="w-full">
                     @include('profile.partials.update-profile-information-form')

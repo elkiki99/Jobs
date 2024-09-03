@@ -66,4 +66,13 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function cv()
+    {
+        $userCv = Auth::user()->userCv;
+
+        return view('profile.cv', [
+            'userCv' => $userCv
+        ]);
+    }
 }
