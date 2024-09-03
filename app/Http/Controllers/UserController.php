@@ -10,12 +10,9 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('id', '!=', Auth::id())->latest()->paginate(24);
-
-        return view('users.index', [
-            'users' => $users,
-        ]);
+        return view('users.index');
     }
+
 
     public function followers()
     {
@@ -44,7 +41,7 @@ class UserController extends Controller
     {
         $user = User::with('opening')->where('username', $username)->firstOrFail();
         $openings = $user->opening()->paginate(24);
-        
+
         return view('users.show', [
             'user' => $user,
             'openings' => $openings

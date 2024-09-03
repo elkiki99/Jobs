@@ -17,6 +17,7 @@ class ToggleFollow extends Component
         $this->isFollowing = auth()->user()->following()->where('followed_id', $user->id)->exists();
     }
 
+
     public function toggleFollow()
     {
         $authUser = Auth::user();
@@ -27,12 +28,14 @@ class ToggleFollow extends Component
         } else {
             $authUser->following()->attach($this->user->id);
             $this->isFollowing = true;
+            $this->dispatch('userFollowed', $this->user->id);
         }
-        // $this->emit('userFollowedOrUnfollowed');
     }
 
     public function render()
     {
-        return view('livewire.users.toggle-follow');
+        return view('livewire.users.toggle-follow', [
+            'isFollowing' => $this->isFollowing
+        ]);
     }
 }
