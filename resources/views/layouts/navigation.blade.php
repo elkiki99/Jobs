@@ -100,6 +100,15 @@
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Home') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('profile.cv')">
+                {{ __('My C.V') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('network')">
+                {{ __('My network') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('openings.applications')">
+                {{ __('My applications') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

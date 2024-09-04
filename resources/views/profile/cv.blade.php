@@ -9,7 +9,7 @@
         <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
             <div class="p-4 bg-white border sm:p-8">
                 <div class="w-full">
-                    @livewire('profile.cv', ['userCv' => $userCv])
+                    @livewire('cv.cv-form', ['userCv' => $userCv])
                 </div>
             </div>
         </div>
