@@ -1,10 +1,23 @@
 <form wire:submit.prevent="updateProfileSummary">
-    <x-input-label for="profile_summary" :value="__('Profile summary')" />
-    <textarea rows=6 placeholder="Tell us a little about yourself!" wire:model="profile_summary" class="block w-full mt-1"
-        autofocus autocomplete="profile_summary"></textarea>
-    <x-input-error class="mt-2" :messages="$errors->get('profile_summary')" />
-    <x-primary-button class="my-4 ml-auto" wire:click.prevent="updateProfileSummary">Save profile
-        summary</x-primary-button>
+    <h2 class="pb-4 text-4xl">{{ __('Profile summary') }}</h2>
+    <div class="space-y-2">
+        <x-input-label for="profile_summary" :value="__('Academic description')" />
+        <div x-data="{ resize() { $refs.textarea.style.height = 'auto';
+                $refs.textarea.style.height = $refs.textarea.scrollHeight + 'px'; } }" x-init="resize()">
+            <textarea rows="4" x-ref="textarea" wire:model="profile_summary" @input="resize"
+                class="w-full mt-1 border border-gray-300 rounded-md resize-none" placeholder="Tell us a little about yourself!"
+                autofocus autocomplete="profile_summary"></textarea>
+        </div>
+        <x-input-error class="mt-2" :messages="$errors->get('profile_summary')" />
+    </div>
+    <x-primary-button class="my-4 ml-auto" wire:click.prevent="updateProfileSummary">
+        Save summary
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="ml-1 size-4">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+        </svg>
+    </x-primary-button>
 
     @if (session('profile_summary_updated'))
         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
