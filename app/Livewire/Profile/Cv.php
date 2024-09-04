@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Livewire\Profile;
 
 use App\Models\UserCV;
@@ -34,6 +33,57 @@ class Cv extends Component
         $this->education[] = ['institution' => '', 'degree' => '', 'start_year' => '', 'end_year' => ''];
     }
 
+    public function removeEducation($index)
+    {
+        if (isset($this->education[$index])) {
+            unset($this->education[$index]);
+            $this->education = array_values($this->education);
+
+            $this->updateEducation();
+        }
+    }
+
+    public function removeWorkExperience($index)
+    {
+        if (isset($this->work_experience[$index])) {
+            unset($this->work_experience[$index]);
+            $this->work_experience = array_values($this->work_experience);
+    
+            $this->updateWorkExperience();
+        }
+    }
+
+    public function removeSkill($index)
+    {
+        if (isset($this->skills[$index])) {
+            unset($this->skills[$index]);
+            $this->skills = array_values($this->skills);
+
+            $this->updateSkills();
+        }
+    }
+
+    public function removeCertification($index)
+    {
+        if (isset($this->certifications[$index])) {
+            unset($this->certifications[$index]);
+            $this->certifications = array_values($this->certifications);
+
+            $this->updateCertifications();
+        }
+    }
+
+    public function removeLanguage($index)
+    {
+        if (isset($this->languages[$index])) {
+            unset($this->languages[$index]);
+            $this->languages = array_values($this->languages);
+    
+            $this->updateLanguages();
+        }
+    }
+
+    
     public function addWorkExperience()
     {
         $this->work_experience[] = ['company' => '', 'position' => '', 'start_date' => '', 'end_date' => '', 'description' => ''];
@@ -54,33 +104,66 @@ class Cv extends Component
         $this->languages[] = ['language' => '', 'proficiency' => ''];
     }
 
-    public function updateCv()
+    public function updateProfileSummary()
     {
-        $validatedData = $this->validate([
-            'profile_summary' => 'nullable|string|max:500',
-            'education.*.institution' => 'nullable|string|max:255',
-            'education.*.degree' => 'nullable|string|max:255',
-            'education.*.start_year' => 'nullable|integer',
-            'education.*.end_year' => 'nullable|integer',
-            'work_experience.*.company' => 'nullable|string|max:255',
-            'work_experience.*.position' => 'nullable|string|max:255',
-            'work_experience.*.start_date' => 'nullable|date',
-            'work_experience.*.end_date' => 'nullable|date',
-            'work_experience.*.description' => 'nullable|string',
-            'skills' => 'nullable|array',
-            'skills.*' => 'nullable|string|max:255',
-            'certifications.*.title' => 'nullable|string|max:255',
-            'certifications.*.year' => 'nullable|integer',
-            'languages.*.language' => 'nullable|string|max:255',
-            'languages.*.proficiency' => 'nullable|string|max:255',
-        ]);
+        $this->validate(['profile_summary' => 'required|string|max:500']);
+        $this->userCv->update(['profile_summary' => $this->profile_summary]);
+        session()->flash('cv_updated', 'Profile summary updated successfully!');
+    }
 
-        $cv = Auth::user()->userCv()->updateOrCreate(
-            ['user_id' => Auth::id()],
-            $validatedData
-        );
-        
-        session()->flash('cv_updated', 'CV updated successfully!');
+    public function updateEducation()
+    {
+        $this->validate([
+            'education.*.institution' => 'required|string|max:255',
+            'education.*.degree' => 'required|string|max:255',
+            'education.*.start_year' => 'required|integer',
+            'education.*.end_year' => 'required|integer',
+        ]);
+        $this->userCv->update(['education' => $this->education]);
+        session()->flash('cv_updated', 'Education updated successfully!');
+    }
+
+    public function updateWorkExperience()
+    {
+        $this->validate([
+            'work_experience.*.company' => 'required|string|max:255',
+            'work_experience.*.position' => 'required|string|max:255',
+            'work_experience.*.start_date' => 'required|date',
+            'work_experience.*.end_date' => 'required|date',
+            'work_experience.*.description' => 'required|string',
+        ]);
+        $this->userCv->update(['work_experience' => $this->work_experience]);
+        session()->flash('cv_updated', 'Work experience updated successfully!');
+    }
+
+    public function updateSkills()
+    {
+        $this->validate([
+            'skills' => 'required|array',
+            'skills.*' => 'required|string|max:255',
+        ]);
+        $this->userCv->update(['skills' => $this->skills]);
+        session()->flash('cv_updated', 'Skills updated successfully!');
+    }
+
+    public function updateCertifications()
+    {
+        $this->validate([
+            'certifications.*.title' => 'required|string|max:255',
+            'certifications.*.year' => 'required|integer',
+        ]);
+        $this->userCv->update(['certifications' => $this->certifications]);
+        session()->flash('cv_updated', 'Certifications updated successfully!');
+    }
+
+    public function updateLanguages()
+    {
+        $this->validate([
+            'languages.*.language' => 'required|string|max:255',
+            'languages.*.proficiency' => 'required|string|max:255',
+        ]);
+        $this->userCv->update(['languages' => $this->languages]);
+        session()->flash('cv_updated', 'Languages updated successfully!');
     }
 
     public function render()
