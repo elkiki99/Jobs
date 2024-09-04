@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\UserCv;
 use App\Models\Opening;
 use App\Models\Follower;
 use Illuminate\Notifications\Notifiable;

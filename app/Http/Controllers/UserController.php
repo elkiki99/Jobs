@@ -39,7 +39,7 @@ class UserController extends Controller
 
         return view('users.show', [
             'user' => $user,
-            'openings' => $openings
+            'openings' => $openings,
         ]);
     }
 }

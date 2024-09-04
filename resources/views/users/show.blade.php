@@ -84,7 +84,7 @@
             @endif
 
             <!-- Company -->
-            @if ($user->role === 'recruiter' && $user->company)
+            @if ($user->company)
                 <div class="flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5">
@@ -117,7 +117,7 @@
                 @endforelse
             </div>
         @else
-            <p>Your CV</p>
+            @livewire('cv.show-cv', ['username' => $user->username])
         @endif
 
         {{ $openings->links() }}

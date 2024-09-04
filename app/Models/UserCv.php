@@ -14,10 +14,10 @@ class UserCv extends Model
         'profile_summary',
         'education',
         'work_experience',
-        'skills',
         'certifications',
         'languages',
         'interests',
+        'skills',
     ];
 
     protected $casts = [
