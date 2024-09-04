@@ -12,6 +12,7 @@
             <div class="mt-2">
                 <p class="text-lg font-semibold">{{ $education['degree'] }} - {{ $education['institution'] }}</p>
                 <p class="text-gray-600 ">{{ $education['start_year'] }} - {{ $education['end_year'] }}</p>
+                <p class="text-gray-700">{!! nl2br(e($education['description'])) !!}</p>
             </div>
         @endforeach
     </div>
@@ -33,8 +34,9 @@
         <h2 class="text-2xl font-semibold text-gray-800">Certifications</h2>
         @foreach ($user->userCv->certifications as $certification)
             <div class="mt-2">
-                <p class="text-lg font-semibold">{{ $certification['title'] }}</p>
+                <p class="text-lg font-semibold">{{ $certification['title'] }} - {{ $certification['organization'] }}</p>
                 <p class="text-gray-600 ">{{ $certification['date'] }}</p>
+                <p class="text-gray-700">{!! nl2br(e($certification['description'])) !!}</p>
             </div>
         @endforeach
     </div>

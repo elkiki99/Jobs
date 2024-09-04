@@ -17,6 +17,7 @@ class UserCv extends Model
         'certifications',
         'languages',
         'interests',
+        'projects',
         'skills',
     ];
 
@@ -27,6 +28,7 @@ class UserCv extends Model
         'certifications' => 'array',
         'languages' => 'array',
         'interests' => 'array',
+        'projects' => 'array',
     ];
 
     public function user()

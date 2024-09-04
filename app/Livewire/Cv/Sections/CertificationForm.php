@@ -23,20 +23,26 @@ class CertificationForm extends Component
     {   
         return [
             'certifications.*.title.required' => 'The title field is required.',
-            'certifications.*.date.required' => 'The date field is required.',
+            'certifications.*.organization.required' => 'The organization field is required.',
+            'certifications.*.organization.max' => 'The organization may not be greater than 255 characters.',
+            'certifications.*.description.required' => 'The description field is required.',
+            'certifications.*.description.max' => 'The description may not be greater than 1000 characters.',
             'certifications.*.date.date' => 'The date must be a valid one.',
+            'certifications.*.date.required' => 'The date field is required.',
         ];
     }
     
     public function addCertification()
     {
-        $this->certifications[] = ['title' => '', 'date' => ''];
+        $this->certifications[] = ['title' => '', 'organization' => '', 'description' => '', 'date' => ''];
     }
 
     public function updateCertifications()
     {
         $this->validate([
             'certifications.*.title' => 'required|string|max:255',
+            'certifications.*.organization' => 'required|string|max:255',
+            'certifications.*.description' => 'required|string|max:1000',
             'certifications.*.date' => 'required|date',
         ]);
         $this->userCv->update(['certifications' => $this->certifications]);

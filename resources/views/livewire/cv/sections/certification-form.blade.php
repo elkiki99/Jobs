@@ -7,6 +7,24 @@
                 type="text" class="block w-full mt-1" />
             <x-input-error class="mt-2" :messages="$errors->get('certifications.' . $index . '.title')" />
 
+            <x-input-label for="certifications" :value="__('Issuing organization')" />
+            <x-text-input placeholder="Your issuing organization" wire:model="certifications.{{ $index }}.organization"
+                type="text" class="block w-full mt-1" />
+            <x-input-error class="mt-2" :messages="$errors->get('certifications.' . $index . '.organization')" />
+
+            <x-input-label for="certifications" :value="__('Certification description')" />
+            <div x-data="{
+                resize() {
+                    $refs.textarea.style.height = 'auto';
+                    $refs.textarea.style.height = $refs.textarea.scrollHeight + 'px';
+                }
+            }" x-init="resize()">
+                <textarea rows="4" placeholder="Description of your certifications" x-ref="textarea"
+                    wire:model="certifications.{{ $index }}.description" @input="resize"
+                    class="w-full mt-1 border border-gray-300 rounded-md resize-none"></textarea>
+            </div>
+            <x-input-error class="mt-2" :messages="$errors->get('certifications.' . $index . '.description')" />
+
             <x-input-label for="certifications" :value="__('Certification date')" />
             <x-text-input wire:model="certifications.{{ $index }}.date" type="date"
                 class="block w-full mt-1" />

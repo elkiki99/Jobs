@@ -7,6 +7,19 @@
                 type="text" class="block w-full mt-1" />
             <x-input-error class="mt-2" :messages="$errors->get('education.' . $index . '.institution')" />
 
+            <x-input-label for="education" :value="__('Education description')" />
+            <div x-data="{
+                resize() {
+                    $refs.textarea.style.height = 'auto';
+                    $refs.textarea.style.height = $refs.textarea.scrollHeight + 'px';
+                }
+            }" x-init="resize()">
+                <textarea rows="4" placeholder="Description of your education" x-ref="textarea"
+                    wire:model="education.{{ $index }}.description" @input="resize"
+                    class="w-full mt-1 border border-gray-300 rounded-md resize-none"></textarea>
+            </div>
+            <x-input-error class="mt-2" :messages="$errors->get('education.' . $index . '.description')" />
+
             <x-input-label for="degree" :value="__('Degree')" />
             <x-text-input placeholder="Your degree" wire:model="education.{{ $index }}.degree" type="text"
                 class="block w-full mt-1" />
