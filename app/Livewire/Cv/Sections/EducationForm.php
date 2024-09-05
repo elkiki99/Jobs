@@ -10,10 +10,10 @@ class EducationForm extends Component
     public $education = [];
     public $userCv;
     
-    public function mount(UserCV $userCv) 
+    public function mount()
     {
-        $this->userCv = $userCv;
-        if ($this->userCv) {
+        $this->userCv = auth()->user()->userCv;
+        if($this->userCv) { 
             $this->education = $this->userCv->education ?? [];
         }
     }

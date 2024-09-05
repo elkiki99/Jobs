@@ -1,7 +1,7 @@
 <form wire:submit.prevent="updateProfileSummary">
     <h2 class="pb-4 text-4xl">{{ __('Profile summary') }}</h2>
     <div class="space-y-2">
-        <x-input-label for="profile_summary" :value="__('Academic description')" />
+        <x-input-label for="profile_summary" :value="__('Academic description *')" />
         <div x-data="{ resize() { $refs.textarea.style.height = 'auto';
                 $refs.textarea.style.height = $refs.textarea.scrollHeight + 'px'; } }" x-init="resize()">
             <textarea rows="4" x-ref="textarea" wire:model="profile_summary" @input="resize"

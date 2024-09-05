@@ -8,6 +8,9 @@
     <!-- Work Experience -->
     <livewire:cv.sections.work-experience-form :userCv="$userCv" />
     
+    <!-- Projects -->
+    <livewire:cv.sections.projects-form :userCv="$userCv" />
+    
     <!-- Certifications -->
     <livewire:cv.sections.certification-form :userCv="$userCv" />
     

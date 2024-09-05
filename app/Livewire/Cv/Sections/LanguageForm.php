@@ -3,6 +3,7 @@
 namespace App\Livewire\Cv\Sections;
 
 use Livewire\Component;
+use App\Models\UserCV;
 
 class LanguageForm extends Component
 {
@@ -12,11 +13,10 @@ class LanguageForm extends Component
     public function mount()
     {
         $this->userCv = auth()->user()->userCv;
-        if($this->userCv) {
+        if($this->userCv) { 
             $this->languages = $this->userCv->languages ?? [];
         }
     }
-
     
     protected function messages()
     {   
@@ -46,7 +46,6 @@ class LanguageForm extends Component
         if (isset($this->languages[$index])) {
             unset($this->languages[$index]);
             $this->languages = array_values($this->languages);
-    
             $this->updateLanguages();
         }
     }

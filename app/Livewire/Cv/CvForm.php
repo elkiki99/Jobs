@@ -10,9 +10,12 @@ class CvForm extends Component
 {
     public $userCv;
 
-    public function mount(UserCV $userCv) 
+    public function mount() 
     {
-        $this->userCv = $userCv;
+        $this->userCv = Auth::user()->userCv;
+        if (!$this->userCv) {
+            $this->userCv = new UserCV();
+        }
     }
 
     public function render()

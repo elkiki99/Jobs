@@ -2,12 +2,17 @@
     <h2 class="pb-4 text-4xl">{{ __('Education') }}</h2>
     @foreach ($education as $index => $edu)
         <div class="space-y-2">
-            <x-input-label for="education" :value="__('Institution')" />
+            <x-input-label for="education" :value="__('Institution *')" />
             <x-text-input placeholder="Your institution" wire:model="education.{{ $index }}.institution"
                 type="text" class="block w-full mt-1" />
             <x-input-error class="mt-2" :messages="$errors->get('education.' . $index . '.institution')" />
 
-            <x-input-label for="education" :value="__('Education description')" />
+            <x-input-label for="degree" :value="__('Degree *')" />
+            <x-text-input placeholder="Your degree" wire:model="education.{{ $index }}.degree" type="text"
+                class="block w-full mt-1" />
+            <x-input-error class="mt-2" :messages="$errors->get('education.' . $index . '.degree')" />
+
+            <x-input-label for="education" :value="__('Education description *')" />
             <div x-data="{
                 resize() {
                     $refs.textarea.style.height = 'auto';
@@ -20,12 +25,7 @@
             </div>
             <x-input-error class="mt-2" :messages="$errors->get('education.' . $index . '.description')" />
 
-            <x-input-label for="degree" :value="__('Degree')" />
-            <x-text-input placeholder="Your degree" wire:model="education.{{ $index }}.degree" type="text"
-                class="block w-full mt-1" />
-            <x-input-error class="mt-2" :messages="$errors->get('education.' . $index . '.degree')" />
-
-            <x-input-label for="start_year" :value="__('Start year')" />
+            <x-input-label for="start_year" :value="__('Start year *')" />
             <x-text-input wire:model="education.{{ $index }}.start_year" type="date"
                 class="block w-full mt-1" />
             <x-input-error class="mt-2" :messages="$errors->get('education.' . $index . '.start_year')" />
@@ -35,7 +35,7 @@
                 class="block w-full mt-1" />
             <x-input-error class="mt-2" :messages="$errors->get('education.' . $index . '.end_year')" />
         </div>
-        <x-danger-button class="my-4" type="button">
+        <x-danger-button class="my-4" wire:click="removeEducation({{ $index }})" type="button">
             Remove
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="ml-1 size-4">

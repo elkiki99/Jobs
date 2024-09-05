@@ -1,7 +1,7 @@
 <form wire:submit.prevent="updateSkills">
     <h2 class="pb-4 text-4xl">{{ __('Skills') }}</h2>
     <div class="block">
-        <x-input-label for="skills" :value="__('Skills')" />
+        <x-input-label for="skills" :value="__('Skills *')" />
         <x-text-input class="w-full mt-1" id="skills" wire:model="skillsInput" type="text"
             placeholder="Enter your skills separated by commas" />
         <x-input-error class="mt-2" :messages="$errors->get('skillsInput')" />

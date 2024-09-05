@@ -2,27 +2,17 @@
     <h2 class="pb-4 text-4xl">{{ __('Work experience') }}</h2>
     @foreach ($work_experience as $index => $work)
         <div class="space-y-2">
-            <x-input-label for="work_experience" :value="__('Company name')" />
+            <x-input-label for="work_experience" :value="__('Company name *')" />
             <x-text-input placeholder="Your company name" wire:model="work_experience.{{ $index }}.company"
                 type="text" class="block w-full mt-1" />
             <x-input-error class="mt-2" :messages="$errors->get('work_experience.' . $index . '.company')" />
 
-            <x-input-label for="work_experience" :value="__('Position')" />
+            <x-input-label for="work_experience" :value="__('Position *')" />
             <x-text-input placeholder="Your position" wire:model="work_experience.{{ $index }}.position"
                 type="text" class="block w-full mt-1" />
             <x-input-error class="mt-2" :messages="$errors->get('work_experience.' . $index . '.position')" />
 
-            <x-input-label for="work_experience" :value="__('Start date')" />
-            <x-text-input wire:model="work_experience.{{ $index }}.start_date" type="date"
-                class="block w-full mt-1" />
-            <x-input-error class="mt-2" :messages="$errors->get('work_experience.' . $index . '.start_date')" />
-
-            <x-input-label for="work_experience" :value="__('End date')" />
-            <x-text-input wire:model="work_experience.{{ $index }}.end_date" type="date"
-                class="block w-full mt-1" />
-            <x-input-error class="mt-2" :messages="$errors->get('work_experience.' . $index . '.end_date')" />
-
-            <x-input-label for="work_experience" :value="__('Description')" />
+            <x-input-label for="work_experience" :value="__('Description *')" />
             <div x-data="{
                 resize() {
                     $refs.textarea.style.height = 'auto';
@@ -34,6 +24,16 @@
                     class="w-full mt-1 border border-gray-300 rounded-md resize-none"></textarea>
             </div>
             <x-input-error class="mt-2" :messages="$errors->get('work_experience.' . $index . '.description')" />
+
+            <x-input-label for="work_experience" :value="__('Start date *')" />
+            <x-text-input wire:model="work_experience.{{ $index }}.start_date" type="date"
+                class="block w-full mt-1" />
+            <x-input-error class="mt-2" :messages="$errors->get('work_experience.' . $index . '.start_date')" />
+
+            <x-input-label for="work_experience" :value="__('End date')" />
+            <x-text-input wire:model="work_experience.{{ $index }}.end_date" type="date"
+                class="block w-full mt-1" />
+            <x-input-error class="mt-2" :messages="$errors->get('work_experience.' . $index . '.end_date')" />
         </div>
         <x-danger-button class="my-4" type="button" wire:click="removeWorkExperience({{ $index }})">
             Remove

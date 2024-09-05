@@ -2,12 +2,12 @@
     <h2 class="pb-4 text-4xl">{{ __('Languages') }}</h2>
     @foreach ($languages as $index => $language)
         <div class="space-y-2">
-            <x-input-label for="languages" :value="__('Language')" />
+            <x-input-label for="languages" :value="__('Language *')" />
             <x-text-input placeholder="Your language" wire:model="languages.{{ $index }}.language" type="text"
                 class="block w-full mt-1" />
             <x-input-error class="mt-2" :messages="$errors->get('languages.' . $index . '.language')" />
 
-            <x-input-label for="languages" :value="__('Proficiency')" />
+            <x-input-label for="languages" :value="__('Proficiency *')" />
             <x-text-input placeholder="Your proficiency (e.g., Fluent, Intermediate)"
                 wire:model="languages.{{ $index }}.proficiency" type="text" class="block w-full mt-1" />
             <x-input-error class="mt-2" :messages="$errors->get('languages.' . $index . '.proficiency')" />

@@ -20,9 +20,7 @@ return new class extends Migration
             $table->json('skills')->nullable();
             $table->json('certifications')->nullable();
             $table->json('languages')->nullable();
-            $table->json('interests')->nullable();
-            $table->string('linkedin_url')->nullable();
-            $table->string('portfolio_url')->nullable();
+            $table->json('projects')->nullable();
             $table->timestamps();
         });
     }

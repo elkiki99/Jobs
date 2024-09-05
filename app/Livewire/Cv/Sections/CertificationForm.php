@@ -7,7 +7,6 @@ use App\Models\UserCV;
 
 class CertificationForm extends Component
 {
-
     public $certifications = [];
     public $userCv;
     
@@ -54,7 +53,6 @@ class CertificationForm extends Component
         if (isset($this->certifications[$index])) {
             unset($this->certifications[$index]);
             $this->certifications = array_values($this->certifications);
-
             $this->updateCertifications();
         }
     }
