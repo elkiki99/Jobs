@@ -21,15 +21,24 @@ class ShowUsers extends Component
 
     public function mount()
     {
-        $this->followedUsers = Auth::user()->following()->pluck('users.id');
+        if(auth()->check()) {
+            $this->followedUsers = Auth::user()->following()->pluck('users.id');
+        }
     }
 
     public function render()
     {
-        $users = User::where('id', '!=', Auth::id())
-            ->whereNotIn('id', $this->followedUsers)
-            ->latest()
-            ->paginate(24);
+        if(!auth()->check()) {
+            $users = User::latest()->paginate(24);
+        } else {
+            $users = User::where('id', '!=', Auth::id())
+                ->whereDoesntHave('followers', function ($query) {
+                    $query->where('follower_id', Auth::id());
+                })
+                ->latest()
+                ->paginate(24);
+        }
+
     
         return view('livewire.users.show-users', [
             'users' => $users

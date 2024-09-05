@@ -28,6 +28,8 @@ class ProfileUpdateRequest extends FormRequest
             'country' => ['nullable', 'string', 'max:255'],
             'postcode' => ['nullable', 'string', 'max:255'],
             'gender' => ['nullable', 'string', 'max:255'],
+            'linkedin' => ['nullable', 'string', 'max:255'],
+            'github' => ['nullable', 'string', 'max:255'],
             'company_id' => ['nullable', 'exists:companies,id'],
         ];
     }

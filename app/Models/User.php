@@ -32,6 +32,8 @@ class User extends Authenticatable
         'country',
         'postcode',
         'gender',
+        'linkedin',
+        'github',
         'company_id',
         'password',
     ];

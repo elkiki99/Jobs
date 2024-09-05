@@ -37,6 +37,8 @@ class UserFactory extends Factory
             'postcode' => fake()->postcode(),
             'gender' => fake()->randomElement(['male', 'female']),
             'company_id' => fake()->numberBetween(1, 100),
+            'linkedin' => fake()->url(),
+            'github' => fake()->url(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

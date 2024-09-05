@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('postcode')->nullable();
             $table->string('gender')->nullable();
             $table->foreignId('company_id')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('github')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

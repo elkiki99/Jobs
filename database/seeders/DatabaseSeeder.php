@@ -20,6 +20,5 @@ class DatabaseSeeder extends Seeder
         Company::factory(100)->create();
         User::factory(100)->create();
         Opening::factory(100)->create();
-
     }
 }

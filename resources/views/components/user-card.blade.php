@@ -1,14 +1,19 @@
-<div
-    class="w-full max-w-4xl mx-auto mt-10 overflow-hidden bg-white border"
-        wire:remove
-        wire:key="user-{{ $user->id }}"
-        wire:target='userFollowed,{{ $user->id }}'
->
+<div class="w-full max-w-4xl mx-auto mt-10 overflow-hidden bg-white border" wire:remove
+    wire:key="user-{{ $user->id }}" wire:target='userFollowed,{{ $user->id }}'>
     <div class="relative w-full">
         <a href="{{ route('users.show', $user->username) }}">
-            <img loading="lazy" class="object-cover w-full h-auto aspect-square"
-                src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}"
-                alt="{{ $user->name }}">
+            @if ($user->avatar)
+                <img loading="lazy" class="object-cover w-full h-auto aspect-square"
+                    src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}"
+                    alt="{{ $user->name }}">
+            @else
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="object-cover w-full h-auto text-gray-500 aspect-square">
+                    <path fill-rule="evenodd"
+                        d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                        clip-rule="evenodd" />
+                </svg>
+            @endif
         </a>
     </div>
 
@@ -30,8 +35,9 @@
 
         <div class="flex items-center justify-between pt-4">
             <a href="{{ route('users.show', $user->username) }}" class="text-sm hover:underline">View Profile</a>
-
-            <livewire:users.toggle-follow :user="$user" :key="$user->id" />
+            @auth
+                <livewire:users.toggle-follow :user="$user" :key="$user->id" />
+            @endauth
         </div>
     </div>
 </div>
