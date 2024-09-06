@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('location');
-            $table->date('salary');
+            $table->decimal('salary', 10, 2); 
             $table->string('image');
             $table->string('status');
             $table->string('slug');

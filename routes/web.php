@@ -1,12 +1,14 @@
 
 <?php
-use App\Http\Middleware\CvMiddleware;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\DevMiddleware;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\OpeningController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Middleware\RecruiterMiddleware;
 
 Route::get('/', function () {
     return view('home');
@@ -21,17 +23,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 }); 
 
-Route::get('/cv', [ProfileController::class, 'cv'])->middleware(CvMiddleware::class)->name('profile.cv');
+Route::get('/cv', [ProfileController::class, 'cv'])->middleware(DevMiddleware::class)->name('profile.cv');
 
 /**
  * Openings
  */
 Route::get('/openings', [OpeningController::class, 'index'])->name('openings.index');
-Route::get('/openings/create', [OpeningController::class, 'create'])->name('openings.create');
-Route::post('/openings/create', [OpeningController::class, 'store'])->name('openings.store');
+Route::get('/opening/create', [OpeningController::class, 'create'])->name('openings.create');
+Route::post('/opening/create', [OpeningController::class, 'store'])->name('openings.store');
+Route::get('/opening/edit/{slug}', [OpeningController::class, 'edit'])->name('openings.edit');
+Route::post('/opening/edit/{slug}', [OpeningController::class, 'update'])->name('openings.update');
 Route::get('/opening/{slug}', [OpeningController::class, 'show'])->name('openings.show');
+Route::get('/applications', [OpeningController::class, 'applications'])->middleware(DevMiddleware::class)->name('openings.applications');
+Route::get('/my-openings', [OpeningController::class, 'myOpenings'])->middleware(RecruiterMiddleware::class)->name('openings.my-openings');
 Route::post('/opening/{slug}', [OpeningController::class, 'apply'])->name('openings.show');
-Route::get('/applications', [OpeningController::class, 'applications'])->name('openings.applications');
 
 /**
  * Users

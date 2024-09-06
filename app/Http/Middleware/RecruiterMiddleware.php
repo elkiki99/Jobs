@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CvMiddleware
+class RecruiterMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,7 +19,7 @@ class CvMiddleware
             return redirect('/');
         }
 
-        if (auth()->user()->role !== 'developer') {
+        if (auth()->user()->role !== 'recruiter') {
             return redirect('/');
         }
         return $next($request);

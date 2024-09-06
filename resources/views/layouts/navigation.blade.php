@@ -54,15 +54,17 @@
                                 {{ __('Network') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link :href="route('openings.applications')">
-                                {{ __('Applications') }}
-                            </x-dropdown-link>
-                            
                             @if (auth()->user()->role === 'developer')
+                                <x-dropdown-link :href="route('openings.applications')">
+                                    {{ __('Applications') }}
+                                </x-dropdown-link>
                                 <x-dropdown-link :href="route('profile.cv')">
                                     {{ __('C.V') }}
                                 </x-dropdown-link>
                             @else
+                                <x-dropdown-link :href="route('openings.my-openings')">
+                                    {{ __('My openings') }}
+                                </x-dropdown-link>
                                 <x-dropdown-link :href="route('openings.create')">
                                     {{ __('New opening') }}
                                 </x-dropdown-link>
@@ -124,14 +126,17 @@
                 <x-responsive-nav-link :href="route('network')" :active="request()->routeIs('network')">
                     {{ __('Network') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('openings.applications')" :active="request()->routeIs('openings.applications')">
-                    {{ __('Applications') }}
-                </x-responsive-nav-link>
                 @if (auth()->user()->role === 'developer')
+                    <x-responsive-nav-link :href="route('openings.applications')" :active="request()->routeIs('openings.applications')">
+                        {{ __('Applications') }}
+                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('profile.cv')" :active="request()->routeIs('profile.cv')">
                         {{ __('C.V') }}
                     </x-responsive-nav-link>
                 @else
+                    <x-responsive-nav-link :href="route('openings.my-openings')" :active="request()->routeIs('openings.my-openings')">
+                        {{ __('My openings') }}
+                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('openings.create')" :active="request()->routeIs('profile.cv')">
                         {{ __('New opening') }}
                     </x-responsive-nav-link>
