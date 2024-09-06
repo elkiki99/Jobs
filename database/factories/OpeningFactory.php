@@ -23,7 +23,7 @@ class OpeningFactory extends Factory
             'location' => $this->faker->city(),
             'image' => $this->faker->imageUrl(),
             'salary' => $this->faker->numberBetween(10000, 100000),
-            'status' => $this->faker->word(),
+            'status' => $this->faker->word('open', 'closed'),
             'slug' => $this->faker->unique()->slug(),
             'category_id' => $this->faker->numberBetween(1, 10),
             'user_id' => User::where('role', 'recruiter')->pluck('id')->random(),

@@ -24,7 +24,7 @@ class OpeningController extends Controller
      */
     public function create()
     {
-        //
+        return view('openings.create');
     }
 
     /**
@@ -32,7 +32,7 @@ class OpeningController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -65,9 +65,14 @@ class OpeningController extends Controller
     }
 
     public function applications()
-    {
+    {   
         $user = auth()->user();
-        $openings = $user->appliedOpenings()->paginate(24);
+
+        if($user->role === 'developer') {
+            $openings = $user->appliedOpenings()->paginate(24);
+        } else {
+            $openings = $user->opening()->paginate(24);
+        }
 
         return view('openings.applications', [
             'openings' => $openings,

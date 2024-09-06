@@ -28,7 +28,7 @@
 
     <div class="py-12">
         <p class="text-2xl text-gray-600">{{ __('Featured companies') }}</p>
-        <div class="gap-8 mt-10 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 sm:grid">
+        <div class="grid grid-cols-2 gap-8 mt-10 sm:grid-cols-4 xl:grid-cols-8">
             @forelse($companies as $company)
                 <a href="{{ route('companies.show', $company->slug) }}">
                     <div class="flex flex-col items-center justify-center text-center">

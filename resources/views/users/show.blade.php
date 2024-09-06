@@ -176,6 +176,10 @@
                         <livewire:users.toggle-follow :user="$user" />
                     </div>
                 @endif
+            @else
+                <div class="pt-4">
+                    <a href="{{ route('login') }}" class="hover:underline">Login to follow</a>
+                </div>
             @endauth
         </div>
 

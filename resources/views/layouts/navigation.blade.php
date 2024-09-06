@@ -50,10 +50,6 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link :href="route('profile.cv')">
-                                {{ __('C.V') }}
-                            </x-dropdown-link>
-
                             <x-dropdown-link :href="route('network')">
                                 {{ __('Network') }}
                             </x-dropdown-link>
@@ -61,6 +57,16 @@
                             <x-dropdown-link :href="route('openings.applications')">
                                 {{ __('Applications') }}
                             </x-dropdown-link>
+                            
+                            @if (auth()->user()->role === 'developer')
+                                <x-dropdown-link :href="route('profile.cv')">
+                                    {{ __('C.V') }}
+                                </x-dropdown-link>
+                            @else
+                                <x-dropdown-link :href="route('openings.create')">
+                                    {{ __('New opening') }}
+                                </x-dropdown-link>
+                            @endif
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
@@ -107,30 +113,61 @@
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Home') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('profile.cv')">
-                {{ __('C.V') }}
+            <x-responsive-nav-link :href="route('openings.index')" :active="request()->routeIs('openings.index')">
+                {{ __('Openings') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('network')">
-                {{ __('Network') }}
+            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                {{ __('Connect') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('openings.applications')">
-                {{ __('Applications') }}
-            </x-responsive-nav-link>
+
+            @auth
+                <x-responsive-nav-link :href="route('network')" :active="request()->routeIs('network')">
+                    {{ __('Network') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('openings.applications')" :active="request()->routeIs('openings.applications')">
+                    {{ __('Applications') }}
+                </x-responsive-nav-link>
+                @if (auth()->user()->role === 'developer')
+                    <x-responsive-nav-link :href="route('profile.cv')" :active="request()->routeIs('profile.cv')">
+                        {{ __('C.V') }}
+                    </x-responsive-nav-link>
+                @else
+                    <x-responsive-nav-link :href="route('openings.create')" :active="request()->routeIs('profile.cv')">
+                        {{ __('New opening') }}
+                    </x-responsive-nav-link>
+                @endif
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
         @auth
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
-                    <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="flex items-center">
+                        @if (Auth::user()->avatar)
+                            <a href="{{ route('users.show', Auth::user()->username) }}">
+                                <img class="rounded-full size-12 aspect-square"
+                                    src="{{ Str::startsWith(Auth::user()->avatar, ['http://', 'https://']) ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar) }}"
+                                    alt="{{ Auth::user()->username }}">
+                            </a>
+                        @else
+                            <a href="{{ route('users.show', Auth::user()->username) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    class="text-gray-500 rounded-full size-16 aspect-square">
+                                    <path fill-rule="evenodd"
+                                        d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        @endif
+                        <div class="ml-2">
+                            <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
+                            <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('users.show', Auth::user()->username)">
-                        {{ __('Profile') }}
-                    </x-responsive-nav-link>
-
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -145,14 +182,12 @@
             </div>
         @else
             <div class="pt-4 pb-1 border-t border-gray-200">
-                {{-- <div class="px-4"> --}}
                 <x-responsive-nav-link :href="route('login')">
                     {{ __('Log in') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('register')">
                     {{ __('Register') }}
                 </x-responsive-nav-link>
-                {{-- </div> --}}
             </div>
         @endauth
     </div>

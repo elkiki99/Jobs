@@ -1,5 +1,6 @@
 
 <?php
+use App\Http\Middleware\CvMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
@@ -18,13 +19,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/cv', [ProfileController::class, 'cv'])->name('profile.cv');
 }); 
+
+Route::get('/cv', [ProfileController::class, 'cv'])->middleware(CvMiddleware::class)->name('profile.cv');
 
 /**
  * Openings
  */
 Route::get('/openings', [OpeningController::class, 'index'])->name('openings.index');
+Route::get('/openings/create', [OpeningController::class, 'create'])->name('openings.create');
+Route::post('/openings/create', [OpeningController::class, 'store'])->name('openings.store');
 Route::get('/opening/{slug}', [OpeningController::class, 'show'])->name('openings.show');
 Route::post('/opening/{slug}', [OpeningController::class, 'apply'])->name('openings.show');
 Route::get('/applications', [OpeningController::class, 'applications'])->name('openings.applications');
