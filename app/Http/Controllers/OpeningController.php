@@ -73,8 +73,8 @@ class OpeningController extends Controller
      */
     public function edit($slug)
     {
-        // Gate::authorize('update', $opening);
         $opening = Opening::where('slug', $slug)->firstOrFail();
+        Gate::authorize('update', $opening);
 
         return view('openings.edit', [
             'opening' => $opening,
@@ -86,8 +86,8 @@ class OpeningController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        // Gate::authorize('update', $opening);
         $opening = Opening::where('slug', $slug)->firstOrFail();
+        Gate::authorize('update', $opening);
 
         $newOpening = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -124,9 +124,15 @@ class OpeningController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Opening $opening)
+    public function destroy($slug)
     {
-        //
+        $opening = Opening::with(['user', 'user.company', 'category'])->where('slug', $slug)->firstOrFail();
+        $opening->delete();
+        return redirect()->route('openings.my-openings')->with('opening_deleted', 'Opening deleted successfully!');
+
+        return view('openings.delete', [
+            'opening' => $opening
+        ]);
     }
     
     public function apply($slug)

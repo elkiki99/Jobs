@@ -37,6 +37,7 @@ Route::get('/opening/{slug}', [OpeningController::class, 'show'])->name('opening
 Route::get('/applications', [OpeningController::class, 'applications'])->middleware(DevMiddleware::class)->name('openings.applications');
 Route::get('/my-openings', [OpeningController::class, 'myOpenings'])->middleware(RecruiterMiddleware::class)->name('openings.my-openings');
 Route::post('/opening/{slug}', [OpeningController::class, 'apply'])->name('openings.show');
+Route::delete('/opening/delete/{slug}', [OpeningController::class, 'destroy'])->name('openings.delete');
 
 /**
  * Users
