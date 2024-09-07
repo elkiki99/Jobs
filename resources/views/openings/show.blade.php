@@ -32,7 +32,7 @@
                     @endif
                 @endauth
             </div>
-            <p>{{ $opening->description }}</p>
+            <p>{!! $opening->description !!}</p>
             <p><span class="font-semibold">Location:</span> {{ $opening->location }}</p>
             <p><span class="font-semibold">Offer:</span>
                 {{ Illuminate\Support\Number::currency($opening->salary, 'USD') }}</p>
@@ -57,35 +57,37 @@
 
             <livewire:openings.apply-to-opening :slug="$opening->slug" />
 
-            @if (auth()->user()->role === 'recruiter' && auth()->user()->id === $opening->user_id)
-                <x-primary-button x-data=""
-                    x-on:click.prevent="$dispatch('open-modal', 'confirm-opening-deletion')">{{ __('Delete opening') }}</x-primary-button>
+            @auth
+                @if (auth()->user()->role === 'recruiter' && auth()->user()->id === $opening->user_id)
+                    <x-primary-button x-data=""
+                        x-on:click.prevent="$dispatch('open-modal', 'confirm-opening-deletion')">{{ __('Delete opening') }}</x-primary-button>
 
-                <x-modal name="confirm-opening-deletion" focusable>
-                    <form method="post" action="{{ route('openings.delete', $opening->slug) }}" class="p-6">
-                        @csrf
-                        @method('delete')
+                    <x-modal name="confirm-opening-deletion" focusable>
+                        <form method="post" action="{{ route('openings.delete', $opening->slug) }}" class="p-6">
+                            @csrf
+                            @method('delete')
 
-                        <h2 class="text-lg font-medium text-gray-900">
-                            {{ __('Are you sure you want to delete this opening?') }}
-                        </h2>
+                            <h2 class="text-lg font-medium text-gray-900">
+                                {{ __('Are you sure you want to delete this opening?') }}
+                            </h2>
 
-                        <p class="mt-1 text-sm text-gray-600">
-                            {{ __('Once deleted, you won\'t be able to restore this opening.') }}
-                        </p>
+                            <p class="mt-1 text-sm text-gray-600">
+                                {{ __('Once deleted, you won\'t be able to restore this opening.') }}
+                            </p>
 
-                        <div class="flex justify-end mt-6">
-                            <x-secondary-button x-on:click="$dispatch('close')">
-                                {{ __('Cancel') }}
-                            </x-secondary-button>
+                            <div class="flex justify-end mt-6">
+                                <x-secondary-button x-on:click="$dispatch('close')">
+                                    {{ __('Cancel') }}
+                                </x-secondary-button>
 
-                            <x-danger-button class="ms-3">
-                                {{ __('Delete opening') }}
-                            </x-danger-button>
-                        </div>
-                    </form>
-                </x-modal>
-            @endif
+                                <x-danger-button class="ms-3">
+                                    {{ __('Delete opening') }}
+                                </x-danger-button>
+                            </div>
+                        </form>
+                    </x-modal>
+                @endif
+            @endauth
         </div>
         <div class="w-full md:w-1/2">
             @if ($opening->image)

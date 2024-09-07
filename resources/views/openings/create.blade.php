@@ -16,20 +16,18 @@
                         <div>
                             <x-input-label for="title" :value="__('Opening title')" />
                             <x-text-input placeholder="Your opening title" id="title" name="title" type="text"
-                                class="block w-full mt-1" 
-                                :value="old('title')"  
-                                autofocus autocomplete="title" />
+                                class="block w-full mt-1" :value="old('title')" autofocus autocomplete="title" />
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />
                         </div>
 
                         <!-- Description -->
-                        <div>
-                            <x-input-label for="description" :value="__('Opening description')" />
-                            <textarea rows=6 id="description" placeholder="Your opening description" name="description"
-                                class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                autofocus autocomplete="description">{{ old('description') }}</textarea>
+                        <div class="mb-4">
+                            <x-input-label for="description" :value="__('Profile description')" />
+                            <div>
+                                <textarea id="description" name="description" placeholder="Tell us your story!">{{ old('description') }}</textarea>
+                            </div>
 
-                            <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                            <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
 
                         <!-- Image -->
@@ -63,8 +61,8 @@
                                 <option hidden value="">Select a country</option>
                                 @foreach (Pranpegu\LaravelCountries\Countries::all() as $location)
                                     <option value="{{ $location['name'] }}"
-                                        {{ old('location') == $location['name'] ? 'selected' : '' }}
-                                        >{{ $location['name'] }}</option>
+                                        {{ old('location') == $location['name'] ? 'selected' : '' }}>
+                                        {{ $location['name'] }}</option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('location')" class="mt-2" />
@@ -100,7 +98,9 @@
                                 name="category_id" autocomplete="category_id">
                                 <option hidden value="">Select a category</option>
                                 @foreach (App\Models\Category::all() as $category)
-                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}
+                                    <option value="{{ $category->id }}"
+                                        {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -138,5 +138,13 @@
                 preview.classList.add('hidden');
             }
         });
+    </script>
+    
+    <!-- CKEditor -->
+    <script>
+        ClassicEditor.create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 </x-app-layout>
