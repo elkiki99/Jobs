@@ -27,7 +27,11 @@ class OpeningController extends Controller
     public function create()
     {
         Gate::authorize('create', Opening::class);
-        return view('openings.create');
+        $countries = config('countries');
+        
+        return view('openings.create', [
+            'countries' => $countries,
+        ]);
     }
 
     /**
@@ -74,10 +78,13 @@ class OpeningController extends Controller
     public function edit($slug)
     {
         $opening = Opening::where('slug', $slug)->firstOrFail();
+        $countries = config('countries');
+
         Gate::authorize('update', $opening);
 
         return view('openings.edit', [
             'opening' => $opening,
+            'countries' => $countries,
         ]);
     }
 

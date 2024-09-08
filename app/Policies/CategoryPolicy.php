@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Opening;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class OpeningPolicy
+class CategoryPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class OpeningPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Opening $opening): bool
+    public function view(User $user, Category $category): bool
     {
         //
     }
@@ -35,23 +35,23 @@ class OpeningPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Opening $opening): bool
+    public function update(User $user, Category $category): bool
     {
-        return $user->id === $opening->user_id;
+        return $user->role === 'recruiter';
     }
 
     /**
-     * Determine whether the user can delete the model. 
+     * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Opening $opening): bool
+    public function delete(User $user, Category $category): bool
     {
-        return $user->id === $opening->user_id;
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Opening $opening): bool
+    public function restore(User $user, Category $category): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class OpeningPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Opening $opening): bool
+    public function forceDelete(User $user, Category $category): bool
     {
         //
     }

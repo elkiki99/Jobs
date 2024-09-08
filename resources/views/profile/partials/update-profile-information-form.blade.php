@@ -140,7 +140,7 @@
                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 name="country" autocomplete="country">
                 <option hidden value="">Select a country</option>
-                @foreach (Pranpegu\LaravelCountries\Countries::all() as $country)
+                @foreach ($countries as $country)
                     <option value="{{ $country['name'] }}"
                         {{ old('country', $user->country) == $country['name'] ? 'selected' : '' }}>
                         {{ $country['name'] }}</option>

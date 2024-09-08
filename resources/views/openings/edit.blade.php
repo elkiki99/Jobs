@@ -68,7 +68,7 @@
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 name="location" autocomplete="location">
                                 <option hidden value="">Select a country</option>
-                                @foreach (Pranpegu\LaravelCountries\Countries::all() as $location)
+                                @foreach ($countries as $location)
                                     <option value="{{ $location['name'] }}"
                                         {{ old('location', $opening->location) == $location['name'] ? 'selected' : '' }}>
                                         {{ $location['name'] }}</option>
@@ -149,7 +149,7 @@
             }
         });
     </script>
-    
+
     <!-- CKEditor -->
     <script>
         ClassicEditor.create(document.querySelector('#description'))

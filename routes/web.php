@@ -37,7 +37,7 @@ Route::get('/opening/{slug}', [OpeningController::class, 'show'])->name('opening
 Route::get('/applications', [OpeningController::class, 'applications'])->middleware(DevMiddleware::class)->name('openings.applications');
 Route::get('/my-openings', [OpeningController::class, 'myOpenings'])->middleware(RecruiterMiddleware::class)->name('openings.my-openings');
 Route::post('/opening/{slug}', [OpeningController::class, 'apply'])->name('openings.show');
-Route::delete('/opening/delete/{slug}', [OpeningController::class, 'destroy'])->name('openings.delete');
+Route::delete('/opening/{slug}', [OpeningController::class, 'destroy'])->name('openings.delete');
 
 /**
  * Users
@@ -56,7 +56,10 @@ Route::get('/company/{slug}', [CompanyController::class, 'show'])->name('compani
 /**
  * Category
  */
+Route::get('/category/create', [CategoryController::class, 'create'])->name('categories.create');
+Route::post('/category/create', [CategoryController::class, 'store'])->name('categories.store');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('categories.show');
+Route::get('/category/edit/{slug}', [CategoryController::class, 'edit'])->name('categories.edit');
 
 Route::get('/contact', function() {
     return view('contact');

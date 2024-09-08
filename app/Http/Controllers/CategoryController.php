@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -20,7 +21,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('create', Category::class);
+        return view('categories.create');
     }
 
     /**
@@ -28,7 +30,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:1000'],
+            'slug' => ['required', 'string', 'max:255', 'unique:categories'],	
+        ]);
+
+        Category::create($category);
+        return redirect()->route('openings.my-openings')->with('category_created', 'Category created successfully!');
     }
 
     /**
@@ -50,7 +59,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        Gate::authorize('edit', Category::class);
+        return view('categories.edit');
     }
 
     /**

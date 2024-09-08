@@ -22,7 +22,7 @@
 
                         <!-- Description -->
                         <div class="mb-4">
-                            <x-input-label for="description" :value="__('Profile description')" />
+                            <x-input-label for="description" :value="__('Opening description')" />
                             <div>
                                 <textarea id="description" name="description" placeholder="Tell us your story!">{{ old('description') }}</textarea>
                             </div>
@@ -54,12 +54,12 @@
 
                         <!-- Location -->
                         <div>
-                            <x-input-label for="location" :value="__('Location')" />
+                            <x-input-label for="location" :value="__('Opening location')" />
                             <select id="location"
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 name="location" autocomplete="location">
                                 <option hidden value="">Select a country</option>
-                                @foreach (Pranpegu\LaravelCountries\Countries::all() as $location)
+                                @foreach ($countries as $location)
                                     <option value="{{ $location['name'] }}"
                                         {{ old('location') == $location['name'] ? 'selected' : '' }}>
                                         {{ $location['name'] }}</option>
@@ -106,7 +106,6 @@
                             </select>
                             <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                         </div>
-
 
                         <!-- Save Button -->
                         <div class="flex items-center gap-4">
