@@ -50,7 +50,11 @@ Route::get('/following', [UserController::class, 'following'])->name('users.foll
 /**
  * Company
  */
+Route::get('/company/create', [CompanyController::class, 'create'])->name('companies.create');
+Route::post('/company/create', [CompanyController::class, 'store'])->name('companies.store');
 Route::get('/company/{company:slug}', [CompanyController::class, 'show'])->name('companies.show');
+Route::get('/company/edit/{company:slug}', [CompanyController::class, 'edit'])->name('companies.edit');
+Route::post('/company/edit/{company:slug}', [CompanyController::class, 'update'])->name('companies.update');
 
 /**
  * Category

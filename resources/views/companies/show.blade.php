@@ -6,8 +6,8 @@
     </x-slot>
 
     <div class="flex gap-8 px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-        <div class="w-1/3 space-y-2">
-            <img class="rounded-full size-36 aspect-square" src="{{ $company->logo }}" alt="{{ $company->name }}">
+        <div class="w-1/3 space-y-2">        
+            <img class="rounded-full size-36 aspect-square" src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : asset('storage/' . $company->logo) }}" alt="{{ $company->name }}">
             <div class="flex items-center gap-2">
                 <p>{{ $company->name }}</p>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -17,7 +17,7 @@
                 </svg>
             </div>
             <p class="text-gray-600">{{ $company->email }}</p>
-            <p class="">{{ $company->bio }}</p>
+            <p class="">{!! $company->bio !!}</p>
 
             <div class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -61,6 +61,30 @@
         </div>
 
         <div class="w-2/3 space-y-2">
+                        
+            <!-- Session messages -->
+            <div class="mt-5">
+                @if (session('company_created'))
+                    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
+                        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-300"
+                        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                        class="mb-4 text-green-600">
+                        {{ session('company_created') }}
+                    </div>
+                @endif
+
+                @if (session('company_updated'))
+                    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
+                        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-300"
+                        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                        class="mb-4 text-green-600">
+                        {{ session('company_updated') }}
+                    </div>
+                @endif
+            </div>
+            
             @forelse ($openings as $opening)
                 <x-opening-card :opening="$opening" />
             @empty

@@ -83,16 +83,6 @@
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('company_id')" class="mt-2" />
-
-                            {{-- <a class="flex text-sm mt-4 font-medium text-gray-600 items-center justify-end"
-                                href="{{ route('companies.create') }}">
-                                <p>Create category</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
-                                </svg>
-                            </a> --}}
                         </div>
 
                         <!-- Slug -->

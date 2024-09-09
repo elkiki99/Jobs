@@ -8,15 +8,17 @@
     <div class="flex flex-col-reverse gap-8 px-4 py-12 mx-auto md:flex-row sm:px-6 lg:px-8 max-w-7xl">
         <div class="w-full space-y-2 md:w-1/2">
 
-            @if (session('applied_success'))
-                <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
-                    x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-300"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                    class="mb-4 text-green-600">
-                    {{ session('applied_success') }}
-                </div>
-            @endif
+            <div class="mt-5">
+                @if (session('applied_success'))
+                    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
+                        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-300"
+                        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                        class="mb-4 text-green-600">
+                        {{ session('applied_success') }}
+                    </div>
+                @endif
+            </div>
 
             <div class="flex items-center justify-between">
                 <p class="text-xl font-semibold">{{ $opening->title }}</p>

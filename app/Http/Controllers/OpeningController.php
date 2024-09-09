@@ -114,7 +114,6 @@ class OpeningController extends Controller
             'company_id' => ['required', 'exists:companies,id'],
             'category_slug' => ['required', 'string', Rule::in($categorySlugs)],
         ]);
-        
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('openings', 'public');
@@ -126,9 +125,9 @@ class OpeningController extends Controller
 
         return redirect()->route('openings.my-openings')->with('opening_updated', 'Opening updated successfully!');
 
-        return view('openings.edit', [
-            'opening' => $opening,
-        ]);
+        // return view('openings.edit', [
+        //     'opening' => $opening,
+        // ]);
     }
 
     /**

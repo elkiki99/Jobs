@@ -37,7 +37,7 @@
                             @if ($opening->image)
                                 <div class="mt-4">
                                     <x-input-label :value="__('Current Image')" />
-                                    <img src="{{ asset('storage/' . $opening->image) }}" alt="Current Image"
+                                    <img src="{{ asset('storage/' . $opening->image) }}" alt="Current image"
                                         class="w-full mt-2 shadow-md md:w-1/2" />
                                 </div>
                             @endif
@@ -51,7 +51,7 @@
                             <!-- Image Preview -->
                             <div id="image-preview" class="hidden mt-4">
                                 <x-input-label :value="__('Image preview')" />
-                                <img id="preview-img" src="" alt="Image Preview"
+                                <img id="preview-img" src="" alt="Image preview"
                                     class="w-full mt-2 shadow-md md:w-1/2" />
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                             </select>
                             <x-input-error :messages="$errors->get('company_id')" class="mt-2" />
 
-                            {{-- <a class="flex text-sm mt-4 font-medium text-gray-600 items-center justify-end"
+                            {{-- <a class="flex items-center justify-end mt-4 text-sm font-medium text-gray-600"
                                 href="{{ route('companies.create') }}">
                                 <p>Create category</p>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
