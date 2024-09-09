@@ -38,24 +38,24 @@
                 {{ Illuminate\Support\Number::currency($opening->salary, 'USD') }}</p>
             <div class="flex items-center gap-2">
                 <p class="font-semibold">Company: </p>
-                <a href="{{ route('companies.show', $opening->user->company->slug) }}" class="text-sm hover:underline">
-                    {{ $opening->user->company->name }}
+                <a href="{{ route('companies.show', $opening->company->slug) }}" class="text-sm hover:underline">
+                    {{ $opening->company->name }}
                 </a>
             </div>
             <div class="flex items-center gap-2">
                 <p class="font-semibold">Category: </p>
-                <a href="{{ route('categories.show', $opening->category->slug) }}"
-                    class="text-sm hover:underline">{{ $opening->category->name }}</a>
+                <a href="{{ route('categories.show', $opening->category()->slug) }}"
+                    class="text-sm hover:underline">{{ $opening->category()->name }}</a>
             </div>
+            
             <div class="flex items-center gap-2">
                 <p class="font-semibold">Posted by: </p>
                 <a href="{{ route('users.show', $opening->user->username) }}"
                     class="text-sm hover:underline">{{ $opening->user->name }}
                 </a>
             </div>
-            <p><span class="font-semibold">Status:</span> {{ $opening->status }}</p>
 
-            <livewire:openings.apply-to-opening :slug="$opening->slug" />
+            <livewire:openings.apply-to-opening :opening="$opening" />
 
             @auth
                 @if (auth()->user()->role === 'recruiter' && auth()->user()->id === $opening->user_id)

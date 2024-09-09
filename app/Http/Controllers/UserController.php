@@ -32,9 +32,8 @@ class UserController extends Controller
         return view('users.network');
     }
 
-    public function show($username)
+    public function show(User $user)
     {
-        $user = User::with('opening')->where('username', $username)->firstOrFail();
         $openings = $user->opening()->paginate(24);
 
         return view('users.show', [

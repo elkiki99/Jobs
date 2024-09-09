@@ -34,10 +34,9 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
+    public function show(Company $company)
     {
-        $company = Company::where('slug', $slug)->firstOrFail();
-        $openings = $company->openings()->with('category')->paginate(24);
+        $openings = $company->openings()->paginate(24);
 
         return view('companies.show', [
             'company' => $company,

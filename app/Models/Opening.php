@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Company;
+// use App\Models\Opening;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,15 +19,16 @@ class Opening extends Model
         'location',
         'image',
         'salary',
-        'status',
+        // 'status',
         'slug',
-        'category_id',
+        'company_id',
+        'category_slug',
         'user_id',
     ];
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return Category::findBySlug($this->category_slug);
     }
 
     public function user()

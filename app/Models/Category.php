@@ -2,21 +2,34 @@
 
 namespace App\Models;
 
-use App\Models\Opening;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-class Category extends Model
+class Category
 {
-    use HasFactory;
+    public $id;
+    public $name;
+    public $slug;
+    public $description;
 
-    protected $fillable = [
-        'name',
-        'slug',
-        'description',
-    ];
+    public function __construct($id, $name, $slug, $description)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->slug = $slug;
+        $this->description = $description;
+    }
 
-    public function opening()
+    public static function all()
+    {
+        return collect(config('categories'))->map(function ($category) {
+            return new self($category['id'], $category['name'], $category['slug'], $category['description']);
+        });
+    }
+
+    public static function findBySlug($slug)
+    {
+        return self::all()->firstWhere('slug', $slug);
+    }
+
+        public function openings()
     {
         return $this->hasMany(Opening::class);
     }

@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Company;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,17 +17,22 @@ class OpeningFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    
     public function definition(): array
     {
+        $categories = config('categories');
+        $randomCategorySlug = Arr::random($categories)['slug'];
+        
         return [
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraphs(8, true),
             'location' => $this->faker->city(),
             'image' => $this->faker->imageUrl(),
             'salary' => $this->faker->numberBetween(10000, 100000),
-            'status' => $this->faker->word('open', 'closed'),
+            // 'status' => $this->faker->word('open', 'closed'),
             'slug' => $this->faker->unique()->slug(),
-            'category_id' => $this->faker->numberBetween(1, 10),
+            'company_id' => Company::pluck('id')->random(),
+            'category_slug' => $randomCategorySlug,
             'user_id' => User::where('role', 'recruiter')->pluck('id')->random(),
         ];
     }

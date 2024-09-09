@@ -4,28 +4,26 @@ namespace App\Livewire\Openings;
 
 use App\Models\Opening;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
 
 class ApplyToOpening extends Component
 {
     public $opening;
     public $hasApplied = false;
 
-    public function mount($slug)
+    public function mount(Opening $opening)
     {
-        $this->opening = Opening::with(['user', 'user.company', 'category'])
-                            ->where('slug', $slug)
-                            ->firstOrFail();
+        $this->opening = $opening;
 
-        if (Auth::check() && Auth::user()->role === 'developer') {
-            $this->hasApplied = Auth::user()->appliedOpenings()->where('opening_id', $this->opening->id)->exists();
+        if (auth()->check() && auth()->user()->role === 'developer') {
+            $this->hasApplied = auth()->user()->appliedOpenings()->where('opening_id', $this->opening->id)->exists();
         }
     }
 
     public function apply()
     {
-        if (Auth::check() && Auth::user()->role === 'developer' && !$this->hasApplied) {
-            Auth::user()->appliedOpenings()->attach($this->opening->id);
+        if (auth()->check() && auth()->user()->role === 'developer' && !$this->hasApplied) {
+            auth()->user()->appliedOpenings()->attach($this->opening->id);
             $this->hasApplied = true;
         }
     }

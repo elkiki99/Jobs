@@ -7,7 +7,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\OpeningController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Middleware\RecruiterMiddleware;
 
 Route::get('/', function () {
@@ -31,19 +30,19 @@ Route::get('/cv', [ProfileController::class, 'cv'])->middleware(DevMiddleware::c
 Route::get('/openings', [OpeningController::class, 'index'])->name('openings.index');
 Route::get('/opening/create', [OpeningController::class, 'create'])->name('openings.create');
 Route::post('/opening/create', [OpeningController::class, 'store'])->name('openings.store');
-Route::get('/opening/edit/{slug}', [OpeningController::class, 'edit'])->name('openings.edit');
-Route::post('/opening/edit/{slug}', [OpeningController::class, 'update'])->name('openings.update');
-Route::get('/opening/{slug}', [OpeningController::class, 'show'])->name('openings.show');
+Route::get('/opening/edit/{opening:slug}', [OpeningController::class, 'edit'])->name('openings.edit');
+Route::post('/opening/edit/{opening:slug}', [OpeningController::class, 'update'])->name('openings.update');
+Route::get('/opening/{opening:slug}', [OpeningController::class, 'show'])->name('openings.show');
 Route::get('/applications', [OpeningController::class, 'applications'])->middleware(DevMiddleware::class)->name('openings.applications');
 Route::get('/my-openings', [OpeningController::class, 'myOpenings'])->middleware(RecruiterMiddleware::class)->name('openings.my-openings');
-Route::post('/opening/{slug}', [OpeningController::class, 'apply'])->name('openings.show');
-Route::delete('/opening/{slug}', [OpeningController::class, 'destroy'])->name('openings.delete');
+Route::post('/opening/{opening:slug}', [OpeningController::class, 'apply'])->name('openings.show');
+Route::delete('/opening/{opening:slug}', [OpeningController::class, 'destroy'])->name('openings.delete');
 
 /**
  * Users
  */
 Route::get('/connect', [UserController::class, 'index'])->name('users.index');
-Route::get('/user/{username}', [UserController::class, 'show'])->name('users.show');
+Route::get('/user/{user:username}', [UserController::class, 'show'])->name('users.show');
 Route::get('/network', [UserController::class, 'network'])->name('network');
 Route::get('/followers', [UserController::class, 'followers'])->name('users.followers');
 Route::get('/following', [UserController::class, 'following'])->name('users.following');
@@ -51,15 +50,12 @@ Route::get('/following', [UserController::class, 'following'])->name('users.foll
 /**
  * Company
  */
-Route::get('/company/{slug}', [CompanyController::class, 'show'])->name('companies.show');
+Route::get('/company/{company:slug}', [CompanyController::class, 'show'])->name('companies.show');
 
 /**
  * Category
  */
-Route::get('/category/create', [CategoryController::class, 'create'])->name('categories.create');
-Route::post('/category/create', [CategoryController::class, 'store'])->name('categories.store');
-Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('categories.show');
-Route::get('/category/edit/{slug}', [CategoryController::class, 'edit'])->name('categories.edit');
+Route::get('/openings/category/{slug}', [OpeningController::class, 'indexByCategory'])->name('categories.show');
 
 Route::get('/contact', function() {
     return view('contact');

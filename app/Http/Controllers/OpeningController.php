@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Opening;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Gate;
@@ -28,9 +29,11 @@ class OpeningController extends Controller
     {
         Gate::authorize('create', Opening::class);
         $countries = config('countries');
+        $categories = config('categories');
         
         return view('openings.create', [
             'countries' => $countries,
+            'categories' => $categories
         ]);
     }
 
@@ -38,16 +41,18 @@ class OpeningController extends Controller
      * Store a newly created resource in storage.
      */ 
     public function store(Request $request)
-    {
+    {   
+        $categorySlugs = array_column(config('categories'), 'slug');
+
         $opening = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:10000'],
             'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:1024'],
             'salary' => ['required', 'numeric'],
             'location' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'in:open,closed'],
             'slug' => ['required', 'string', 'max:255', 'unique:openings'],	
-            'category_id' => ['required', 'exists:categories,id'],
+            'company_id' => ['required', 'exists:companies,id'],
+            'category_slug' => ['required', 'string', Rule::in($categorySlugs)],
         ]);
         
         if ($request->hasFile('image')) {
@@ -63,10 +68,8 @@ class OpeningController extends Controller
     /**
      * Display the specified resource.
      */ 
-    public function show($slug)
+    public function show(Opening $opening)
     {
-        $opening = Opening::with(['user', 'user.company', 'category'])->where('slug', $slug)->firstOrFail();
-
         return view('openings.show', [
             'opening' => $opening,
         ]);
@@ -75,25 +78,25 @@ class OpeningController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($slug)
+    public function edit(Opening $opening)
     {
-        $opening = Opening::where('slug', $slug)->firstOrFail();
-        $countries = config('countries');
-
         Gate::authorize('update', $opening);
+        $countries = config('countries');
+        $categories = config('categories');
 
         return view('openings.edit', [
             'opening' => $opening,
             'countries' => $countries,
+            'categories' => $categories
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, Opening $opening)
     {
-        $opening = Opening::where('slug', $slug)->firstOrFail();
+        $categorySlugs = array_column(config('categories'), 'slug');
         Gate::authorize('update', $opening);
 
         $newOpening = $request->validate([
@@ -102,14 +105,14 @@ class OpeningController extends Controller
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:1024'],
             'salary' => ['required', 'numeric'],
             'location' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'in:open,closed'],
             'slug' => [
                         'required', 
                         'string', 
                         'max:255',
                         Rule::unique('openings')->ignore($opening->id),
                     ],            
-            'category_id' => ['required', 'exists:categories,id'],
+            'company_id' => ['required', 'exists:companies,id'],
+            'category_slug' => ['required', 'string', Rule::in($categorySlugs)],
         ]);
         
 
@@ -131,9 +134,8 @@ class OpeningController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($slug)
+    public function destroy(Opening $opening)
     {
-        $opening = Opening::with(['user', 'user.company', 'category'])->where('slug', $slug)->firstOrFail();
         $opening->delete();
         return redirect()->route('openings.my-openings')->with('opening_deleted', 'Opening deleted successfully!');
 
@@ -141,10 +143,19 @@ class OpeningController extends Controller
             'opening' => $opening
         ]);
     }
-    
-    public function apply($slug)
+
+    public function indexByCategory(Category $category)
     {
-        $opening = Opening::where('slug', $slug)->firstOrFail();
+        $openings = Opening::where('category_slug', $category->slug)->latest()->paginate(24);
+    
+        return view('openings.index', [
+           'category' => $category,
+           'openings' => $openings,
+        ]);
+    }
+    
+    public function apply(Opening $opening)
+    {
         $user = auth()->user();
 
         if(!$user) {

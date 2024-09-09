@@ -41,9 +41,12 @@
                                         class="w-full mt-2 shadow-md md:w-1/2" />
                                 </div>
                             @endif
-                            <x-input-label for="image" :value="__('Opening image')" />
-                            <x-text-input placeholder="Your image" id="image" name="image" type="file" />
-                            <x-input-error class="mt-2" :messages="$errors->get('image')" />
+
+                            <div class="mt-4">
+                                <x-input-label for="image" :value="__('Opening image')" />
+                                <x-text-input placeholder="Your image" id="image" name="image" type="file" />
+                                <x-input-error class="mt-2" :messages="$errors->get('image')" />
+                            </div>
 
                             <!-- Image Preview -->
                             <div id="image-preview" class="hidden mt-4">
@@ -77,20 +80,32 @@
                             <x-input-error :messages="$errors->get('location')" class="mt-2" />
                         </div>
 
-                        <!-- Status -->
+
+                        <!-- Company -->
                         <div>
-                            <x-input-label for="status" :value="__('Opening status')" />
-                            <select id="status"
+                            <x-input-label for="company_id" :value="__('Opening company')" />
+                            <select id="company_id"
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                name="status" autocomplete="status">
-                                <option hidden value="">Select a status</option>
-                                <option value="open"
-                                    {{ old('status', $opening->status) == 'open' ? 'selected' : '' }}>Open
-                                </option>
-                                <option value="closed"
-                                    {{ old('status', $opening->status) == 'closed' ? 'selected' : '' }}>Closed</option>
+                                name="company_id" autocomplete="company_id">
+                                <option hidden value="">Select a company</option>
+                                @foreach (App\Models\Company::all() as $company)
+                                    <option value="{{ $company->id }}"
+                                        {{ old('company_id', $opening->company_id) == $company->id ? 'selected' : '' }}>
+                                        {{ $company->name }}
+                                    </option>
+                                @endforeach
                             </select>
-                            <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('company_id')" class="mt-2" />
+
+                            {{-- <a class="flex text-sm mt-4 font-medium text-gray-600 items-center justify-end"
+                                href="{{ route('companies.create') }}">
+                                <p>Create category</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                                </svg>
+                            </a> --}}
                         </div>
 
                         <!-- Slug -->
@@ -103,19 +118,18 @@
 
                         <!-- Category -->
                         <div>
-                            <x-input-label for="category_id" :value="__('Opening category')" />
-                            <select id="category_id"
+                            <x-input-label for="category_slug" :value="__('Opening category')" />
+                            <select id="category_slug"
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                name="category_id" autocomplete="category_id">
+                                name="category_slug" autocomplete="category_slug">
                                 <option hidden value="">Select a category</option>
-                                @foreach (App\Models\Category::all() as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{ old('category_id', $opening->category_id) == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category['slug'] }}"
+                                        {{ old('category_slug', $opening->category()->slug) == $category['slug'] ? 'selected' : '' }}>
+                                        {{ $category['name'] }}</option>
                                 @endforeach
                             </select>
-                            <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('category_slug')" class="mt-2" />
                         </div>
 
                         <!-- Save Button -->

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class ToggleFollow extends Component
 {
     public $user;
-    public $isFollowing;
+    public $isFollowing = false;    
     
     public function mount(User $user)
     {

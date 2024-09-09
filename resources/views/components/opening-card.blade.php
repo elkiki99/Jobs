@@ -10,7 +10,7 @@
             <h3 class="text-2xl font-medium text-gray-800">{{ $opening->title }}</h3>
             <p class="my-2 text-gray-700">{!! Str::limit($opening->description, 150) !!}</p>
             <div class="flex gap-2">
-                <a href="{{ route('companies.show', $opening->user->company->slug)}}" class="text-gray-400 hover:underline">{{ $opening->user->company->name }}</a>
+                <a href="{{ route('companies.show', $opening->company->slug)}}" class="text-gray-400 hover:underline">{{ $opening->company->name }}</a>
                 <a href="{{ route('openings.show', $opening->slug) }}" class="ml-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                         <path fill-rule="evenodd"
