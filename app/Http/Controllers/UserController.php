@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        $openings = $user->opening()->paginate(24);
+        $openings = $user->opening()->paginate(12);
 
         return view('users.show', [
             'user' => $user,

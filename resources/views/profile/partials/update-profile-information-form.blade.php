@@ -45,7 +45,7 @@
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
+            <x-input-label for="name" :value="__('Name *')" />
             <x-text-input placeholder="Your name" id="name" name="name" type="text" class="block w-full mt-1"
                 :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
@@ -53,7 +53,7 @@
 
         <!-- Email -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('Email *')" />
             <x-text-input placeholder="Your email" id="email" name="email" type="email"
                 class="block w-full mt-1" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
@@ -80,7 +80,7 @@
 
         <!-- Username -->
         <div>
-            <x-input-label for="username" :value="__('Username')" />
+            <x-input-label for="username" :value="__('Username *    ')" />
             <x-text-input placeholder="Your username" id="username" name="username" type="text"
                 class="block w-full mt-1" :value="old('username', $user->username)" required autofocus autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('username')" />
@@ -97,95 +97,107 @@
 
         <!-- Avatar -->
         <div>
-            <x-input-label for="avatar" :value="__('Avatar')" />
-            <x-text-input placeholder="Your avatar" id="avatar" name="avatar" type="file" />
-            <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+            <div>
+                <x-input-label for="avatar" :value="__('Avatar')" />
+                <x-text-input placeholder="Your avatar" id="avatar" name="avatar" type="file" />
+                <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+            </div>
 
             <!-- Image Preview -->
             <div id="avatar-preview" class="hidden mt-4">
                 <x-input-label :value="__('Image preview')" />
                 <img id="preview-img" src="" alt="Image Preview"
-                    class="w-1/2 mt-2 rounded-full shadow-md md:w-1/4" />
+                    class="object-cover w-48 h-48 mt-2 rounded-full shadow-md" />
             </div>
         </div>
 
-        <!-- Phone -->
-        <div>
-            <x-input-label for="phone" :value="__('Phone')" />
-            <x-text-input placeholder="Your phone" id="phone" name="phone" type="text"
-                class="block w-full mt-1" :value="old('phone', $user->phone)" autofocus autocomplete="phone" />
-            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+        <div class="sm:gap-2 sm:flex">
+            <!-- Phone -->
+            <div class="w-full sm:w-1/2">
+                <x-input-label for="phone" :value="__('Phone')" />
+                <x-text-input placeholder="Your phone" id="phone" name="phone" type="text"
+                    class="block w-full mt-1" :value="old('phone', $user->phone)" autofocus autocomplete="phone" />
+                <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+            </div>
+
+            <!-- Address -->
+            <div class="w-full sm:w-1/2">
+                <x-input-label for="address" :value="__('Address')" />
+                <x-text-input placeholder="Your address" id="address" name="address" type="text"
+                    class="block w-full mt-1" :value="old('address', $user->address)" autofocus autocomplete="address" />
+                <x-input-error class="mt-2" :messages="$errors->get('address')" />
+            </div>
         </div>
 
-        <!-- Address -->
-        <div>
-            <x-input-label for="address" :value="__('Address')" />
-            <x-text-input placeholder="Your address" id="address" name="address" type="text"
-                class="block w-full mt-1" :value="old('address', $user->address)" autofocus autocomplete="address" />
-            <x-input-error class="mt-2" :messages="$errors->get('address')" />
+        <div class="sm:gap-2 sm:flex">
+            <!-- City -->
+            <div class="w-full sm:w-1/2">
+                <x-input-label for="city" :value="__('City')" />
+                <x-text-input placeholder="Your city" id="city" name="city" type="text"
+                    class="block w-full mt-1" :value="old('city', $user->city)" autofocus autocomplete="city" />
+                <x-input-error class="mt-2" :messages="$errors->get('city')" />
+            </div>
+
+            <!-- Country -->
+            <div class="w-full sm:w-1/2">
+                <x-input-label for="country" :value="__('Country')" />
+                <select id="country"
+                    class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    name="country" autocomplete="country">
+                    <option hidden value="">Select a country</option>
+                    @foreach ($countries as $country)
+                        <option value="{{ $country['name'] }}"
+                            {{ old('country', $user->country) == $country['name'] ? 'selected' : '' }}>
+                            {{ $country['name'] }}</option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('country')" class="mt-2" />
+            </div>
         </div>
 
-        <!-- City -->
-        <div>
-            <x-input-label for="city" :value="__('City')" />
-            <x-text-input placeholder="Your city" id="city" name="city" type="text" class="block w-full mt-1"
-                :value="old('city', $user->city)" autofocus autocomplete="city" />
-            <x-input-error class="mt-2" :messages="$errors->get('city')" />
+        <div class="sm:gap-2 sm:flex">
+            <!-- Postcode -->
+            <div class="w-full sm:w-1/2">
+                <x-input-label for="postcode" :value="__('Postcode')" />
+                <x-text-input placeholder="11200" id="postcode" name="postcode" type="number"
+                    class="block w-full mt-1" :value="old('postcode', $user->postcode)" autofocus autocomplete="postcode" />
+                <x-input-error class="mt-2" :messages="$errors->get('postcode')" />
+            </div>
+
+            <!-- Gender -->
+            <div class="w-full sm:w-1/2">
+                <x-input-label for="gender" :value="__('Gender')" />
+                <select id="gender"
+                    class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    name="gender" autocomplete="gender">
+                    <option hidden value="">Select a gender</option>
+                    <option value="female" {{ old('gender', $user->gender) == 'female' ? 'selected' : '' }}>Female
+                    </option>
+                    <option value="male" {{ old('gender', $user->gender) == 'male' ? 'selected' : '' }}>Male
+                    </option>
+                    <option value="other" {{ old('gender', $user->gender) == 'other' ? 'selected' : '' }}>Other
+                    </option>
+                </select>
+                <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+            </div>
         </div>
 
-        <!-- Country -->
-        <div>
-            <x-input-label for="country" :value="__('Country')" />
-            <select id="country"
-                class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                name="country" autocomplete="country">
-                <option hidden value="">Select a country</option>
-                @foreach ($countries as $country)
-                    <option value="{{ $country['name'] }}"
-                        {{ old('country', $user->country) == $country['name'] ? 'selected' : '' }}>
-                        {{ $country['name'] }}</option>
-                @endforeach
-            </select>
-            <x-input-error :messages="$errors->get('country')" class="mt-2" />
-        </div>
+        <div class="sm:gap-2 sm:flex">
+            <!-- Linkedin -->
+            <div class="w-full sm:w-1/2">
+                <x-input-label for="linkedin" :value="__('Linkedin')" />
+                <x-text-input placeholder="Your linkedin profile url" id="linkedin" name="linkedin" type="url"
+                    class="block w-full mt-1" :value="old('linkedin', $user->linkedin)" autofocus autocomplete="linkedin" />
+                <x-input-error class="mt-2" :messages="$errors->get('linkedin')" />
+            </div>
 
-        <!-- Postcode -->
-        <div>
-            <x-input-label for="postcode" :value="__('Postcode')" />
-            <x-text-input placeholder="11200" id="postcode" name="postcode" type="number"
-                class="block w-full mt-1" :value="old('postcode', $user->postcode)" autofocus autocomplete="postcode" />
-            <x-input-error class="mt-2" :messages="$errors->get('postcode')" />
-        </div>
-
-        <!-- Gender -->
-        <div>
-            <x-input-label for="gender" :value="__('Gender')" />
-            <select id="gender"
-                class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                name="gender" autocomplete="gender">
-                <option hidden value="">Select a gender</option>
-                <option value="female" {{ old('gender', $user->gender) == 'female' ? 'selected' : '' }}>Female
-                </option>
-                <option value="male" {{ old('gender', $user->gender) == 'male' ? 'selected' : '' }}>Male</option>
-                <option value="other" {{ old('gender', $user->gender) == 'other' ? 'selected' : '' }}>Other</option>
-            </select>
-            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
-        </div>
-
-        <!-- Linkedin -->
-        <div>
-            <x-input-label for="linkedin" :value="__('Linkedin')" />
-            <x-text-input placeholder="Your linkedin profile url" id="linkedin" name="linkedin" type="url"
-                class="block w-full mt-1" :value="old('linkedin', $user->linkedin)" autofocus autocomplete="linkedin" />
-            <x-input-error class="mt-2" :messages="$errors->get('linkedin')" />
-        </div>
-
-        <!-- Github -->
-        <div>
-            <x-input-label for="github" :value="__('Github')" />
-            <x-text-input placeholder="Your github profile url" id="github" name="github" type="url"
-                class="block w-full mt-1" :value="old('github', $user->github)" autofocus autocomplete="github" />
-            <x-input-error class="mt-2" :messages="$errors->get('github')" />
+            <!-- Github -->
+            <div class="w-full sm:w-1/2">
+                <x-input-label for="github" :value="__('Github')" />
+                <x-text-input placeholder="Your github profile url" id="github" name="github" type="url"
+                    class="block w-full mt-1" :value="old('github', $user->github)" autofocus autocomplete="github" />
+                <x-input-error class="mt-2" :messages="$errors->get('github')" />
+            </div>
         </div>
 
         <!-- Company -->
@@ -203,7 +215,8 @@
             </select>
             <x-input-error :messages="$errors->get('company_id')" class="mt-2" />
 
-            <a class="flex text-sm mt-2 text-gray-500 items-center gap-2 justify-end" href="{{ route('companies.create') }}">
+            <a class="flex text-sm mt-2 text-gray-500 items-center gap-2 justify-end"
+                href="{{ route('companies.create') }}">
                 <p>
                     Add a company
                 </p>
@@ -218,10 +231,6 @@
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
-            @if (session('status') === 'profile-updated')
-                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600">{{ __('Saved.') }}</p>
-            @endif
         </div>
     </form>
 

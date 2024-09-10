@@ -16,6 +16,8 @@
             @endforelse
         </div>
 
-        {{ $openings->links() }}
+        <div class="max-w-4xl">
+            {{ $openings->links() }}
+        </div>
     </div>
 </x-app-layout>

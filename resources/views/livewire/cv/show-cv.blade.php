@@ -1,4 +1,4 @@
-<div class="max-w-4xl p-6 mx-auto">
+<div class="p-6">
     <!-- Profile summary -->
     @if ($user->userCv && $user->userCv->profile_summary)
         <div class="mb-6">

@@ -51,10 +51,12 @@
             @forelse($openings as $opening)
                 <x-opening-card :opening="$opening" />
             @empty
-                <p>No openings found.</p>
+                <p>No openings found. <a class="hover:underline" href="{{ route('openings.create') }}">Create your first one!</a></p>
             @endforelse
         </div>
 
-        {{ $openings->links() }}
+        <div class="max-w-4xl">
+            {{ $openings->links() }}
+        </div>
     </div>
 </x-app-layout>

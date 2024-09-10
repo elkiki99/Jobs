@@ -10,7 +10,7 @@
 
             <!-- Avatar -->
             @if ($user->avatar)
-                <img class="rounded-full size-36 aspect-square"
+                <img class="rounded-full object-cover size-36 aspect-square"
                     src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}"
                     alt="{{ $user->username }}">
             @else
@@ -186,30 +186,45 @@
 
         <!-- Openings -->
         @if ($user->role === 'recruiter')
-            <div class="w-2/3 space-y-2">
-
+            <div class="flex flex-col w-2/3 min-h-screen">
                 <div class="mt-5">
-                    @if (session('company_deleted'))
+                    @if (session('profile-updated'))
                         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
                             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
                             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-300"
                             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                            class="mb-4 text-red-600">
-                            {{ session('company_deleted') }}
+                            class="mb-4 text-green-600">
+                            {{ session('profile-updated') }}
                         </div>
                     @endif
                 </div>
-                
+
                 @forelse ($openings as $opening)
                     <x-opening-card :opening="$opening" />
                 @empty
                     <p>No openings found.</p>
                 @endforelse
+
+                <div class="mt-auto">
+                    {{ $openings->links() }}
+                </div>
             </div>
         @else
-            @livewire('cv.show-cv', ['username' => $user->username])
-        @endif
+            <div>
+                <div class="mt-5">
+                    @if (session('profile-updated'))
+                        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
+                            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-300"
+                            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                            class="mb-4 text-green-600">
+                            {{ session('profile-updated') }}
+                        </div>
+                    @endif
+                </div>
 
-        {{ $openings->links() }}
+                @livewire('cv.show-cv', ['username' => $user->username])
+            </div>
+        @endif
     </div>
 </x-app-layout>

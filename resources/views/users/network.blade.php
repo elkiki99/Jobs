@@ -7,6 +7,19 @@
 
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <p class="text-2xl text-gray-600">{{ __('Manage your network') }}</p>
+
+        <div class="mt-5">
+            @if (session('company_deleted'))
+                <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
+                    x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-300"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="mb-4 text-red-600">
+                    {{ session('company_deleted') }}
+                </div>
+            @endif
+        </div>
+
         <div class="py-12 space-y-2">
             <a class="flex items-center py-1 underline" href="{{ route('users.followers') }}">
                 People who follow you

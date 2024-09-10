@@ -7,7 +7,7 @@
 
     <div class="flex gap-8 px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="w-1/3 space-y-2">
-            <img class="rounded-full size-36 aspect-square"
+            <img class="rounded-full object-cover size-36 aspect-square"
                 src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : asset('storage/' . $company->logo) }}"
                 alt="{{ $company->name }}">
             <div class="flex items-center justify-between">

@@ -158,7 +158,7 @@ class CompanyController extends Controller
     
         if (!$isCompanyInUseByOthers) {
             $company->delete();
-            return redirect()->route('users.show', ['user' => $user->username])
+            return redirect()->route('network')
                              ->with('company_deleted', 'Your company was deleted successfully!');
         } else {
             return redirect()->route('companies.show', ['company' => $company->slug])

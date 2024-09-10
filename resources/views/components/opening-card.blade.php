@@ -19,6 +19,7 @@
                     </svg>
                 </a>
             </div>
+            <p class="my-2 text-gray-500 text-sm">${{ number_format($opening->salary, 2) }}</p>
         </div>
     </div>
 </div>

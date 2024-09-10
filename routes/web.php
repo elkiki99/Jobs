@@ -8,10 +8,14 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\OpeningController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RecruiterMiddleware;
+use App\Http\Controllers\LegalPagesController;
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
 /**
  * Profile
@@ -63,36 +67,15 @@ Route::delete('/company/{company:slug}', [CompanyController::class, 'destroy'])-
  */
 Route::get('/openings/category/{slug}', [OpeningController::class, 'indexByCategory'])->name('categories.show');
 
-Route::get('/contact', function() {
-    return view('contact');
-})->name('contact');
+/**
+ * Legal
+ */
+Route::get('/cookies', [LegalPagesController::class, 'cookies'])->name('cookies');
+Route::get('/contact', [LegalPagesController::class, 'contact'])->name('contact');
+Route::get('/privacy', [LegalPagesController::class, 'privacy'])->name('privacy');
+Route::get('/support', [LegalPagesController::class, 'support'])->name('support');
+Route::get('/help', [LegalPagesController::class, 'help'])->name('help');
+Route::get('/terms', [LegalPagesController::class, 'terms'])->name('terms');
 
-Route::get('/search', function() {
-    return view('search');
-})->name('search');
-
-Route::get('/about', function() {
-    return view('about');
-})->name('about');
-
-Route::get('/terms', function() {
-    return view('terms');
-})->name('terms');
-
-Route::get('/support', function() {
-    return view('support');
-})->name('support');
-
-Route::get('/privacy', function() {
-    return view('privacy');
-})->name('privacy');
-
-Route::get('/cookies', function() {
-    return view('cookies');
-})->name('cookies');
-
-Route::get('/help', function() {
-    return view('help');
-})->name('help');
 
 require __DIR__.'/auth.php';
