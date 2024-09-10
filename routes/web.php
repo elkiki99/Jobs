@@ -50,6 +50,7 @@ Route::get('/following', [UserController::class, 'following'])->name('users.foll
 /**
  * Company
  */
+Route::get('/my-companies', [CompanyController::class, 'index'])->middleware(RecruiterMiddleware::class)->name('companies.index');
 Route::get('/company/create', [CompanyController::class, 'create'])->name('companies.create');
 Route::post('/company/create', [CompanyController::class, 'store'])->name('companies.store');
 Route::get('/company/{company:slug}', [CompanyController::class, 'show'])->name('companies.show');

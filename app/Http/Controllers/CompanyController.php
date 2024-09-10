@@ -15,7 +15,11 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //  
+        $companies = Company::where('created_by', auth()->user()->id)->paginate(24);
+
+        return view('companies.index', [
+            'companies' => $companies
+        ]);
     }
 
     /**

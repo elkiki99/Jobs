@@ -32,8 +32,9 @@
             @forelse($companies as $company)
                 <a href="{{ route('companies.show', $company->slug) }}">
                     <div class="flex flex-col items-center justify-center text-center">
-                        <img loading="lazy" class="w-24 h-24 border rounded-full " src="{{ $company->logo }}"
-                        alt="{{ $company->name }}">
+                        <img loading="lazy" class="w-24 h-24 border rounded-full"
+                            src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : asset('storage/' . $company->logo) }}"
+                            alt="{{ $company->name }}">
                         <p class="flex-grow mt-2 font-medium">{{ $company->name }}</p>
                     </div>
                 </a>
