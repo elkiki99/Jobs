@@ -6,15 +6,28 @@
     </x-slot>
 
     <div class="flex gap-8 px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-        <div class="w-1/3 space-y-2">        
-            <img class="rounded-full size-36 aspect-square" src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : asset('storage/' . $company->logo) }}" alt="{{ $company->name }}">
-            <div class="flex items-center gap-2">
-                <p>{{ $company->name }}</p>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
-                </svg>
+        <div class="w-1/3 space-y-2">
+            <img class="rounded-full size-36 aspect-square"
+                src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : asset('storage/' . $company->logo) }}"
+                alt="{{ $company->name }}">
+            <div class="flex justify-between items-center">
+                <div class="flex items-cener gap-2">
+                    <p>{{ $company->name }}</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+                    </svg>
+                </div>
+                @if ($company->created_by === auth()->user()->id)
+                    <a href="{{ route('companies.edit', $company->slug) }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                        </svg>
+                    </a>
+                @endif
             </div>
             <p class="text-gray-600">{{ $company->email }}</p>
             <p class="">{!! $company->bio !!}</p>
@@ -58,10 +71,44 @@
                 </svg>
                 <p>{{ $company->employees }} employees</p>
             </div>
+
+
+            @auth
+                @if (auth()->user()->role === 'recruiter' && auth()->user()->id === $company->created_by)
+                    <div class="pt-4">
+                        <x-primary-button x-data=""
+                            x-on:click.prevent="$dispatch('open-modal', 'confirm-company-deletion')">{{ __('Delete company') }}</x-primary-button>
+                    </div>
+                    <x-modal name="confirm-company-deletion" focusable>
+                        <form method="post" action="{{ route('companies.delete', $company->slug) }}" class="p-6">
+                            @csrf
+                            @method('delete')
+
+                            <h2 class="text-lg font-medium text-gray-900">
+                                {{ __('Are you sure you want to delete this company?') }}
+                            </h2>
+
+                            <p class="mt-1 text-sm text-gray-600">
+                                {{ __('Once deleted, you won\'t be able to restore this company.') }}
+                            </p>
+
+                            <div class="flex justify-end mt-6">
+                                <x-secondary-button x-on:click="$dispatch('close')">
+                                    {{ __('Cancel') }}
+                                </x-secondary-button>
+
+                                <x-danger-button class="ms-3">
+                                    {{ __('Delete company') }}
+                                </x-danger-button>
+                            </div>
+                        </form>
+                    </x-modal>
+                @endif
+            @endauth
         </div>
 
         <div class="w-2/3 space-y-2">
-                        
+
             <!-- Session messages -->
             <div class="mt-5">
                 @if (session('company_created'))
@@ -73,7 +120,6 @@
                         {{ session('company_created') }}
                     </div>
                 @endif
-
                 @if (session('company_updated'))
                     <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
                         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
@@ -83,8 +129,17 @@
                         {{ session('company_updated') }}
                     </div>
                 @endif
+                @if (session('company_deleted_error'))
+                    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
+                        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-300"
+                        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                        class="mb-4 text-red-600">
+                        {{ session('company_deleted_error') }}
+                    </div>
+                @endif
             </div>
-            
+
             @forelse ($openings as $opening)
                 <x-opening-card :opening="$opening" />
             @empty

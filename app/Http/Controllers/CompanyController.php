@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
 
 class CompanyController extends Controller
 {
@@ -22,6 +23,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Company::class);
         $categories = config('categories');
         $countries = config('countries');
 
@@ -58,6 +60,7 @@ class CompanyController extends Controller
             $companyData['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
+        $companyData['created_by'] = auth()->user()->id;
         $company = Company::create($companyData);
 
         return redirect()->route('companies.show', $company->slug)->with('company_created', 'Company created successfully.');
@@ -81,6 +84,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
+        Gate::authorize('update', $company);
         $countries = config('countries');
 
         return view('companies.edit', [
@@ -94,6 +98,7 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
+        // Gate::authorize('update', $company);
         $newCompanyData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -130,6 +135,7 @@ class CompanyController extends Controller
         } else {
             $newCompanyData['logo'] = $company->logo;
         }
+        $newCompanyData['created_by'] = auth()->user()->id;
         $company->update($newCompanyData);
 
         return redirect()->route('companies.show', $company->slug)->with('company_updated', 'Company updated successfully!');
@@ -140,6 +146,19 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $user = auth()->user();
+        
+        $isCompanyInUseByOthers = User::where('company_id', $company->id)
+                                      ->where('id', '!=', $user->id)
+                                      ->exists();
+    
+        if (!$isCompanyInUseByOthers) {
+            $company->delete();
+            return redirect()->route('users.show', ['user' => $user->username])
+                             ->with('company_deleted', 'Your company was deleted successfully!');
+        } else {
+            return redirect()->route('companies.show', ['company' => $company->slug])
+                             ->with('company_deleted_error', 'Your company cannot be deleted as it is being used by another user!');
+        }
     }
 }

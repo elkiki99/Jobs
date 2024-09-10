@@ -9,15 +9,15 @@ class EducationForm extends Component
 {
     public $education = [];
     public $userCv;
-    
+
     public function mount()
     {
         $this->userCv = auth()->user()->userCv;
-        if($this->userCv) { 
+        if ($this->userCv) {
             $this->education = $this->userCv->education ?? [];
         }
     }
-    
+
     protected function messages()
     {
         return [
@@ -29,13 +29,13 @@ class EducationForm extends Component
             'education.*.start_year.date' => 'The start date must be a valid one.',
             'education.*.end_year.date' => 'The end date must be a valid one.',
         ];
-    }    
+    }
 
     public function addEducation()
     {
         $this->education[] = ['institution' => '', 'degree' => '', 'description' => '', 'start_year' => '', 'end_year' => ''];
     }
-    
+
     public function updateEducation()
     {
         $this->validate([
@@ -45,8 +45,18 @@ class EducationForm extends Component
             'education.*.start_year' => 'required|date',
             'education.*.end_year' => 'nullable|date',
         ]);
-        $this->userCv->update(['education' => $this->education]);
-        session()->flash('education_updated', 'Education updated successfully!');
+
+        $existingEducation = $this->userCv ? $this->userCv->education : [];
+
+        if ($existingEducation !== $this->education) {
+            $this->userCv = UserCV::updateOrCreate(
+                ['user_id' => auth()->id()],
+                ['education' => $this->education],
+            );
+            session()->flash('education_updated', 'Education updated successfully!');
+        } else {
+            session()->flash('education_updated_error', 'Education is needed to update your cv!');
+        }
     }
 
     public function removeEducation($index)

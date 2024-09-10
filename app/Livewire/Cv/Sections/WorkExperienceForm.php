@@ -44,8 +44,18 @@ class WorkExperienceForm extends Component
             'work_experience.*.end_date' => 'nullable|date',
             'work_experience.*.description' => 'required|string',
         ]);
-        $this->userCv->update(['work_experience' => $this->work_experience]);
-        session()->flash('work_experience_updated', 'Work experience updated successfully!');
+
+        $existingWorkExperience = $this->userCv ? $this->userCv->work_experience : [];
+
+        if($existingWorkExperience !== $this->work_experience) {
+            $this->userCv = UserCv::updateOrCreate(
+                ['user_id' => auth()->id()],
+                ['work_experience' => $this->work_experience],
+            );
+            session()->flash('work_experience_updated', 'Work experience updated successfully!');
+        } else {
+            session()->flash('work_experience_updated_error', 'Work experience is needed to update your cv!');
+        }
     }
 
     public function removeWorkExperience($index)

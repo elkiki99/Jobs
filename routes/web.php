@@ -55,6 +55,7 @@ Route::post('/company/create', [CompanyController::class, 'store'])->name('compa
 Route::get('/company/{company:slug}', [CompanyController::class, 'show'])->name('companies.show');
 Route::get('/company/edit/{company:slug}', [CompanyController::class, 'edit'])->name('companies.edit');
 Route::post('/company/edit/{company:slug}', [CompanyController::class, 'update'])->name('companies.update');
+Route::delete('/company/{company:slug}', [CompanyController::class, 'destroy'])->name('companies.delete');
 
 /**
  * Category

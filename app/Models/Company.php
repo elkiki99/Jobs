@@ -26,6 +26,7 @@ class Company extends Model
         'employees',
         'revenue',
         'slug',
+        'created_by'
     ];
 
     public function user()

@@ -37,8 +37,18 @@ class LanguageForm extends Component
             'languages.*.language' => 'required|string|max:255',
             'languages.*.proficiency' => 'required|string|max:255',
         ]);
-        $this->userCv->update(['languages' => $this->languages]);
-        session()->flash('languages_updated', 'Languages updated successfully!');
+
+        $existingLanguages = $this->userCv ? $this->userCv->languages : [];
+
+        if($existingLanguages !== $this->languages) {
+            $this->userCv = UserCv::updateOrCreate(
+                ['user_id' => auth()->id()],
+                ['languages' => $this->languages],
+            );
+            session()->flash('languages_updated', 'Work experience updated successfully!');
+        } else {
+            session()->flash('languages_updated_error', 'Language is needed to update your cv!');
+        }
     }
 
     public function removeLanguage($index)

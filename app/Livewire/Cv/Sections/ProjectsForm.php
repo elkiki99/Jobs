@@ -46,8 +46,17 @@ class ProjectsForm extends Component
             'projects.*.date' => 'required|date',
         ]);
 
-        $this->userCv->update(['projects' => $this->projects]);
-        session()->flash('projects_updated', 'Projects updated successfully!');
+        $existingProjects = $this->userCv ? $this->userCv->projects : [];
+
+        if($existingProjects !== $this->projects) {
+            $this->userCv = UserCv::updateOrCreate(
+                ['user_id' => auth()->id()],
+                ['projects' => $this->projects],
+            );
+            session()->flash('projects_updated', 'Project updated successfully!');
+        } else {
+            session()->flash('projects_updated_error', 'Project is needed to update your cv!');
+        }
     }
 
     public function removeProject($index)

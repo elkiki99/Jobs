@@ -1,6 +1,4 @@
-<div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl"
-    
->
+<div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
     <p class="text-2xl text-gray-600">
         {{ __('Expand your network, contact with headhunters and connect with devs just like you') }}</p>
 

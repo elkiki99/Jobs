@@ -44,8 +44,18 @@ class CertificationForm extends Component
             'certifications.*.description' => 'required|string|max:1000',
             'certifications.*.date' => 'required|date',
         ]);
-        $this->userCv->update(['certifications' => $this->certifications]);
-        session()->flash('certifications_updated', 'Certifications updated successfully!');
+
+        $existingCertifications = $this->userCv ? $this->userCv->certifications : [];
+
+        if($existingCertifications !== $this->certifications) {
+            $this->userCv = UserCv::updateOrCreate(
+                ['user_id' => auth()->id()],
+                ['certifications' => $this->certifications],
+            );
+            session()->flash('certifications_updated', 'Certification updated successfully!');
+        } else {
+            session()->flash('certifications_updated_error', 'Certification is needed to update your cv!');
+        }
     }
 
     public function removeCertification($index)

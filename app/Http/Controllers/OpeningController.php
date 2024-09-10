@@ -124,10 +124,6 @@ class OpeningController extends Controller
         $opening->update($newOpening);
 
         return redirect()->route('openings.my-openings')->with('opening_updated', 'Opening updated successfully!');
-
-        // return view('openings.edit', [
-        //     'opening' => $opening,
-        // ]);
     }
 
     /**
