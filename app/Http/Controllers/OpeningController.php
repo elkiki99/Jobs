@@ -53,6 +53,13 @@ class OpeningController extends Controller
             'slug' => ['required', 'string', 'max:255', 'unique:openings'],	
             'company_id' => ['required', 'exists:companies,id'],
             'category_slug' => ['required', 'string', Rule::in($categorySlugs)],
+        ], [
+            'category_slug.required' => 'The category field is required.',
+            'category_slug.string' => 'The category must be a string.',
+            'category_slug.in' => 'The selected category is invalid.',
+            'company_id.required' => 'The company is required', 
+            'company_id.exists' => 'The company you provided does not match our records', 
+            'company_id.required' => 'The company is required', 
         ]);
         
         if ($request->hasFile('image')) {
@@ -70,6 +77,8 @@ class OpeningController extends Controller
      */ 
     public function show(Opening $opening)
     {
+        $opening->load('user.company');
+
         return view('openings.show', [
             'opening' => $opening,
         ]);
@@ -113,6 +122,13 @@ class OpeningController extends Controller
                     ],            
             'company_id' => ['required', 'exists:companies,id'],
             'category_slug' => ['required', 'string', Rule::in($categorySlugs)],
+        ], [
+            'category_slug.required' => 'The category field is required.',
+            'category_slug.string' => 'The category must be a string.',
+            'category_slug.in' => 'The selected category is invalid.',
+            'company_id.required' => 'The company is required', 
+            'company_id.exists' => 'The company you provided does not match our records', 
+            'company_id.required' => 'The company is required', 
         ]);
 
         if ($request->hasFile('image')) {
@@ -146,6 +162,7 @@ class OpeningController extends Controller
         return view('openings.index', [
            'category' => $category,
            'openings' => $openings,
+           'categoryName' => $category->name,
         ]);
     }
     

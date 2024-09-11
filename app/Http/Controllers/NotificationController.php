@@ -10,21 +10,11 @@ class NotificationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
-        $notifications = $user->notifications->sortByDesc('created_at');
-
-        $this->markAsReadOnNextVisit($user);
+        $notifications = $user->notifications()->latest()->paginate(24);
+        $user->unreadNotifications->markAsRead();
 
         return view('notifications', [
             'notifications' => $notifications,
         ]);
-    }
-
-    private function markAsReadOnNextVisit($user)
-    {
-        if (session()->has('last_notification_visit')) {
-            $user->unreadNotifications->markAsRead();
-        }
-        session(['last_notification_visit' => now()]);
-    }
+    } 
 }

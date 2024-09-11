@@ -1,7 +1,7 @@
 <div class="w-full max-w-4xl mx-auto mt-10 overflow-hidden bg-white border" wire:remove
     wire:key="user-{{ $user->id }}" wire:target='userFollowed,{{ $user->id }}'>
     <div class="relative w-full">
-        <a href="{{ route('users.show', $user->username) }}">
+        <a wire:navigate href="{{ route('users.show', $user->username) }}">
             @if ($user->avatar)
                 <img loading="lazy" class="object-cover w-full h-auto aspect-square"
                     src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}"
@@ -34,7 +34,7 @@
         <p class="text-gray-600">{{ $user->email }}</p>
 
         <div class="flex items-center justify-between pt-4">
-            <a href="{{ route('users.show', $user->username) }}" class="text-sm hover:underline">View Profile</a>
+            <a wire:navigate href="{{ route('users.show', $user->username) }}" class="text-sm hover:underline">View Profile</a>
             @auth
                 <livewire:users.toggle-follow :user="$user" :key="$user->id" />
             @endauth

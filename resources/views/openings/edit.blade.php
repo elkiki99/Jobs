@@ -1,22 +1,22 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-6xl font-medium leading-tight text-gray-800">
-            {{ __('Edit opening ') }}
+        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
+            {{ __('Edit opening') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="">
         <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
+        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">Edit opening {{ $opening->name }}</p>
             <div class="p-4 bg-white border sm:p-8">
                 <div class="w-full">
                     <form method="post" action="{{ route('openings.update', $opening->slug) }}"
                         enctype="multipart/form-data" class="mt-6 space-y-6">
                         @csrf
-                        {{-- @method('PUT')  --}}
 
                         <!-- Title -->
                         <div>
-                            <x-input-label for="title" :value="__('Opening title')" />
+                            <x-input-label for="title" :value="__('Opening title *')" />
                             <x-text-input placeholder="Your opening title" id="title" name="title" type="text"
                                 class="block w-full mt-1" :value="old('title', $opening->title)" autofocus autocomplete="title" />
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />
@@ -24,7 +24,7 @@
 
                         <!-- Description -->
                         <div class="mb-4">
-                            <x-input-label for="description" :value="__('Profile description')" />
+                            <x-input-label for="description" :value="__('Profile description *')" />
                             <div>
                                 <textarea id="description" name="description" placeholder="Tell us your story!">{{ old('description', $opening->description) }}</textarea>
                             </div>
@@ -36,7 +36,7 @@
                         <div>
                             @if ($opening->image)
                                 <div class="mt-4">
-                                    <x-input-label :value="__('Current Image')" />
+                                    <x-input-label :value="__('Current Image *')" />
                                     <img src="{{ asset('storage/' . $opening->image) }}" alt="Current image"
                                         class="w-full mt-2 shadow-md md:w-1/2" />
                                 </div>
@@ -58,7 +58,7 @@
 
                         <!-- Salary -->
                         <div>
-                            <x-input-label for="salary" :value="__('Opening salary')" />
+                            <x-input-label for="salary" :value="__('Opening salary *')" />
                             <x-text-input placeholder="Your opening salary" id="salary" name="salary" type="number"
                                 class="block w-full mt-1" :value="old('salary', $opening->salary)" autofocus autocomplete="salary" />
                             <x-input-error class="mt-2" :messages="$errors->get('salary')" />
@@ -66,7 +66,7 @@
 
                         <!-- Location -->
                         <div>
-                            <x-input-label for="location" :value="__('Location')" />
+                            <x-input-label for="location" :value="__('Location *')" />
                             <select id="location"
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 name="location" autocomplete="location">
@@ -83,7 +83,7 @@
 
                         <!-- Company -->
                         <div>
-                            <x-input-label for="company_id" :value="__('Opening company')" />
+                            <x-input-label for="company_id" :value="__('Opening company *')" />
                             <select id="company_id"
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 name="company_id" autocomplete="company_id">
@@ -110,7 +110,7 @@
 
                         <!-- Slug -->
                         <div>
-                            <x-input-label for="slug" :value="__('Opening slug')" />
+                            <x-input-label for="slug" :value="__('Opening slug *')" />
                             <x-text-input placeholder="Your opening slug" id="slug" name="slug" type="text"
                                 class="block w-full mt-1" :value="old('slug', $opening->slug)" autofocus autocomplete="slug" />
                             <x-input-error class="mt-2" :messages="$errors->get('slug')" />
@@ -118,7 +118,7 @@
 
                         <!-- Category -->
                         <div>
-                            <x-input-label for="category_slug" :value="__('Opening category')" />
+                            <x-input-label for="category_slug" :value="__('Opening category *')" />
                             <select id="category_slug"
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 name="category_slug" autocomplete="category_slug">

@@ -60,6 +60,7 @@ class AppliedToOpening extends Notification
             'opening_slug' => $this->opening->slug,
             'user_id' => $notifiable->id,
             'candidate_id' => $this->candidate->id,
+            'candidate_avatar' => $this->candidate,
             'candidate_username' => $this->candidate->username,
         ];
     }
@@ -72,6 +73,7 @@ class AppliedToOpening extends Notification
             'opening_slug' => $this->opening->slug,
             'user_id' => $notifiable->id,
             'candidate_id' => $this->candidate->id,
+            'candidate_avatar' => $this->candidate,
             'candidate_username' => $this->candidate->username,
         ];
     }

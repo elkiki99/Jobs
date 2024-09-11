@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-6xl font-medium leading-tight text-gray-800">
+        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
             {{ $user->name }}
         </h2>
     </x-slot>
@@ -10,7 +10,7 @@
 
             <!-- Avatar -->
             @if ($user->avatar)
-                <img class="rounded-full object-cover size-36 aspect-square"
+                <img class="object-cover rounded-full size-36 aspect-square"
                     src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}"
                     alt="{{ $user->username }}">
             @else
@@ -38,7 +38,7 @@
                     </div>
                     @auth
                         @if (auth()->user()->id === $user->id)
-                            <a href="{{ route('profile.edit') }}">
+                            <a wire:navigate href="{{ route('profile.edit') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="mx-2 size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -53,7 +53,7 @@
                     <p class="text-2xl">{{ $user->username }}</p>
                     @auth
                         @if (auth()->user()->id === $user->id)
-                            <a href="{{ route('profile.edit') }}">
+                            <a wire:navigate href="{{ route('profile.edit') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="mx-2 size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -120,7 +120,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
                     </svg>
-                    <p>Works at <a class="underline"
+                    <p>Works at <a wire:navigate class="underline"
                             href="{{ route('companies.show', $user->company->slug) }}">{{ $user->company->name }}</a>
                     </p>
                 </div>

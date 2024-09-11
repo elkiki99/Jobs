@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
-                    <a href="{{ route('home') }}">
+                    <a wire:navigate href="{{ route('home') }}">
                         <x-application-logo class="block w-auto text-gray-800 fill-current h-9" />
                     </a>
                 </div>
@@ -82,6 +82,19 @@
                             </form>
                         </x-slot>
                     </x-dropdown>
+
+                    <a wire:navigate href="{{ route('notifications') }}" class="relative flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
+                            stroke="currentColor" class="w-6 h-6 text-gray-600">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                        </svg>
+
+                        <span x-data="{ unreadCount: {{ auth()->user()->unreadNotifications->count() }} }" x-show="unreadCount > 0 "
+                            x-text="unreadCount > 9 ? '+9' : unreadCount" x-cloak
+                            class="absolute flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-red-600 rounded-full -top-2 -right-2">
+                        </span>
+                    </a>
                 @else
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('login')">
@@ -96,6 +109,21 @@
 
             <!-- Hamburger -->
             <div class="flex items-center -me-2 sm:hidden">
+                @auth
+                    <a wire:navigate class="relative flex items-center mx-2" href="{{ route('notifications') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                        </svg>
+
+                        <span x-data="{ unreadCount: {{ auth()->user()->unreadNotifications->count() }} }" x-show="unreadCount > 0 "
+                            x-text="unreadCount > 9 ? '+9' : unreadCount" x-cloak
+                            class="absolute flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-red-600 rounded-full -top-2 -right-2">
+                        </span>
+                    </a>
+                @endauth
+
                 <button @click="open = ! open"
                     class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
                     <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -150,13 +178,13 @@
                 <div class="px-4">
                     <div class="flex items-center">
                         @if (Auth::user()->avatar)
-                            <a href="{{ route('users.show', Auth::user()->username) }}">
+                            <a wire:navigate href="{{ route('users.show', Auth::user()->username) }}">
                                 <img class="rounded-full size-12 aspect-square"
                                     src="{{ Str::startsWith(Auth::user()->avatar, ['http://', 'https://']) ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar) }}"
                                     alt="{{ Auth::user()->username }}">
                             </a>
                         @else
-                            <a href="{{ route('users.show', Auth::user()->username) }}">
+                            <a wire:navigate href="{{ route('users.show', Auth::user()->username) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                     class="text-gray-500 rounded-full size-16 aspect-square">
                                     <path fill-rule="evenodd"
@@ -165,6 +193,7 @@
                                 </svg>
                             </a>
                         @endif
+
                         <div class="ml-2">
                             <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
                             <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>

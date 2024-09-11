@@ -1,12 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-6xl font-medium leading-tight text-gray-800">
+        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
             {{ __('New opening') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="">
         <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
+        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">{{ __('Create a new opening') }}</p>
             <div class="p-4 bg-white border sm:p-8">
                 <div class="w-full">
                     <form method="post" action="{{ route('openings.store') }}" class="mt-6 space-y-6"
@@ -22,7 +23,7 @@
 
                         <!-- Description -->
                         <div class="mb-4">
-                            <x-input-label for="description" :value="__('Opening description')" />
+                            <x-input-label for="description" :value="__('Opening description *')" />
                             <div>
                                 <textarea id="description" name="description" placeholder="Tell us about this opening!">{{ old('description') }}</textarea>
                             </div>
@@ -46,7 +47,7 @@
 
                         <!-- Salary -->
                         <div>
-                            <x-input-label for="salary" :value="__('Opening salary')" />
+                            <x-input-label for="salary" :value="__('Opening salary *')" />
                             <x-text-input placeholder="Your opening salary" id="salary" name="salary" type="number"
                                 class="block w-full mt-1" :value="old('salary')" autofocus autocomplete="salary" />
                             <x-input-error class="mt-2" :messages="$errors->get('salary')" />
@@ -54,7 +55,7 @@
 
                         <!-- Location -->
                         <div>
-                            <x-input-label for="location" :value="__('Opening location')" />
+                            <x-input-label for="location" :value="__('Opening location *')" />
                             <select id="location"
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 name="location" autocomplete="location">
@@ -70,7 +71,7 @@
 
                         <!-- Company -->
                         <div>
-                            <x-input-label for="company_id" :value="__('Opening company')" />
+                            <x-input-label for="company_id" :value="__('Opening company *')" />
                             <select id="company_id"
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 name="company_id" autocomplete="company_id">
@@ -82,12 +83,26 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <x-input-error :messages="$errors->get('company_id')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('company_id *')" class="mt-2" />
+
+                            @if (auth()->user()->role === 'recruiter')
+                                <a wire:navigate class="flex items-center justify-end gap-2 mt-2 text-sm text-gray-500"
+                                    href="{{ route('companies.create') }}">
+                                    <p>
+                                        Add a company
+                                    </p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="size-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                                    </svg>
+                                </a>
+                            @endif
                         </div>
 
                         <!-- Slug -->
                         <div>
-                            <x-input-label for="slug" :value="__('Opening slug')" />
+                            <x-input-label for="slug" :value="__('Opening slug *')" />
                             <x-text-input placeholder="Your opening slug" id="slug" name="slug" type="text"
                                 class="block w-full mt-1" :value="old('slug')" autofocus autocomplete="slug" />
                             <x-input-error class="mt-2" :messages="$errors->get('slug')" />
@@ -95,7 +110,7 @@
 
                         <!-- Category -->
                         <div>
-                            <x-input-label for="category_slug" :value="__('Opening category')" />
+                            <x-input-label for="category_slug" :value="__('Opening category *')" />
                             <select id="category_slug"
                                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 name="category_slug" autocomplete="category_slug">

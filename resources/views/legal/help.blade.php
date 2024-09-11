@@ -1,11 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-6xl font-medium leading-tight text-gray-800">
+        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
             {{ __('Help') }}
         </h2>
     </x-slot>   
 
-    <div class="p-4 mx-auto sm:px-6 lg:px-8 max-w-7xl space-y-6">
+    <div class="pb-12 mx-auto space-y-6 sm:px-6 lg:px-8 max-w-7xl">
+        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">Our help center</p>
+        
         <p class="text-lg text-gray-600">
             Welcome to our Help page! Here, you will find answers to common questions and useful information to help you navigate our platform.
         </p>
@@ -28,7 +30,7 @@
         <p class="text-lg text-gray-600">
             If you need further assistance or have specific questions that are not covered in the FAQs, please reach out to our support team. You can contact us via:
         </p>
-        <ul class="list-disc pl-6 text-lg text-gray-600">
+        <ul class="pl-6 text-lg text-gray-600 list-disc">
             <li><strong>Email:</strong> support@example.com</li>
             <li><strong>Phone:</strong> +1 (123) 456-7890</li>
             <li><strong>Live Chat:</strong> Available on our website from 9 AM to 5 PM (EST)</li>
@@ -38,7 +40,7 @@
         <p class="text-lg text-gray-600">
             While you're here, you might find these features interesting:
         </p>
-        <ul class="list-disc pl-6 text-lg text-gray-600">
+        <ul class="pl-6 text-lg text-gray-600 list-disc">
             <li><a href="#" class="text-blue-500 hover:underline">Feature Overview</a> - Learn about the key features of our platform.</li>
             <li><a href="#" class="text-blue-500 hover:underline">Upcoming Releases</a> - Get a sneak peek at what's coming next.</li>
             <li><a href="#" class="text-blue-500 hover:underline">User Stories</a> - Read about how others are using our platform to succeed.</li>

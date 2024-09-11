@@ -22,6 +22,7 @@ class ApplyToOpening extends Component
             $this->hasApplied = Auth::user()->appliedOpenings()->where('opening_id', $this->opening->id)->exists();
         }
     }
+    
     public function apply()
     {
         if (Auth::check() && Auth::user()->role === 'developer' && !$this->hasApplied) {

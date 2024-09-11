@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-6xl font-medium leading-tight text-gray-800">
+        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
             {{ __('My network') }}
         </h2>
     </x-slot>
 
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-        <p class="text-2xl text-gray-600">{{ __('Manage your network') }}</p>
+        <p class="text-lg text-gray-600 sm:text-2xl">{{ __('Manage your network') }}</p>
 
         <div class="mt-5">
             @if (session('company_deleted'))
@@ -21,7 +21,7 @@
         </div>
 
         <div class="py-12 space-y-2">
-            <a class="flex items-center py-1 underline" href="{{ route('users.followers') }}">
+            <a wire:navigate class="flex items-center py-1 underline" href="{{ route('users.followers') }}">
                 People who follow you
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-1 size-5">
                     <path fill-rule="evenodd"
@@ -29,7 +29,7 @@
                         clip-rule="evenodd" />
                 </svg>
             </a>
-            <a class="flex items-center py-1 underline" href="{{ route('users.following') }}">
+            <a wire:navigate class="flex items-center py-1 underline" href="{{ route('users.following') }}">
                 People you follow
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-1 size-5">
                     <path fill-rule="evenodd"
@@ -37,7 +37,7 @@
                         clip-rule="evenodd" />
                 </svg>
             </a>
-            <a class="flex items-center py-1 underline" href="{{ route('users.index') }}">
+            <a wire:navigate class="flex items-center py-1 underline" href="{{ route('users.index') }}">
                 Connect with more people!
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-1 size-5">
                     <path fill-rule="evenodd"
@@ -46,7 +46,7 @@
                 </svg>
             </a>
             @if(auth()->user()->role === 'recruiter' && App\Models\Company::where('created_by', auth()->user()->id)->exists())
-                <a class="flex items-center py-1 underline" href="{{ route('companies.index') }}">
+                <a wire:navigate class="flex items-center py-1 underline" href="{{ route('companies.index') }}">
                     My companies!
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-1 size-5">
                         <path fill-rule="evenodd"

@@ -1,11 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-6xl font-medium leading-tight text-gray-800">
-            {{ __('Cookies Policy') }}
+        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
+            {{ __('Cookies policy') }}
         </h2>
     </x-slot>   
 
-    <div class="p-4 mx-auto sm:px-6 lg:px-8 max-w-7xl space-y-6">
+    <div class="pb-12 mx-auto space-y-6 sm:px-6 lg:px-8 max-w-7xl">
+        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">Our cookies policy</p>
+
         <p class="text-lg text-gray-600">
             This Cookies Policy explains how we use cookies and similar tracking technologies on our platform. By using our site, you consent to our use of cookies in accordance with this policy.
         </p>
@@ -16,7 +18,7 @@
         </p>
 
         <h3 class="text-2xl font-semibold text-gray-800">2. Types of Cookies We Use</h3>
-        <ul class="list-disc pl-6 text-lg text-gray-600">
+        <ul class="pl-6 text-lg text-gray-600 list-disc">
             <li><strong>Essential Cookies:</strong> These cookies are necessary for the proper functioning of our site and to provide you with the services you request, such as logging in or filling out forms.</li>
             <li><strong>Performance Cookies:</strong> These cookies collect information about how visitors use our site, helping us improve its performance and user experience. They do not collect personal data.</li>
             <li><strong>Functionality Cookies:</strong> These cookies allow our site to remember your choices, such as language preferences, and provide enhanced features.</li>

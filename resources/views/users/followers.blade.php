@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-6xl font-medium leading-tight text-gray-800">
+        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
             {{ __('Followers') }}
         </h2>
     </x-slot>
@@ -13,7 +13,7 @@
                 <x-user-card :user="$user" />
             @empty
                 <div class="col-span-full">
-                    <p>No users are following you yet, <a class="py-1 underline" href="{{ route('users.index') }}">connect with more people!</a></p>
+                    <p>No users are following you yet, <a wire:navigate class="py-1 underline" href="{{ route('users.index') }}">connect with more people!</a></p>
                 </div>
             @endforelse
         </div>

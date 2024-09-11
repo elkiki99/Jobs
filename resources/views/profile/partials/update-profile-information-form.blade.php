@@ -25,7 +25,7 @@
                 </p>
             </div>
 
-            <a href="{{ route('users.show', $user->username) }}" class="ml-auto">
+            <a wire:navigate href="{{ route('users.show', $user->username) }}" class="ml-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                     <path fill-rule="evenodd"
                         d="M8.25 3.75H19.5a.75.75 0 0 1 .75.75v11.25a.75.75 0 0 1-1.5 0V6.31L5.03 20.03a.75.75 0 0 1-1.06-1.06L17.69 5.25H8.25a.75.75 0 0 1 0-1.5Z"
@@ -207,6 +207,7 @@
                 class="block w-full mt-1 text-sm font-medium text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 name="company_id" autocomplete="company_id">
                 <option hidden value="">Select a company</option>
+                <option value="-1">None</option>
                 @foreach (App\Models\Company::all() as $company)
                     <option value="{{ $company->id }}"
                         {{ old('company_id', $user->company_id) == $company->id ? 'selected' : '' }}>
@@ -215,16 +216,18 @@
             </select>
             <x-input-error :messages="$errors->get('company_id')" class="mt-2" />
 
-            <a class="flex text-sm mt-2 text-gray-500 items-center gap-2 justify-end"
-                href="{{ route('companies.create') }}">
-                <p>
-                    Add a company
-                </p>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
-                </svg>
-            </a>
+            @if(auth()->user()->role === 'recruiter')
+                <a wire:navigate class="flex items-center justify-end gap-2 mt-2 text-sm text-gray-500"
+                    href="{{ route('companies.create') }}">
+                    <p>
+                        Add a company
+                    </p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                </a>
+            @endif
         </div>
 
         <!-- Save Button -->

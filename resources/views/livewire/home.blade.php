@@ -1,5 +1,5 @@
 <div class="px-6 mx-auto max-w-7xl lg:px-8">
-    <p class="text-xl text-gray-800">
+    <p class="text-lg text-gray-600 sm:text-xl">
         {{ __('Get recruited quickly by top headhunters, tailored for fast-moving developers.') }}<br>
         {{ __('Just apply and skip the lengthy forms!') }}
     </p>

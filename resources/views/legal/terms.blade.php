@@ -1,11 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-6xl font-medium leading-tight text-gray-800">
-            {{ __('Terms and Conditions') }}
+        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
+            {{ __('Terms') }}
         </h2>
     </x-slot>   
 
-    <div class="p-4 mx-auto sm:px-6 lg:px-8 max-w-7xl space-y-6">
+    <div class="pb-12 mx-auto space-y-6 sm:px-6 lg:px-8 max-w-7xl">
+        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">Our terms & conditions</p>
+        
         <p class="text-lg text-gray-600">
             Welcome to our platform. By using our services, you agree to be bound by the following terms and conditions. Please read them carefully as they outline your rights and responsibilities as a user of our site.
         </p>
@@ -27,7 +29,7 @@
 
         <h3 class="text-2xl font-semibold text-gray-800">4. Privacy</h3>
         <p class="text-lg text-gray-600">
-            Your privacy is important to us. Please refer to our <a class="hover:underline" href="{{ route('privacy')}}">Privacy Policy</a> for information on how we collect, use, and protect your personal data. By using our platform, you consent to the handling of your data in accordance with our policy.
+            Your privacy is important to us. Please refer to our <a wire:navigate class="hover:underline" href="{{ route('privacy')}}">Privacy Policy</a> for information on how we collect, use, and protect your personal data. By using our platform, you consent to the handling of your data in accordance with our policy.
         </p>
 
         <h3 class="text-2xl font-semibold text-gray-800">5. Liability</h3>

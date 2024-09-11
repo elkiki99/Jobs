@@ -1,11 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-6xl font-medium leading-tight text-gray-800">
-            {{ __('Privacy Policy') }}
+        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
+            {{ __('Privacy policy') }}
         </h2>
     </x-slot>   
 
-    <div class="p-4 mx-auto sm:px-6 lg:px-8 max-w-7xl space-y-6">
+    <div class="pb-12 mx-auto space-y-6 sm:px-6 lg:px-8 max-w-7xl">
+        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">Our privacy policy</p>
+        
         <p class="text-lg text-gray-600">
             Your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your personal information when you visit our platform. Please take a moment to read through this policy to understand our practices.
         </p>

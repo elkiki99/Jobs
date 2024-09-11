@@ -6,7 +6,7 @@
             <x-user-card :user="$user" />
         @empty
             <div class="col-span-full">
-                <p>You are not following anyone yet, <a class="py-1 underline" href="{{ route('users.index') }}">connect with more people!</a></p>
+                <p>You are not following anyone yet, <a wire:navigate class="py-1 underline" href="{{ route('users.index') }}">connect with more people!</a></p>
             </div>
         @endforelse
     </div>
