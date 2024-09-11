@@ -35,34 +35,45 @@
                 @endauth
             </div>
 
+            <div class="py-1 text-gray-500 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <p>{{ $opening->created_at->diffForHumans() }}</p>
+            </div>
+
             <p>{!! $opening->description !!}</p>
 
-            <div class="space-y-4">
-                <p><span class="font-semibold">Location:</span> {{ $opening->location }}</p>
-                <p><span class="font-semibold">Offer:</span>
-                    {{ Illuminate\Support\Number::currency($opening->salary, 'USD') }}</p>
-                <div class="flex items-center gap-2">
-                    <p class="font-semibold">Company: </p>
-                    <a href="{{ route('companies.show', $opening->company->slug) }}" class="hover:underline">
-                        {{ $opening->company->name }}
-                    </a>
+            <div class="pt-6">
+                <div class="space-y-4">
+                    <p><span class="font-semibold">Location:</span> {{ $opening->location }}</p>
+                    <p><span class="font-semibold">Offer:</span>
+                        {{ Illuminate\Support\Number::currency($opening->salary, 'USD') }}</p>
+                    <div class="flex items-center gap-2">
+                        <p class="font-semibold">Company: </p>
+                        <a href="{{ route('companies.show', $opening->company->slug) }}" class="hover:underline">
+                            {{ $opening->company->name }}
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <p class="font-semibold">Category: </p>
+                        <a href="{{ route('categories.show', $opening->category()->slug) }}"
+                            class="hover:underline">{{ $opening->category()->name }}</a>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <p class="font-semibold">Posted by: </p>
+                        <a href="{{ route('users.show', $opening->user->username) }}"
+                            class="hover:underline">{{ $opening->user->name }}
+                        </a>
+                    </div>
+
+                    <livewire:openings.apply-to-opening :opening="$opening" />
                 </div>
-                <div class="flex items-center gap-2">
-                    <p class="font-semibold">Category: </p>
-                    <a href="{{ route('categories.show', $opening->category()->slug) }}"
-                        class="hover:underline">{{ $opening->category()->name }}</a>
-                </div>
-                
-                <div class="flex items-center gap-2">
-                    <p class="font-semibold">Posted by: </p>
-                    <a href="{{ route('users.show', $opening->user->username) }}"
-                        class="hover:underline">{{ $opening->user->name }}
-                    </a>
-                </div>
-    
-                <livewire:openings.apply-to-opening :opening="$opening" />    
             </div>
-            
+
             @auth
                 @if (auth()->user()->role === 'recruiter' && auth()->user()->id === $opening->user_id)
                     <x-primary-button x-data=""

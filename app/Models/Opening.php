@@ -45,4 +45,9 @@ class Opening extends Model
     {
         return $this->belongsToMany(User::class, 'opening_user', 'opening_id', 'user_id');
     }
+
+    public function recruiter()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

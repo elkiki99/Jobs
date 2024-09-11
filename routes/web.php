@@ -9,6 +9,7 @@ use App\Http\Controllers\OpeningController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RecruiterMiddleware;
 use App\Http\Controllers\LegalPagesController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', function () {
     return view('home');
@@ -77,5 +78,9 @@ Route::get('/support', [LegalPagesController::class, 'support'])->name('support'
 Route::get('/help', [LegalPagesController::class, 'help'])->name('help');
 Route::get('/terms', [LegalPagesController::class, 'terms'])->name('terms');
 
+/**
+ * Notifications
+ */
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
 
 require __DIR__.'/auth.php';
