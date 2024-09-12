@@ -4,6 +4,7 @@ namespace App\Livewire\Users;
 
 use App\Models\User;
 use Livewire\Component;
+use App\Notifications\UserFollowed;
 use Illuminate\Support\Facades\Auth;
 
 class ToggleFollow extends Component
@@ -29,6 +30,8 @@ class ToggleFollow extends Component
             $authUser->following()->attach($this->user->id);
             $this->isFollowing = true;
             $this->dispatch('userFollowed', $this->user->id);
+
+            $this->user->notify(new UserFollowed($authUser));
         }
     }
 

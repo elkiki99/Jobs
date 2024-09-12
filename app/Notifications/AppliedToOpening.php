@@ -55,26 +55,18 @@ class AppliedToOpening extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => "A new application has been submitted by {$this->candidate->name} for the opening titled {$this->opening->title}",
+            'message' => "New application by {$this->candidate->name} submitted for {$this->opening->title}",
             'opening_id' => $this->opening->id,
-            'opening_slug' => $this->opening->slug,
-            'user_id' => $notifiable->id,
             'candidate_id' => $this->candidate->id,
-            'candidate_avatar' => $this->candidate,
-            'candidate_username' => $this->candidate->username,
         ];
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'message' => "A new application has been submitted by {$this->candidate->name} for the opening titled {$this->opening->title}.",
+            'message' => "New application by {$this->candidate->name} submitted for {$this->opening->title}.",
             'opening_id' => $this->opening->id,
-            'opening_slug' => $this->opening->slug,
-            'user_id' => $notifiable->id,
             'candidate_id' => $this->candidate->id,
-            'candidate_avatar' => $this->candidate,
-            'candidate_username' => $this->candidate->username,
         ];
     }
 }
