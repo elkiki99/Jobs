@@ -20,12 +20,11 @@ return new class extends Migration
             $table->text('description');
             $table->string('location');
             $table->decimal('salary', 10, 2); 
-            $table->string('image');
-            // $table->string('status');
+            $table->string('image')->nullable();
             $table->string('slug');
             $table->foreignIdFor(Company::class);
             $table->string('category_slug');
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@
 app = 'jobs-polished-meadow-3345'
 primary_region = 'scl'
 console_command = 'php /var/www/html/artisan tinker'
-
+  
 [build]
   [build.args]
     NODE_VERSION = '18'

@@ -14,20 +14,31 @@ class ProfileSummaryForm extends Component
     public function mount()
     {
         $this->userCv = Auth::user()->userCv;
-        if ($this->userCv) {
-            $this->profile_summary = $this->userCv->profile_summary ?? [];
-        }
+        $this->profile_summary = $this->userCv->profile_summary ?? '';
+    }
+
+    protected function rules()
+    {
+        return [
+            'profile_summary' => 'nullable|string|max:1000',
+        ];
+    }
+
+    protected function messages()
+    {
+        return [
+            'profile_summary.max' => 'The profile summary may not be greater than 1000 characters.',
+        ];
     }
 
     public function updateProfileSummary()
     {
-        $this->validate([
-            'profile_summary' => 'required|string|max:1000',
-        ]);
+        $this->validate();
 
-        $this->userCv->profile_summary = $this->profile_summary;
-        $this->userCv->user_id = Auth::id();
-        $this->userCv->save();
+        UserCv::updateOrCreate(
+            ['user_id' => Auth::id()],
+            ['profile_summary' => $this->profile_summary]
+        );
 
         session()->flash('profile_summary_updated', 'Profile summary updated successfully!');
     }

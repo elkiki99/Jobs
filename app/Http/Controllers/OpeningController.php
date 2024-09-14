@@ -49,7 +49,7 @@ class OpeningController extends Controller
         $opening = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:10000'],
-            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:1024'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:1024'],
             'salary' => ['required', 'numeric'],
             'location' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:openings'],	

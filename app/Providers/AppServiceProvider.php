@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+// use DebugBar\DebugBar;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
         Route::bind('slug', function ($slug) {
             return Category::findBySlug($slug) ?? abort(404);
         });
+
+        // if ($this->app->environment('local')) {
+        //     Debugbar::enable();
+        // }
     }
 }

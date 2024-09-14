@@ -2,10 +2,17 @@
     <div class="flex flex-col sm:flex-row">
         <div class="relative w-full mb-4 sm:w-36 sm:mb-0 sm:mr-4 aspect-square">
             <a wire:navigate href="{{ route('openings.show', $opening->slug) }}">
-                <img loading="lazy" class="absolute inset-0 object-cover w-full h-full border" alt="{{ $opening->title }}"
-                    src="{{ Str::startsWith($opening->image, ['http://', 'https://']) ? $opening->image : Storage::disk('s3')->url($opening->image) }}">
+                @if ($opening->image)
+                    <img loading="lazy" class="absolute inset-0 object-cover w-full h-full border"
+                        alt="{{ $opening->title }}"
+                        src="{{ Str::startsWith($opening->image, ['http://', 'https://']) ? $opening->image : Storage::disk('s3')->url($opening->image) }}">
+                @else
+                    <img loading="lazy" class="absolute inset-0 object-cover w-full h-full border"
+                        alt="{{ $opening->title }}"
+                        src="{{ asset('images/no-image.png') }}">
+                @endif
             </a>
-        </div>
+        </div>  
 
         <div class="flex-1">
             <h3 class="text-2xl font-medium text-gray-800">{{ $opening->title }}</h3>
