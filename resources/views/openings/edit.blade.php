@@ -40,7 +40,7 @@
                                     <img 
                                         {{-- src="{{ asset('storage/' . $opening->image) }}"  --}}
                                         alt="Current image"
-                                        src="{{ Str::startsWith($opening->avatar, ['http://', 'https://']) ? $opening->avatar : Storage::disk('s3')->url($opening->avatar) }}"
+                                        src="{{ Str::startsWith($opening->image, ['http://', 'https://']) ? $opening->image : Storage::disk('s3')->url($opening->image) }}"
                                         class="w-full mt-2 shadow-md md:w-1/2" />
                                 </div>
                             @endif

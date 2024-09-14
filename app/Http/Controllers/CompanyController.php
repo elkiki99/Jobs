@@ -105,7 +105,7 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        // Gate::authorize('update', $company);
+        Gate::authorize('update', $company);
         $newCompanyData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -156,8 +156,8 @@ class CompanyController extends Controller
         $user = Auth::user();
         
         $isCompanyInUseByOthers = User::where('company_id', $company->id)
-                                      ->where('id', '!=', $user->id)
-                                      ->exists();
+                ->where('id', '!=', $user->id)
+                ->exists();
     
         if (!$isCompanyInUseByOthers) {
             $company->delete();
