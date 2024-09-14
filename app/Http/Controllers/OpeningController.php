@@ -6,7 +6,9 @@ use App\Models\Opening;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class OpeningController extends Controller
 {
@@ -57,16 +59,16 @@ class OpeningController extends Controller
             'category_slug.required' => 'The category field is required.',
             'category_slug.string' => 'The category must be a string.',
             'category_slug.in' => 'The selected category is invalid.',
-            'company_id.required' => 'The company is required', 
             'company_id.exists' => 'The company you provided does not match our records', 
             'company_id.required' => 'The company is required', 
         ]);
         
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('openings', 'public');
+            // $imagePath = Storage::disk('s3')->put($request->file('image'), 'openings');
+            $imagePath = Storage::disk('s3')->put('openings', $request->file('image'));
             $opening['image'] = $imagePath;
         }
-        $opening['user_id'] = auth()->user()->id;
+        $opening['user_id'] = Auth::user()->id;
         Opening::create($opening);
 
         return redirect()->route('openings.my-openings')->with('opening_created', 'Opening created successfully!');
@@ -126,13 +128,13 @@ class OpeningController extends Controller
             'category_slug.required' => 'The category field is required.',
             'category_slug.string' => 'The category must be a string.',
             'category_slug.in' => 'The selected category is invalid.',
-            'company_id.required' => 'The company is required', 
             'company_id.exists' => 'The company you provided does not match our records', 
             'company_id.required' => 'The company is required', 
         ]);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('openings', 'public');
+            // $imagePath = $request->file('image')->store('openings', ['s3', 'visibility' => 'public']);
+            $imagePath = Storage::disk('s3')->put('openings', $request->file('image'));
             $newOpening['image'] = $imagePath;
         } else {
             $newOpening['image'] = $opening->image;
@@ -168,7 +170,7 @@ class OpeningController extends Controller
     
     public function apply(Opening $opening)
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         if(!$user) {
             return redirect()->route('login');
@@ -184,7 +186,7 @@ class OpeningController extends Controller
 
     public function applications()
     {   
-        $openings = auth()->user()->appliedOpenings()->paginate(24);
+        $openings = Auth::user()->appliedOpenings()->paginate(24);
 
         return view('openings.applications', [
             'openings' => $openings,
@@ -193,7 +195,7 @@ class OpeningController extends Controller
 
     public function myOpenings()
     {
-        $openings = auth()->user()->opening()->latest()->paginate(24);
+        $openings = Auth::user()->opening()->latest()->paginate(24);
 
         return view('openings.my-openings', [
             'openings' => $openings,

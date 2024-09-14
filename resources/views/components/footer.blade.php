@@ -9,13 +9,13 @@
 
         <!-- Navigation Links -->
         <div class="flex flex-wrap justify-center gap-4 px-4 sm:gap-6 md:gap-8">
-            <x-nav-link :href="route('home')">Home</x-nav-link>
-            <x-nav-link :href="route('about')">About</x-nav-link>
-            <x-nav-link :href="route('terms')">Terms</x-nav-link>
-            <x-nav-link :href="route('support')">Support</x-nav-link>
-            <x-nav-link :href="route('privacy')">Privacy</x-nav-link>
-            <x-nav-link :href="route('cookies')">Cookies</x-nav-link>
-            <x-nav-link :href="route('help')">Help</x-nav-link>
+            <x-nav-link wire:navigate :href="route('home')">Home</x-nav-link>
+            <x-nav-link wire:navigate :href="route('about')">About</x-nav-link>
+            <x-nav-link wire:navigate :href="route('terms')">Terms</x-nav-link>
+            <x-nav-link wire:navigate :href="route('support')">Support</x-nav-link>
+            <x-nav-link wire:navigate :href="route('privacy')">Privacy</x-nav-link>
+            <x-nav-link wire:navigate :href="route('cookies')">Cookies</x-nav-link>
+            <x-nav-link wire:navigate :href="route('help')">Help</x-nav-link>
         </div>
     </div>
 </div>

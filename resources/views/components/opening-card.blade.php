@@ -3,7 +3,7 @@
         <div class="relative w-full mb-4 sm:w-36 sm:mb-0 sm:mr-4 aspect-square">
             <a wire:navigate href="{{ route('openings.show', $opening->slug) }}">
                 <img loading="lazy" class="absolute inset-0 object-cover w-full h-full border" alt="{{ $opening->title }}"
-                    src="{{ Str::startsWith($opening->image, ['http://', 'https://']) ? $opening->image : asset('storage/' . $opening->image) }}">
+                    src="{{ Str::startsWith($opening->image, ['http://', 'https://']) ? $opening->image : Storage::disk('s3')->url($opening->image) }}">
             </a>
         </div>
 

@@ -4,7 +4,7 @@
             <!-- Avatar -->
             @if ($user->avatar)
                 <img class="rounded-full size-16 aspect-square"
-                    src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}"
+                    src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : Storage::disk('s3')->url($user->avatar) }}"
                     alt="{{ $user->username }}">
             @else
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -216,7 +216,7 @@
             </select>
             <x-input-error :messages="$errors->get('company_id')" class="mt-2" />
 
-            @if(auth()->user()->role === 'recruiter')
+            @if (auth()->user()->role === 'recruiter')
                 <a wire:navigate class="flex items-center justify-end gap-2 mt-2 text-sm text-gray-500"
                     href="{{ route('companies.create') }}">
                     <p>
@@ -224,7 +224,8 @@
                     </p>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
                     </svg>
                 </a>
             @endif

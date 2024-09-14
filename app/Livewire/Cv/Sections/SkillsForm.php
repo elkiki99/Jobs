@@ -3,14 +3,14 @@
 namespace App\Livewire\Cv\Sections;
 
 use Livewire\Component;
-use App\Models\UserCV;
+use App\Models\UserCv;
 
 class SkillsForm extends Component
 {
     public $skillsInput = '';
     public $userCv;
 
-    public function mount(UserCV $userCv) 
+    public function mount(UserCv $userCv) 
     {
         $this->userCv = $userCv;
 

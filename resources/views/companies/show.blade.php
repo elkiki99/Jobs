@@ -11,7 +11,8 @@
         <div class="flex">
             <div class="w-1/3 space-y-2">
                 <img class="object-cover rounded-full size-36 aspect-square"
-                    src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : asset('storage/' . $company->logo) }}"
+                    {{-- src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : asset('storage/' . $company->logo) }}" --}}
+                    src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : Storage::disk('s3')->url($company->logo) }}"
                     alt="{{ $company->name }}">
                 <div class="flex items-center justify-between">
                     <div class="flex gap-2 items-cener">

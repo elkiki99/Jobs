@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class UserFollowed extends Notification
+class UserFollowed extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -39,8 +39,8 @@ class UserFollowed extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
+                    ->line("{$this->follower->name} has followed you!")
+                    ->action('View profile', url('/user/'.$this->follower->username))
                     ->line('Thank you for using our application!');
     }
 

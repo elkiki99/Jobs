@@ -10,12 +10,28 @@ use Illuminate\Support\Facades\Auth;
 class ToggleFollow extends Component
 {
     public $user;
-    public $isFollowing = false;    
-    
+    public $isFollowing = false;
+
     public function mount(User $user)
     {
         $this->user = $user;
         $this->isFollowing = auth()->user()->following()->where('followed_id', $user->id)->exists();
+    }
+
+    public function notifyFollow()
+    {
+        $authUser = Auth::user();
+
+        $existingNotification = $this->user->notifications()
+            ->where('type', UserFollowed::class)
+            ->where('data->follower_id', $authUser->id)
+            ->first();
+
+        if ($existingNotification) {
+            $existingNotification->update(['created_at' => now()]);
+        } else {
+            $this->user->notify(new UserFollowed($authUser));
+        }
     }
 
     public function toggleFollow()
@@ -31,7 +47,7 @@ class ToggleFollow extends Component
             $this->isFollowing = true;
             $this->dispatch('userFollowed', $this->user->id);
 
-            $this->user->notify(new UserFollowed($authUser));
+            $this->notifyFollow();
         }
     }
 

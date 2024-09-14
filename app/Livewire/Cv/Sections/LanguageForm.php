@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Cv\Sections;
 
+use App\Models\UserCv;
 use Livewire\Component;
-use App\Models\UserCV;
+use Illuminate\Support\Facades\Auth;
 
 class LanguageForm extends Component
 {
@@ -12,14 +13,12 @@ class LanguageForm extends Component
 
     public function mount()
     {
-        $this->userCv = auth()->user()->userCv;
-        if($this->userCv) { 
-            $this->languages = $this->userCv->languages ?? [];
-        }
+        $this->userCv = Auth::user()->userCv;
+        $this->languages = $this->userCv->languages ?? [];
     }
     
     protected function messages()
-    {   
+    {
         return [
             'languages.*.language.required' => 'The language field is required.',
             'languages.*.proficiency.required' => 'The proficiency field is required.',
@@ -38,17 +37,18 @@ class LanguageForm extends Component
             'languages.*.proficiency' => 'required|string|max:255',
         ]);
 
-        $existingLanguages = $this->userCv ? $this->userCv->languages : [];
+        $existingData = $this->userCv ? $this->userCv->toArray() : [];
 
-        if($existingLanguages !== $this->languages) {
-            $this->userCv = UserCv::updateOrCreate(
-                ['user_id' => auth()->id()],
-                ['languages' => $this->languages],
-            );
-            session()->flash('languages_updated', 'Work experience updated successfully!');
-        } else {
-            session()->flash('languages_updated_error', 'Language is needed to update your cv!');
-        }
+        $updatedData = array_merge($existingData, [
+            'languages' => $this->languages
+        ]);
+
+        UserCv::updateOrCreate(
+            ['user_id' => Auth::id()],
+            $updatedData
+        );
+
+        session()->flash('languages_updated', 'Languages updated successfully!');
     }
 
     public function removeLanguage($index)
@@ -56,6 +56,7 @@ class LanguageForm extends Component
         if (isset($this->languages[$index])) {
             unset($this->languages[$index]);
             $this->languages = array_values($this->languages);
+
             $this->updateLanguages();
         }
     }

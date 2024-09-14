@@ -1,22 +1,22 @@
 <div class="space-y-6">
     <!-- Profile summary -->
-    <livewire:cv.sections.profile-summary-form :userCv="$userCv" />
+    <livewire:cv.sections.profile-summary-form />
 
     <!-- Education -->
-    <livewire:cv.sections.education-form :userCv="$userCv" />
+    <livewire:cv.sections.education-form />
 
     <!-- Work Experience -->
-    <livewire:cv.sections.work-experience-form :userCv="$userCv" />
+    <livewire:cv.sections.work-experience-form />
     
     <!-- Projects -->
-    <livewire:cv.sections.projects-form :userCv="$userCv" />
+    <livewire:cv.sections.projects-form />
     
     <!-- Certifications -->
-    <livewire:cv.sections.certification-form :userCv="$userCv" />
+    <livewire:cv.sections.certification-form />
     
     <!-- Languages -->
-    <livewire:cv.sections.language-form :userCv="$userCv" />
+    <livewire:cv.sections.language-form />
     
     <!-- Skills -->
-    <livewire:cv.sections.skills-form :userCv="$userCv" />
+    <livewire:cv.sections.skills-form />
 </div>

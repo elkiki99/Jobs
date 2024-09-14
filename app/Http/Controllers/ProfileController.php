@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
 
@@ -34,7 +35,8 @@ class ProfileController extends Controller
         $user->fill($request->validated());
 
         if ($request->hasFile('avatar')) {
-            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            // $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $avatarPath = Storage::disk('s3')->put('avatars', $request->file('avatar'));
             
             $user->avatar = $avatarPath;
             $user->save();
@@ -45,7 +47,7 @@ class ProfileController extends Controller
         }
 
         $user->save();
-        return Redirect::route('users.show', auth()->user()->username)->with('profile-updated', 'Profile updated successfully.');
+        return Redirect::route('users.show', Auth::user()->username)->with('profile-updated', 'Profile updated successfully.');
     }
 
     /**

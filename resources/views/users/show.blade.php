@@ -13,7 +13,7 @@
                 <!-- Avatar -->
                 @if ($user->avatar)
                     <img class="object-cover rounded-full size-36 aspect-square"
-                        src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}"
+                        src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : Storage::disk('s3')->url($user->avatar) }}"
                         alt="{{ $user->username }}">
                 @else
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -174,7 +174,7 @@
 
                 <!-- Follow button -->
                 @auth
-                    @if (auth()->user()->id !== $user->id && !auth()->user()->followers->contains($user))
+                    @if (auth()->user()->id !== $user->id)
                         <div class="pt-4">
                             <livewire:users.toggle-follow :user="$user" />
                         </div>

@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Cv\Sections;
 
+use App\Models\UserCv;
 use Livewire\Component;
-use App\Models\UserCV;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectsForm extends Component
 {
@@ -12,14 +13,12 @@ class ProjectsForm extends Component
 
     public function mount()
     {
-        $this->userCv = auth()->user()->userCv;
-        if($this->userCv) {
-            $this->projects = $this->userCv->projects ?? [];
-        }
+        $this->userCv = Auth::user()->userCv;
+        $this->projects = $this->userCv->projects ?? [];
     }
 
     protected function messages()
-    {   
+    {
         return [
             'projects.*.title.required' => 'The project title field is required.',
             'projects.*.title.max' => 'The project title may not be greater than 255 characters.',
@@ -46,17 +45,18 @@ class ProjectsForm extends Component
             'projects.*.date' => 'required|date',
         ]);
 
-        $existingProjects = $this->userCv ? $this->userCv->projects : [];
+        $existingData = $this->userCv ? $this->userCv->toArray() : [];
 
-        if($existingProjects !== $this->projects) {
-            $this->userCv = UserCv::updateOrCreate(
-                ['user_id' => auth()->id()],
-                ['projects' => $this->projects],
-            );
-            session()->flash('projects_updated', 'Project updated successfully!');
-        } else {
-            session()->flash('projects_updated_error', 'Project is needed to update your cv!');
-        }
+        $updatedData = array_merge($existingData, [
+            'projects' => $this->projects
+        ]);
+
+        UserCv::updateOrCreate(
+            ['user_id' => Auth::id()],
+            $updatedData
+        );
+
+        session()->flash('projects_updated', 'Project updated successfully!');
     }
 
     public function removeProject($index)

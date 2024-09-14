@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Cv\Sections;
 
+use App\Models\UserCv;
 use Livewire\Component;
-use App\Models\UserCV;
+use Illuminate\Support\Facades\Auth;
 
 class EducationForm extends Component
 {
@@ -12,10 +13,8 @@ class EducationForm extends Component
 
     public function mount()
     {
-        $this->userCv = auth()->user()->userCv;
-        if ($this->userCv) {
-            $this->education = $this->userCv->education ?? [];
-        }
+        $this->userCv = Auth::user()->userCv;
+        $this->education = $this->userCv->education ?? [];
     }
 
     protected function messages()
@@ -46,17 +45,18 @@ class EducationForm extends Component
             'education.*.end_year' => 'nullable|date',
         ]);
 
-        $existingEducation = $this->userCv ? $this->userCv->education : [];
+        $existingData = $this->userCv ? $this->userCv->toArray() : [];
 
-        if ($existingEducation !== $this->education) {
-            $this->userCv = UserCV::updateOrCreate(
-                ['user_id' => auth()->id()],
-                ['education' => $this->education],
-            );
-            session()->flash('education_updated', 'Education updated successfully!');
-        } else {
-            session()->flash('education_updated_error', 'Education is needed to update your cv!');
-        }
+        $updatedData = array_merge($existingData, [
+            'education' => $this->education
+        ]);
+
+        UserCv::updateOrCreate(
+            ['user_id' => Auth::id()],
+            $updatedData
+        );
+
+        session()->flash('education_updated', 'Education updated successfully!');
     }
 
     public function removeEducation($index)

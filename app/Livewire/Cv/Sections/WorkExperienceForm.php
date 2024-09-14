@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Cv\Sections;
 
+use App\Models\UserCv;
 use Livewire\Component;
-use App\Models\UserCV;
+use Illuminate\Support\Facades\Auth;
 
 class WorkExperienceForm extends Component
 {
@@ -12,20 +13,18 @@ class WorkExperienceForm extends Component
 
     public function mount()
     {
-        $this->userCv = auth()->user()->userCv;
-        if($this->userCv) { 
-            $this->work_experience = $this->userCv->work_experience ?? [];
-        }
+        $this->userCv = Auth::user()->userCv;
+        $this->work_experience = $this->userCv->work_experience ?? [];
     }
-    
+
     protected function messages()
     {
         return [
             'work_experience.*.company.required' => 'The company field is required.',
             'work_experience.*.position.required' => 'The position field is required.',
             'work_experience.*.start_date.required' => 'The start date is required.',
-            'work_experience.*.start_date.date' => 'The start date must be an valid one.',
-            'work_experience.*.end_date.date' => 'The end date must be an valid one.',
+            'work_experience.*.start_date.date' => 'The start date must be a valid one.',
+            'work_experience.*.end_date.date' => 'The end date must be a valid one.',
             'work_experience.*.description.required' => 'The description field is required.',
         ];
     }
@@ -45,17 +44,18 @@ class WorkExperienceForm extends Component
             'work_experience.*.description' => 'required|string',
         ]);
 
-        $existingWorkExperience = $this->userCv ? $this->userCv->work_experience : [];
+        $existingData = $this->userCv ? $this->userCv->toArray() : [];
 
-        if($existingWorkExperience !== $this->work_experience) {
-            $this->userCv = UserCv::updateOrCreate(
-                ['user_id' => auth()->id()],
-                ['work_experience' => $this->work_experience],
-            );
-            session()->flash('work_experience_updated', 'Work experience updated successfully!');
-        } else {
-            session()->flash('work_experience_updated_error', 'Work experience is needed to update your cv!');
-        }
+        $updatedData = array_merge($existingData, [
+            'work_experience' => $this->work_experience
+        ]);
+
+        UserCv::updateOrCreate(
+            ['user_id' => Auth::id()],
+            $updatedData
+        );
+
+        session()->flash('work_experience_updated', 'Work experience updated successfully!');
     }
 
     public function removeWorkExperience($index)
@@ -63,7 +63,6 @@ class WorkExperienceForm extends Component
         if (isset($this->work_experience[$index])) {
             unset($this->work_experience[$index]);
             $this->work_experience = array_values($this->work_experience);
-    
             $this->updateWorkExperience();
         }
     }

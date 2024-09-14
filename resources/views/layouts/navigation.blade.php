@@ -16,13 +16,13 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                    <x-nav-link wire:navigate :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('openings.index')" :active="request()->routeIs('openings.index')">
+                    <x-nav-link wire:navigate :href="route('openings.index')" :active="request()->routeIs('openings.index')">
                         {{ __('Openings') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                    <x-nav-link wire:navigate :href="route('users.index')" :active="request()->routeIs('users.index')">
                         {{ __('Connect') }}
                     </x-nav-link>
                 </div>
@@ -46,26 +46,26 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('users.show', Auth::user()->username)">
+                            <x-dropdown-link wire:navigate :href="route('users.show', Auth::user()->username)">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link :href="route('network')">
+                            <x-dropdown-link wire:navigate :href="route('network')">
                                 {{ __('Network') }}
                             </x-dropdown-link>
 
                             @if (auth()->user()->role === 'developer')
-                                <x-dropdown-link :href="route('openings.applications')">
+                                <x-dropdown-link wire:navigate :href="route('openings.applications')">
                                     {{ __('Applications') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('profile.cv')">
+                                <x-dropdown-link wire:navigate :href="route('profile.cv')">
                                     {{ __('C.V') }}
                                 </x-dropdown-link>
                             @else
-                                <x-dropdown-link :href="route('openings.my-openings')">
+                                <x-dropdown-link wire:navigate :href="route('openings.my-openings')">
                                     {{ __('My openings') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('openings.create')">
+                                <x-dropdown-link wire:navigate :href="route('openings.create')">
                                     {{ __('New opening') }}
                                 </x-dropdown-link>
                             @endif
@@ -140,32 +140,32 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+            <x-responsive-nav-link wire:navigate :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Home') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('openings.index')" :active="request()->routeIs('openings.index')">
+            <x-responsive-nav-link wire:navigate :href="route('openings.index')" :active="request()->routeIs('openings.index')">
                 {{ __('Openings') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+            <x-responsive-nav-link wire:navigate :href="route('users.index')" :active="request()->routeIs('users.index')">
                 {{ __('Connect') }}
             </x-responsive-nav-link>
 
             @auth
-                <x-responsive-nav-link :href="route('network')" :active="request()->routeIs('network')">
+                <x-responsive-nav-link wire:navigate :href="route('network')" :active="request()->routeIs('network')">
                     {{ __('Network') }}
                 </x-responsive-nav-link>
                 @if (auth()->user()->role === 'developer')
-                    <x-responsive-nav-link :href="route('openings.applications')" :active="request()->routeIs('openings.applications')">
+                    <x-responsive-nav-link wire:navigate :href="route('openings.applications')" :active="request()->routeIs('openings.applications')">
                         {{ __('Applications') }}
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('profile.cv')" :active="request()->routeIs('profile.cv')">
+                    <x-responsive-nav-link wire:navigate :href="route('profile.cv')" :active="request()->routeIs('profile.cv')">
                         {{ __('C.V') }}
                     </x-responsive-nav-link>
                 @else
-                    <x-responsive-nav-link :href="route('openings.my-openings')" :active="request()->routeIs('openings.my-openings')">
+                    <x-responsive-nav-link wire:navigate :href="route('openings.my-openings')" :active="request()->routeIs('openings.my-openings')">
                         {{ __('My openings') }}
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('openings.create')" :active="request()->routeIs('profile.cv')">
+                    <x-responsive-nav-link wire:navigate :href="route('openings.create')" :active="request()->routeIs('openings.create')">
                         {{ __('New opening') }}
                     </x-responsive-nav-link>
                 @endif

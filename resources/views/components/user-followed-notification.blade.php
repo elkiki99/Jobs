@@ -5,7 +5,7 @@
         <div class="mr-5">
             @if ($follower->avatar)
                 <img class="object-cover rounded-full size-12 sm:size-24 aspect-square"
-                    src="{{ Str::startsWith($follower->avatar, ['http://', 'https://']) ? $follower->avatar : asset('storage/' . $follower->avatar) }}"
+                    src="{{ Str::startsWith($follower->avatar, ['http://', 'https://']) ? $follower->avatar : Storage::disk('s3')->url($follower->avatar) }}"
                     alt="{{ $follower->username }}">
             @else
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"

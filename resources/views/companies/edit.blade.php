@@ -130,7 +130,10 @@
                             @if ($company->logo)
                                 <div class="mt-4">
                                     <x-input-label :value="__('Current logo')" />
-                                    <img src="{{ asset('storage/' . $company->logo) }}" alt="Current logo"
+                                    <img 
+                                        {{-- src="{{ asset('storage/' . $company->logo) }}"  --}}
+                                        src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : Storage::disk('s3')->url($company->logo) }}"
+                                        alt="Current logo"
                                         class="object-cover w-48 h-48 mt-2 rounded-full shadow-md" />
                                 </div>
                             @endif

@@ -7,7 +7,7 @@
 
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <p class="pb-12 text-lg text-gray-600 sm:text-2xl">{{ $opening->company->name }}</p>
-        
+
         <div class="flex flex-col-reverse gap-8 md:flex-row">
             <div class="w-full space-y-2 md:w-1/2">
 
@@ -114,15 +114,8 @@
             <div class="w-full md:w-1/2">
                 @if ($opening->image)
                     <img class="object-cover aspect-square"
-                        src="{{ Str::startsWith($opening->image, ['http://', 'https://']) ? $opening->image : asset('storage/' . $opening->image) }}"
+                        src="{{ Str::startsWith($opening->image, ['http://', 'https://']) ? $opening->image : Storage::disk('s3')->url($opening->image) }}"
                         alt="{{ $opening->name }}">
-                @else
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="text-gray-500 aspect-square">
-                        <path fill-rule="evenodd"
-                            d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                            clip-rule="evenodd" />
-                    </svg>
                 @endif
             </div>
         </div>

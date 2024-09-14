@@ -6,7 +6,9 @@ use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -15,7 +17,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::where('created_by', auth()->user()->id)->paginate(24);
+        $companies = Company::where('created_by', Auth::user()->id)->paginate(24);
 
         return view('companies.index', [
             'companies' => $companies
@@ -61,10 +63,11 @@ class CompanyController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $companyData['logo'] = $request->file('logo')->store('logos', 'public');
+            // $companyData['logo'] = $request->file('logo')->store('logos', 'public');
+            $companyData['logo'] = Storage::disk('s3')->put('logos', $request->file('company'));
         }
 
-        $companyData['created_by'] = auth()->user()->id;
+        $companyData['created_by'] = Auth::user()->id;
         $company = Company::create($companyData);
 
         return redirect()->route('companies.show', $company->slug)->with('company_created', 'Company created successfully.');
@@ -139,7 +142,7 @@ class CompanyController extends Controller
         } else {
             $newCompanyData['logo'] = $company->logo;
         }
-        $newCompanyData['created_by'] = auth()->user()->id;
+        $newCompanyData['created_by'] = Auth::user()->id;
         $company->update($newCompanyData);
 
         return redirect()->route('companies.show', $company->slug)->with('company_updated', 'Company updated successfully!');
@@ -150,7 +153,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         
         $isCompanyInUseByOthers = User::where('company_id', $company->id)
                                       ->where('id', '!=', $user->id)

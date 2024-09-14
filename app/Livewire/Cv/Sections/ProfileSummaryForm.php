@@ -3,7 +3,7 @@
 namespace App\Livewire\Cv\Sections;
 
 use Livewire\Component;
-use App\Models\UserCV;
+use App\Models\UserCv;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileSummaryForm extends Component
@@ -11,10 +11,12 @@ class ProfileSummaryForm extends Component
     public $profile_summary;
     public $userCv;
 
-    public function mount(UserCV $userCv = null) 
+    public function mount()
     {
-        $this->userCv = $userCv ?? UserCV::firstOrNew(['user_id' => Auth::id()]);
-        $this->profile_summary = $this->userCv->profile_summary ?? '';
+        $this->userCv = Auth::user()->userCv;
+        if ($this->userCv) {
+            $this->profile_summary = $this->userCv->profile_summary ?? [];
+        }
     }
 
     public function updateProfileSummary()

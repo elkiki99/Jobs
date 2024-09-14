@@ -51,7 +51,7 @@
             @forelse($openings as $opening)
                 <x-opening-card :opening="$opening" />
             @empty
-                <p>No openings found. <a class="hover:underline" href="{{ route('openings.create') }}">Create your first one!</a></p>
+                <p>No openings found. <a wire:navigate class="hover:underline" href="{{ route('openings.create') }}">Create your first one!</a></p>
             @endforelse
         </div>
 

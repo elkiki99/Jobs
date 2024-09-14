@@ -15,7 +15,7 @@
                         @csrf
                         <!-- Title -->
                         <div>
-                            <x-input-label for="title" :value="__('Opening title')" />
+                            <x-input-label for="title" :value="__('Opening title *')" />
                             <x-text-input placeholder="Your opening title" id="title" name="title" type="text"
                                 class="block w-full mt-1" :value="old('title')" autofocus autocomplete="title" />
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />

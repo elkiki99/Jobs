@@ -4,7 +4,7 @@
         <a wire:navigate href="{{ route('users.show', $user->username) }}">
             @if ($user->avatar)
                 <img loading="lazy" class="object-cover w-full h-auto aspect-square"
-                    src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}"
+                    src="{{ Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : Storage::disk('s3')->url($user->avatar) }}"
                     alt="{{ $user->name }}">
             @else
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -34,7 +34,8 @@
         <p class="text-gray-600">{{ $user->email }}</p>
 
         <div class="flex items-center justify-between pt-4">
-            <a wire:navigate href="{{ route('users.show', $user->username) }}" class="text-sm hover:underline">View Profile</a>
+            <a wire:navigate href="{{ route('users.show', $user->username) }}" class="text-sm hover:underline">View
+                Profile</a>
             @auth
                 <livewire:users.toggle-follow :user="$user" :key="$user->id" />
             @endauth

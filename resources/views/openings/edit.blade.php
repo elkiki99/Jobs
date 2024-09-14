@@ -37,7 +37,10 @@
                             @if ($opening->image)
                                 <div class="mt-4">
                                     <x-input-label :value="__('Current Image *')" />
-                                    <img src="{{ asset('storage/' . $opening->image) }}" alt="Current image"
+                                    <img 
+                                        {{-- src="{{ asset('storage/' . $opening->image) }}"  --}}
+                                        alt="Current image"
+                                        src="{{ Str::startsWith($opening->avatar, ['http://', 'https://']) ? $opening->avatar : Storage::disk('s3')->url($opening->avatar) }}"
                                         class="w-full mt-2 shadow-md md:w-1/2" />
                                 </div>
                             @endif

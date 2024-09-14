@@ -2,24 +2,23 @@
 
 namespace App\Livewire\Cv\Sections;
 
+use App\Models\UserCv;
 use Livewire\Component;
-use App\Models\UserCV;
+use Illuminate\Support\Facades\Auth;
 
 class CertificationForm extends Component
 {
     public $certifications = [];
     public $userCv;
-    
+
     public function mount()
     {
-        $this->userCv = auth()->user()->userCv;
-        if($this->userCv) { 
-            $this->certifications = $this->userCv->certifications ?? [];
-        }
+        $this->userCv = Auth::user()->userCv;
+        $this->certifications = $this->userCv->certifications ?? [];
     }
 
     protected function messages()
-    {   
+    {
         return [
             'certifications.*.title.required' => 'The title field is required.',
             'certifications.*.organization.required' => 'The organization field is required.',
@@ -30,7 +29,7 @@ class CertificationForm extends Component
             'certifications.*.date.required' => 'The date field is required.',
         ];
     }
-    
+
     public function addCertification()
     {
         $this->certifications[] = ['title' => '', 'organization' => '', 'description' => '', 'date' => ''];
@@ -45,17 +44,18 @@ class CertificationForm extends Component
             'certifications.*.date' => 'required|date',
         ]);
 
-        $existingCertifications = $this->userCv ? $this->userCv->certifications : [];
+        $existingData = $this->userCv ? $this->userCv->toArray() : [];
 
-        if($existingCertifications !== $this->certifications) {
-            $this->userCv = UserCv::updateOrCreate(
-                ['user_id' => auth()->id()],
-                ['certifications' => $this->certifications],
-            );
-            session()->flash('certifications_updated', 'Certification updated successfully!');
-        } else {
-            session()->flash('certifications_updated_error', 'Certification is needed to update your cv!');
-        }
+        $updatedData = array_merge($existingData, [
+            'certifications' => $this->certifications
+        ]);
+
+        UserCv::updateOrCreate(
+            ['user_id' => Auth::id()],
+            $updatedData
+        );
+
+        session()->flash('certifications_updated', 'Certification updated successfully!');
     }
 
     public function removeCertification($index)
@@ -63,6 +63,7 @@ class CertificationForm extends Component
         if (isset($this->certifications[$index])) {
             unset($this->certifications[$index]);
             $this->certifications = array_values($this->certifications);
+
             $this->updateCertifications();
         }
     }

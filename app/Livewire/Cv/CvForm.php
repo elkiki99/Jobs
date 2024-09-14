@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Cv;
 
-use App\Models\UserCV;
+use App\Models\UserCv;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 

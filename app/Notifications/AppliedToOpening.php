@@ -7,8 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AppliedToOpening extends Notification
-// implements ShouldQueue
+class AppliedToOpening extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -33,7 +32,7 @@ class AppliedToOpening extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database', 'mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -42,8 +41,8 @@ class AppliedToOpening extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line("A new application has been submitted for the opening titled: {$this->opening->title}.")
-            ->action('View Opening', url("/openings/{$this->opening->slug}"))
+            ->line("New application by {$this->candidate->name} submitted for {$this->opening->title}")
+            ->action('View candidate', url("/user/{$this->candidate->slug}"))
             ->line('Thank you for using our application!');
     }
 
@@ -64,9 +63,10 @@ class AppliedToOpening extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'message' => "New application by {$this->candidate->name} submitted for {$this->opening->title}.",
+            'message' => "New application by {$this->candidate->name} submitted for {$this->opening->title}",
             'opening_id' => $this->opening->id,
             'candidate_id' => $this->candidate->id,
         ];
     }
 }
+

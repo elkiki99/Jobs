@@ -40,7 +40,7 @@ Route::post('/opening/edit/{opening:slug}', [OpeningController::class, 'update']
 Route::get('/opening/{opening:slug}', [OpeningController::class, 'show'])->name('openings.show');
 Route::get('/applications', [OpeningController::class, 'applications'])->middleware(DevMiddleware::class)->name('openings.applications');
 Route::get('/my-openings', [OpeningController::class, 'myOpenings'])->middleware(RecruiterMiddleware::class)->name('openings.my-openings');
-Route::post('/opening/{opening:slug}', [OpeningController::class, 'apply'])->name('openings.show');
+// Route::post('/opening/{opening:slug}', [OpeningController::class, 'apply'])->name('openings.apply');
 Route::delete('/opening/{opening:slug}', [OpeningController::class, 'destroy'])->name('openings.delete');
 
 /**
