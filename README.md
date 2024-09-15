@@ -25,8 +25,8 @@ To use **Jobs**, follow these steps:
 2. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/elkiki99/Laravel-Tall-Stack-Blog-App
-    cd edifice-gazette
+    git clone https://github.com/elkiki99/Jobs
+    cd jobs
     ```
 
 3. **Install the dependencies:**
@@ -53,7 +53,7 @@ To use **Jobs**, follow these steps:
 
 ## Contributions
 
-Contributions are welcome! If you'd like to contribute to **The Edifice Gazette**, please follow these steps:
+Contributions are welcome! If you'd like to contribute to **Jobs**, please follow these steps:
 
 ## Contact
 
