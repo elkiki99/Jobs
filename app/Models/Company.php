@@ -36,6 +36,6 @@ class Company extends Model
 
     public function openings()
     {
-        return $this->hasManyThrough(Opening::class, User::class);
+        return $this->hasMany(Opening::class);
     }
 }

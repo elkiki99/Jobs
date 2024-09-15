@@ -1,9 +1,9 @@
-<div class="p-6">
+<div class="pt-10 xp-0 md:xp-6 lg:pt-0">
     <!-- Profile summary -->
     @if ($user->userCv && $user->userCv->profile_summary)
         <div class="mb-6">
             <h2 class="text-2xl font-semibold text-gray-800">About</h2>
-            <p class="mt-2 text-gray-700">{{ $user->userCv->profile_summary }}</p>
+            <p class="mt-2 text-gray-700">{!! $user->userCv->profile_summary !!}</p>
         </div>
     @endif
 

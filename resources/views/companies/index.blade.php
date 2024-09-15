@@ -22,18 +22,24 @@
                 @forelse($companies as $company)
                     <div class="flex flex-col md:flex-row md:items-start">
                         <a wire:navigate href="{{ route('companies.show', $company->slug) }}">
-                            <img loading="lazy" class="w-24 h-24 mb-2 mr-5 border rounded-full"
-                                src="{{ Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : asset('storage/' . $company->logo) }}"
-                                alt="{{ $company->name }}">
+                            @if ($company->logo)
+                                <img loading="lazy" class="w-24 h-24 mb-2 mr-5 border rounded-full"
+                                    src="{{ $company->logo ? (Str::startsWith($company->logo, ['http://', 'https://']) ? $company->logo : Storage::disk('s3')->url($company->logo)) : 'path/to/default/image.png' }}"
+                                    alt="{{ $company->name }}">
+                            @else
+                                <img loading="lazy" class="w-24 h-24 mb-2 mr-5 border rounded-full"
+                                    src="{{ asset('images/no-image.png') }}" alt="{{ $company->name }}">
+                            @endif
                         </a>
                         <div class="flex-grow">
                             <p class="mt-2 font-medium">{{ $company->name }}</p>
                             <p class="mt-2 text-sm">{{ $company->email }}</p>
                             <p class="mt-2 text-sm">{{ $company->city }}</p>
                         </div>
-                        <a wire:navigate href="{{ route('companies.edit', $company->slug) }}" class="mt-2 md:mt-0 md:ml-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
+                        <a wire:navigate href="{{ route('companies.edit', $company->slug) }}"
+                            class="mt-2 md:mt-0 md:ml-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                             </svg>

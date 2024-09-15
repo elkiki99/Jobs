@@ -45,16 +45,18 @@
                         clip-rule="evenodd" />
                 </svg>
             </a>
-            @if(auth()->user()->role === 'recruiter' && App\Models\Company::where('created_by', auth()->user()->id)->exists())
-                <a wire:navigate class="flex items-center py-1 underline" href="{{ route('companies.index') }}">
-                    My companies!
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-1 size-5">
-                        <path fill-rule="evenodd"
-                            d="M8.25 3.75H19.5a.75.75 0 0 1 .75.75v11.25a.75.75 0 0 1-1.5 0V6.31L5.03 20.03a.75.75 0 0 1-1.06-1.06L17.69 5.25H8.25a.75.75 0 0 1 0-1.5Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </a>
-            @endif
+            @auth
+                @if(auth()->user()->role === 'recruiter' && App\Models\Company::where('created_by', auth()->user()->id)->exists())
+                    <a wire:navigate class="flex items-center py-1 underline" href="{{ route('companies.index') }}">
+                        My companies!
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-1 size-5">
+                            <path fill-rule="evenodd"
+                                d="M8.25 3.75H19.5a.75.75 0 0 1 .75.75v11.25a.75.75 0 0 1-1.5 0V6.31L5.03 20.03a.75.75 0 0 1-1.06-1.06L17.69 5.25H8.25a.75.75 0 0 1 0-1.5Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                @endif
+            @endauth
         </div>
     </div>
 </x-app-layout>

@@ -46,7 +46,7 @@
                 </div>
             @endif
         </div>
-        
+
         <div class="gap-8 py-12">
             @forelse($openings as $opening)
                 <x-opening-card :opening="$opening" />

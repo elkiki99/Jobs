@@ -2,12 +2,20 @@
     <h2 class="pb-4 text-4xl">{{ __('Profile summary') }}</h2>
     <div class="space-y-2">
         <x-input-label for="profile_summary" :value="__('Academic description *')" />
-        <div x-data="{ resize() { $refs.textarea.style.height = 'auto';
+        {{-- <div x-data="{ resize() { $refs.textarea.style.height = 'auto';
                 $refs.textarea.style.height = $refs.textarea.scrollHeight + 'px'; } }" x-init="resize()">
             <textarea rows="4" x-ref="textarea" wire:model="profile_summary" @input="resize"
                 class="w-full mt-1 border border-gray-300 rounded-md resize-none" placeholder="Tell us a little about yourself!"
                 autofocus autocomplete="profile_summary"></textarea>
+        </div> --}}
+        <div wire:ignore>
+            <textarea 
+                id="profile_summary"
+                wire:model="profile_summary"
+                placeholder="Tell us your story!">
+            {{ $profile_summary }}</textarea>
         </div>
+        
         <x-input-error class="mt-2" :messages="$errors->get('profile_summary')" />
     </div>
     <x-primary-button class="my-4 ml-auto" wire:click.prevent="updateProfileSummary">
@@ -28,3 +36,18 @@
         </div>
     @endif
 </form>
+
+@script
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#profile_summary'))
+            .then(profile_summary => {
+                profile_summary.model.document.on('change:data', () => {
+                @this.set('profile_summary', profile_summary.getData());
+                })
+        })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endscript

@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RecruiterMiddleware;
 use App\Http\Controllers\LegalPagesController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Middleware\AuthMiddleware;
 
 Route::get('/', function () {
     return view('home');
@@ -25,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-}); 
+});
 
 Route::get('/cv', [ProfileController::class, 'cv'])->middleware(DevMiddleware::class)->name('profile.cv');
 
@@ -40,7 +41,6 @@ Route::post('/opening/edit/{opening:slug}', [OpeningController::class, 'update']
 Route::get('/opening/{opening:slug}', [OpeningController::class, 'show'])->name('openings.show');
 Route::get('/applications', [OpeningController::class, 'applications'])->middleware(DevMiddleware::class)->name('openings.applications');
 Route::get('/my-openings', [OpeningController::class, 'myOpenings'])->middleware(RecruiterMiddleware::class)->name('openings.my-openings');
-// Route::post('/opening/{opening:slug}', [OpeningController::class, 'apply'])->name('openings.apply');
 Route::delete('/opening/{opening:slug}', [OpeningController::class, 'destroy'])->name('openings.delete');
 
 /**
@@ -48,9 +48,9 @@ Route::delete('/opening/{opening:slug}', [OpeningController::class, 'destroy'])-
  */
 Route::get('/connect', [UserController::class, 'index'])->name('users.index');
 Route::get('/user/{user:username}', [UserController::class, 'show'])->name('users.show');
-Route::get('/network', [UserController::class, 'network'])->name('network');
-Route::get('/followers', [UserController::class, 'followers'])->name('users.followers');
-Route::get('/following', [UserController::class, 'following'])->name('users.following');
+Route::get('/network', [UserController::class, 'network'])->middleware('auth')->name('network');
+Route::get('/followers', [UserController::class, 'followers'])->middleware('auth')->name('users.followers');
+Route::get('/following', [UserController::class, 'following'])->middleware('auth')->name('users.following');
 
 /**
  * Company
@@ -83,4 +83,4 @@ Route::get('/terms', [LegalPagesController::class, 'terms'])->name('terms');
  */
 Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

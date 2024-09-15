@@ -63,8 +63,7 @@ class CompanyController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            // $companyData['logo'] = $request->file('logo')->store('logos', 'public');
-            $companyData['logo'] = Storage::disk('s3')->put('logos', $request->file('company'));
+            $companyData['logo'] = Storage::disk('s3')->put('logos', $request->file('logo'));
         }
 
         $companyData['created_by'] = Auth::user()->id;
@@ -106,6 +105,8 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         Gate::authorize('update', $company);
+        $user = Auth::user();
+
         $newCompanyData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -136,16 +137,24 @@ class CompanyController extends Controller
             ],
         ]);
 
-        if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('logos', 'public');
-            $newCompanyData['logo'] = $logoPath;
-        } else {
-            $newCompanyData['logo'] = $company->logo;
-        }
-        $newCompanyData['created_by'] = Auth::user()->id;
-        $company->update($newCompanyData);
+        $isCompanyInUseByOthers = User::where('company_id', $company->id)
+        ->where('id', '!=', $user->id)
+        ->exists();
 
-        return redirect()->route('companies.show', $company->slug)->with('company_updated', 'Company updated successfully!');
+        if (!$isCompanyInUseByOthers) {
+            if ($request->hasFile('logo')) {
+                $logoPath = Storage::disk('s3')->put('logos', $request->file('logo'));
+                $newCompanyData['logo'] = $logoPath;
+            } else {
+                $newCompanyData['logo'] = $company->logo;
+            }
+            
+            $newCompanyData['created_by'] = Auth::user()->id;
+            $company->update($newCompanyData);
+            return redirect()->route('companies.show', $company->slug)->with('company_updated', 'Company updated successfully!');
+        } else {
+            return redirect()->route('companies.show', $company->slug)->with('company_updated_error', 'Your company cannot be updated as it is being used by another user!');
+        }
     }
 
     /**
@@ -153,6 +162,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
+        Gate::authorize('delete', $company);
         $user = Auth::user();
         
         $isCompanyInUseByOthers = User::where('company_id', $company->id)
@@ -165,7 +175,7 @@ class CompanyController extends Controller
                              ->with('company_deleted', 'Your company was deleted successfully!');
         } else {
             return redirect()->route('companies.show', ['company' => $company->slug])
-                             ->with('company_deleted_error', 'Your company cannot be deleted as it is being used by another user!');
+                             ->with('company_deleted_error', 'Your company cannot be deleted as it is being used by another user');
         }
     }
 }

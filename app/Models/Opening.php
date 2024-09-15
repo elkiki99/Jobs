@@ -19,7 +19,6 @@ class Opening extends Model
         'location',
         'image',
         'salary',
-        // 'status',
         'slug',
         'company_id',
         'category_slug',

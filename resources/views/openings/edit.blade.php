@@ -7,7 +7,7 @@
 
     <div class="">
         <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
-        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">Edit opening {{ $opening->name }}</p>
+            <p class="px-4 pb-12 text-lg text-gray-600 sm:px-0 sm:text-2xl">Edit opening {{ $opening->name }}</p>
             <div class="p-4 bg-white border sm:p-8">
                 <div class="w-full">
                     <form method="post" action="{{ route('openings.update', $opening->slug) }}"
@@ -37,9 +37,7 @@
                             @if ($opening->image)
                                 <div class="mt-4">
                                     <x-input-label :value="__('Current Image *')" />
-                                    <img 
-                                        {{-- src="{{ asset('storage/' . $opening->image) }}"  --}}
-                                        alt="Current image"
+                                    <img alt="Current image"
                                         src="{{ Str::startsWith($opening->image, ['http://', 'https://']) ? $opening->image : Storage::disk('s3')->url($opening->image) }}"
                                         class="w-full mt-2 shadow-md md:w-1/2" />
                                 </div>
@@ -100,15 +98,17 @@
                             </select>
                             <x-input-error :messages="$errors->get('company_id')" class="mt-2" />
 
-                            {{-- <a class="flex items-center justify-end mt-4 text-sm font-medium text-gray-600"
+                            <a wire:navigate class="flex items-center justify-end gap-2 mt-2 text-sm text-gray-500"
                                 href="{{ route('companies.create') }}">
-                                <p>Create category</p>
+                                <p>
+                                    Add a company
+                                </p>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    stroke-width="1.5" stroke="currentColor" class="size-4">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
                                 </svg>
-                            </a> --}}
+                            </a>
                         </div>
 
                         <!-- Slug -->

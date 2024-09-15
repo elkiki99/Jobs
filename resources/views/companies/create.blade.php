@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
-        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">Create a new company</p>
+        <p class="px-4 pb-12 text-lg text-gray-600 sm:px-0 sm:text-2xl">Create a new company</p>
 
         <div class="p-4 bg-white border sm:p-8">
             <div class="w-full">

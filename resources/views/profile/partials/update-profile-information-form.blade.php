@@ -89,7 +89,7 @@
         <!-- Bio -->
         <div>
             <x-input-label for="bio" :value="__('Bio')" />
-            <textarea rows=6 id="bio" placeholder="Tell us about yourself!" name="bio"
+            <textarea rows=3 id="bio" placeholder="Tell us about yourself!" name="bio"
                 class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 autofocus autocomplete="bio">{{ old('bio', $user->bio) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('bio')" />

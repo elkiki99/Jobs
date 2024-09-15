@@ -5,7 +5,7 @@
         </h2>
     </x-slot>   
 
-    <div class="pb-12 mx-auto space-y-6 sm:px-6 lg:px-8 max-w-7xl">
+    <div class="px-4 pb-12 mx-auto space-y-6 sm:px-6 lg:px-8 max-w-7xl">
         <p class="pb-12 text-lg text-gray-600 sm:text-2xl">Our cookies policy</p>
 
         <p class="text-lg text-gray-600">

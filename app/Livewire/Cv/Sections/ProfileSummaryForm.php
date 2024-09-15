@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileSummaryForm extends Component
 {
-    public $profile_summary;
+    public $profile_summary = '';
     public $userCv;
 
     public function mount()

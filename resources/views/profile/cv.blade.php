@@ -5,8 +5,8 @@
         </h2>
     </x-slot>
 
-    <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
-    <p class="pb-12 text-lg text-gray-600 sm:text-2xl">Update my C.V.</p>
+    <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">{{ __('Update my C.V.') }}</p>
 
         <div class="p-4 bg-white border sm:p-8">
             <div class="w-full">

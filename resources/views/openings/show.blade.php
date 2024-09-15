@@ -8,8 +8,8 @@
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <p class="pb-12 text-lg text-gray-600 sm:text-2xl">{{ $opening->company->name }}</p>
 
-        <div class="flex flex-col-reverse gap-8 md:flex-row">
-            <div class="w-full space-y-2 md:w-1/2">
+        <div class="flex flex-col-reverse gap-8 lg:flex-row">
+            <div class="w-full space-y-2 lg:w-1/2">
 
                 <div class="mt-5">
                     @if (session('applied_success'))
@@ -111,7 +111,7 @@
                 @endauth
             </div>
 
-            <div class="w-full md:w-1/2">
+            <div class="w-full lg:w-1/2">
                 @if ($opening->image)
                     <img class="object-cover aspect-square"
                         src="{{ Str::startsWith($opening->image, ['http://', 'https://']) ? $opening->image : Storage::disk('s3')->url($opening->image) }}"

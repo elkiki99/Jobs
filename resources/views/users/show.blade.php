@@ -1,15 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-4xl font-medium leading-tight text-gray-800 sm:text-6xl">
+        <h2 class="hidden text-4xl font-medium leading-tight text-gray-800 sm:text-6xl sm:block">
             {{ $user->name }}
         </h2>
     </x-slot>
 
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">{{ $user->username }}</p>
+        <p class="hidden pb-12 text-lg text-gray-600 sm:text-2xl sm:block">{{ $user->username }}</p>
 
-        <div class="flex-row gap-8 md:flex">
-            <div class="w-full space-y-2 md:w-1/3 ">
+        <div class="flex-row gap-8 lg:flex">
+            <div class="w-full space-y-2 ">
                 <!-- Avatar -->
                 @if ($user->avatar)
                     <img class="object-cover rounded-full size-36 aspect-square"
@@ -26,7 +26,7 @@
 
                 <!-- Username -->
                 @if ($user->role === 'recruiter')
-                    <div class="flex items-center justify-between">
+                    <div class="items-center justify-between sm:flex">
                         <div>
                             <div class="flex items-center gap-2">
                                 <p class="text-2xl">{{ $user->username }}</p>
@@ -186,10 +186,9 @@
                 @endauth
             </div>
 
-
             <!-- Openings -->
             @if ($user->role === 'recruiter')
-                <div class="flex flex-col w-full min-h-screen md:w-2/3">
+                <div class="flex flex-col w-full min-h-screen lg:w-3/5">
                     <div class="mt-5">
                         @if (session('profile-updated'))
                             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('salary', 10, 2); 
             $table->string('image')->nullable();
             $table->string('slug');
-            $table->foreignIdFor(Company::class);
+            $table->foreignIdFor(Company::class)->constrained('companies')->onDelete('cascade');
             $table->string('category_slug');
             $table->foreignIdFor(User::class)->constrained('users')->onDelete('cascade');
             $table->timestamps();

@@ -2,20 +2,22 @@
 
 namespace App\Livewire\Cv\Sections;
 
-use Livewire\Component;
 use App\Models\UserCv;
+use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class SkillsForm extends Component
 {
     public $skillsInput = '';
     public $userCv;
 
-    public function mount(UserCv $userCv) 
+    public function mount() 
     {
-        $this->userCv = $userCv;
-
+        $this->userCv = Auth::user()->userCv;
         if ($this->userCv) {
             $this->skillsInput = implode(', ', json_decode($this->userCv->skills, true) ?? []);
+        } else {
+            $this->skillsInput = '';
         }
     }
 
@@ -38,7 +40,12 @@ class SkillsForm extends Component
         $this->validate();
 
         $skillsArray = array_map('trim', explode(',', $this->skillsInput));
-        $this->userCv->update(['skills' => json_encode($skillsArray)]);
+        $skillsJson = json_encode($skillsArray);
+
+        UserCv::updateOrCreate(
+            ['user_id' => Auth::id()],
+            ['skills' => $skillsJson]
+        );
 
         session()->flash('skills_updated', 'Skills updated successfully!');
     }

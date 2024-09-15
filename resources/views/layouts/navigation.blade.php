@@ -177,10 +177,12 @@
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
                     <div class="flex items-center">
+                        
+                        <!-- Avatar -->
                         @if (Auth::user()->avatar)
                             <a wire:navigate href="{{ route('users.show', Auth::user()->username) }}">
                                 <img class="rounded-full size-12 aspect-square"
-                                    src="{{ Str::startsWith(Auth::user()->avatar, ['http://', 'https://']) ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar) }}"
+                                    src="{{ Str::startsWith(Auth::user()->avatar, ['http://', 'https://']) ? Auth::user()->avatar : Storage::disk('s3')->url(Auth::user()->avatar) }}"
                                     alt="{{ Auth::user()->username }}">
                             </a>
                         @else

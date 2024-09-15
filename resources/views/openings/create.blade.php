@@ -7,7 +7,8 @@
 
     <div class="">
         <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
-        <p class="pb-12 text-lg text-gray-600 sm:text-2xl">{{ __('Create a new opening') }}</p>
+        <p class="px-4 pb-12 text-lg text-gray-600 sm:px-0 sm:text-2xl">{{ __('Create a new opening') }}</p>
+        
             <div class="p-4 bg-white border sm:p-8">
                 <div class="w-full">
                     <form method="post" action="{{ route('openings.store') }}" class="mt-6 space-y-6"
@@ -85,19 +86,17 @@
                             </select>
                             <x-input-error :messages="$errors->get('company_id *')" class="mt-2" />
 
-                            @if (auth()->user()->role === 'recruiter')
-                                <a wire:navigate class="flex items-center justify-end gap-2 mt-2 text-sm text-gray-500"
-                                    href="{{ route('companies.create') }}">
-                                    <p>
-                                        Add a company
-                                    </p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="size-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
-                                    </svg>
-                                </a>
-                            @endif
+                            <a wire:navigate class="flex items-center justify-end gap-2 mt-2 text-sm text-gray-500"
+                                href="{{ route('companies.create') }}">
+                                <p>
+                                    Add a company
+                                </p>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                                </svg>
+                            </a>
                         </div>
 
                         <!-- Slug -->
