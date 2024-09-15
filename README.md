@@ -1,6 +1,6 @@
 # Jobs
 
-**Jobs** is a powerful full-stack application template designed for job seekers and recruiters. This application provides a solid foundation for managing job applications, displaying CVs, and creating job openings. It features an easy-to-use admin panel, dynamic content management, and a follow toggle system to enhance user engagement.
+**Jobs** is a powerful full-stack application template designed for job seekers and recruiters. This application provides a solid foundation for managing job applications, displaying CVs, and creating job openings. It features an easy-to-use user panel, dynamic content management, follow & notifications systems to enhance user engagement.
 
 ## Key Features
 
