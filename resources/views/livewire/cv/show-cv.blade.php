@@ -23,7 +23,7 @@
     @endif
 
     <!-- Work experience -->
-    @if ($user->userCv && $user->userCv->projects)
+    @if ($user->userCv && $user->userCv->work_experience)
         <div class="mb-6">
             <h2 class="text-2xl font-semibold text-gray-800">Work Experience</h2>
             @foreach ($user->userCv->work_experience as $experience)
@@ -43,7 +43,7 @@
             @foreach ($user->userCv->projects as $project)
                 <div class="mt-2">
                     <p class="text-lg font-semibold">{{ $project['title'] }}</p>
-                    <p class="text-gray-600">{{ $project['date'] }}</p>
+                    {{ \Carbon\Carbon::parse($project['date'])->format('d/m/Y') }}
                     <p class="text-gray-700">{!! nl2br(e($project['description'])) !!}</p>
 
                     <div class="mt-1 mb-3">

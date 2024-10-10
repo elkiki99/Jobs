@@ -9,7 +9,7 @@
         <p class="hidden pb-12 text-lg text-gray-600 sm:text-2xl sm:block">{{ $user->username }}</p>
 
         <div class="flex-row gap-8 lg:flex">
-            <div class="w-full space-y-2 ">
+            <div class="w-full space-y-2 lg:w-1/3">
                 <!-- Avatar -->
                 @if ($user->avatar)
                     <img class="object-cover rounded-full size-36 aspect-square"
@@ -150,7 +150,7 @@
                     </div>
                 @endif
 
-                <!-- Linkedin -->
+                <!-- Github -->
                 @if ($user->github)
                     <div class="flex items-center gap-2">
                         <svg viewBox="0 0 256 250" width="256" class="size-5" height="250" fill="#24292f"
@@ -188,7 +188,7 @@
 
             <!-- Openings -->
             @if ($user->role === 'recruiter')
-                <div class="flex flex-col w-full min-h-screen lg:w-3/5">
+                <div class="flex flex-col w-full min-h-screen lg:w-2/3">
                     <div class="mt-5">
                         @if (session('profile-updated'))
                             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
@@ -213,7 +213,7 @@
                     </div>
                 </div>
             @else
-                <div>
+                <div class="flex flex-col w-full min-h-screen lg:w-2/3">
                     <div class="mt-5">
                         @if (session('profile-updated'))
                             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 2000)" x-show="show"
